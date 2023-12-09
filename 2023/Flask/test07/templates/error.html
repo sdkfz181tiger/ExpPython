@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}ERROR{% endblock %}
+
+{% block header %}ERROR{% endblock %}
+
+{% block content %}
+<ul>
+	<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+</ul>
+<h3>Error:{{ error.code }}</h3>
+<p>{{ error.description }}</p>
+{% endblock %}
+
+{% block footer %}{% endblock %}

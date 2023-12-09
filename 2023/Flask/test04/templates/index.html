@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+<ul>
+	<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+</ul>
+<ul>
+	<li><a href="{{ url_for('hello_detail', id=1) }}">商品A</a></li>
+	<li><a href="{{ url_for('hello_detail', id=2) }}">商品B</a></li>
+	<li><a href="{{ url_for('hello_detail', id=3) }}">商品C</a></li>
+</ul>
+{% endblock %}
+
+{% block footer %}{% endblock %}

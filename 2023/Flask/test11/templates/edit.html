@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}EDIT{% endblock %}
+
+{% block header %}EDIT{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+	</ul>
+	<p>{{ record["uid"] }}:{{ record["name"] }}:{{ record["comment"] }}</p>
+	<form method="POST" novalidate>
+		<p>{{ edit_form.name.label }}: {{ edit_form.name(size=10, value=record["name"]) }}</p>
+		<p>{{ edit_form.comment.label }}: {{ edit_form.comment(size=14, value=record["comment"]) }}</p>
+		<p>{{ edit_form.submit() }}</p>
+	</form>
+	{% if edit_form.errors %}
+	<ul style="color: red">
+		{% for key, value in edit_form.errors.items() %}
+		<li>{{ key }}:{{ value }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

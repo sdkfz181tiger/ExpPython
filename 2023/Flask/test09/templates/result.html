@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}RESULT{% endblock %}
+
+{% block header %}RESULT{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+	</ul>
+	<ul>
+		<li>Name: {{ form.name.data }}</li>
+		<li>Email: {{ form.email.data }}</li>
+		<li>Password: {{ form.password.data }}</li>
+		<li>Confirm: {{ form.confirm.data }}</li>
+	</ul>
+{% endblock %}
+
+{% block footer %}{% endblock %}

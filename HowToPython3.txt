@@ -1,0 +1,26 @@
+HowTo Python3
+
+= pyenv =
+
+1, Install
+	$brew install pyenv
+
+2, Check your shell(zsh or bash)
+	$echo $SHELL
+
+3, Path(~/.zshrc or ~/.bash_profile)
+	
+	export PYENV_ROOT="$HOME/.pyenv"
+	export PATH="$PYENV_ROOT/bin:$PATH"
+	eval "$(pyenv init --path)"
+	eval "$(pyenv init -)"
+
+4, Source(~/.zshrc or ~/.bash_profile)
+
+	$source ~/.zshrc
+	$source ~/.bash_profile
+
+5, Install Python
+
+	$pyenv install --list
+	$pyenv install 3.11.0

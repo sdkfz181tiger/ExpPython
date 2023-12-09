@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+	</ul>
+	<form method="POST" novalidate>
+		<p>{{ ins_form.name.label }}: {{ ins_form.name(size=10, placeholder="Name") }}</p>
+		<p>{{ ins_form.comment.label }}: {{ ins_form.comment(size=14, placeholder="How are you!?") }}</p>
+		<p>{{ ins_form.submit() }}</p>
+	</form>
+	{% if ins_form.errors %}
+	<ul style="color: red">
+		{% for key, value in ins_form.errors.items() %}
+		<li>{{ key }}:{{ value }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% if records %}
+	<table>
+		{% for record in records %}
+		<tr>
+			<td>
+				<form method="POST" novalidate>
+					{{ del_form.uid(value=record[0], hidden="true") }}
+					{{ del_form.submit() }}
+				</form>
+			</td>
+			<td>{{ record[0] }}</td>
+			<td>{{ record[1] }}</td>
+			<td>{{ record[2] }}</td>
+			<td>
+				<a href="{{ url_for('hello_edit', uid=record[0]) }}">Edit</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

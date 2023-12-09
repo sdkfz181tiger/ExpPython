@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}DETAIL{% endblock %}
+
+{% block header %}DETAIL{% endblock %}
+
+{% block content %}
+<ul>
+	<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+</ul>
+<h2>Name:{{ data[index]["name"] }}</h2>
+<p>HP:{{ data[index]["hp"] }}</p>
+<p>MP:{{ data[index]["mp"] }}</p>
+<strong>MEMO:{{ data[index]["memo"] }}</strong>
+{% endblock %}

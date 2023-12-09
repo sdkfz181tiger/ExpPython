@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+<ul>
+	<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+</ul>
+<ul>
+	{% for name in names %}
+	<li>
+		{% filter upper %}
+			{{ loop.index0 }}:{{ name }}
+		{% endfilter %}
+	</li>
+	{% endfor %}
+</ul>
+{% endblock %}
+
+{% block footer %}{% endblock %}

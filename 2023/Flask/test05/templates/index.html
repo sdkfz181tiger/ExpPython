@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+<ul>
+	<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+</ul>
+<h3>全員</h3>
+<ul>
+	{% for person in data %}
+		<li>{{ loop.index0 }}:{{ person["name"] }}</li>
+	{% endfor %}
+</ul>
+<h3>HPが50以上</h3>
+<ul>
+	{% for person in data %}
+		{% if 50 < person["hp"] %}
+		<li>{{ loop.index0 }}:{{ person["name"] }}</li>
+		{% endif %}
+	{% endfor %}
+</ul>
+<h3>詳細情報</h3>
+<ul>
+	{% for person in data %}
+		<li><a href="{{ url_for('hello_detail', index=loop.index0) }}">{{ person["name"] }}</a></li>
+	{% endfor %}
+</ul>
+{% endblock %}
+
+{% block footer %}{% endblock %}

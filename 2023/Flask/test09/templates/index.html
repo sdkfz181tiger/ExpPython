@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+	</ul>
+	{% if form.errors %}
+	<ul style="color: red">
+		{% for key, value in form.errors.items() %}
+		<li>{{ key }}:{{ value }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	<form method="POST" novalidate>
+		<p>{{ form.name.label }}: {{ form.name(size=20) }}</p>
+		<p>{{ form.email.label }}: {{ form.email(placeholder="xxx@yyy.com") }}</p>
+		<p>{{ form.password.label }}: {{ form.password(size=20) }}</p>
+		<p>{{ form.confirm.label }}: {{ form.confirm(size=20) }}</p>
+		<p>{{ form.submit() }}
+	</form>
+{% endblock %}
+
+{% block footer %}{% endblock %}

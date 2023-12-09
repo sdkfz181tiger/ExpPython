@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block header %}HOME{% endblock %}
+
+{% block content %}
+	<ul>
+		<li><a href="{{ url_for('hello_world') }}">HOME</a></li>
+	</ul>
+	{% if name != None %}
+		<p>Welcome, {{ name }}!!</p>
+	{% else %}
+		<form method="POST">
+			Name:<input type="text" name="name" value="hoge"/>
+			<button>Submit</button>
+		</form>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
