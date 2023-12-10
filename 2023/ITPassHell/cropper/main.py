@@ -34,7 +34,7 @@ def main():
 	print("main")
 
 	# JSON
-	with open("./my_data_ip.json") as f:
+	with open("./my_data_to.json") as f:
 		json_obj = json.load(f)
 		for data in json_obj["data"]:
 			# PdfCropper

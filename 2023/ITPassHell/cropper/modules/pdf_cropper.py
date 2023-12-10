@@ -104,7 +104,7 @@ class PdfCropper:
 		return image.crop((0, 0, w, b+pad))
 
 	# Trim left
-	def trim_left(self, image, num=0, pad=30):
+	def trim_left(self, image, num=0, pad=5):
 		print("trim_left...:", num)
 
 		w = image.size[0]

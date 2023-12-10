@@ -15,11 +15,11 @@ def main():
 	print("main")
 
 	title = "[IP_令x春:問{:01d}]"
-	trim_from = "../assets/jpg/ip/2013h25a_ip_qs"
+	trim_from = "../assets/jpg/to/tokurei_Mondai_20230723_FE"
 	#trim_from = "./jpg/from/"
 	trim_to   = "./jpg/to/"
 
-	pad_l = 0
+	pad_l = 20
 	pad_r = 0
 	pad_t = 0
 
@@ -38,13 +38,13 @@ def main():
 		w = image.size[0]
 		h = image.size[1]
 		# Crop
-		crop = image.crop((pad_l, pad_t, w-pad_r, h+30))
+		crop = image.crop((pad_l, pad_t, w-pad_l-pad_r, h+30))
 		# Draw
 		draw = ImageDraw.Draw(crop) # Draw
 		draw.rectangle(((0, h-2), (w, h+32)), fill=(255, 255, 255))
 		# Title
 		text = title.format(int(num))
-		draw.text((w-5, h-5), text, font=font_25, fill=(0, 0, 0), anchor="rt")
+		#draw.text((w-5, h-5), text, font=font_25, fill=(0, 0, 0), anchor="rt")
 		# Save
 		crop.save(path, "JPEG") # Save
 
