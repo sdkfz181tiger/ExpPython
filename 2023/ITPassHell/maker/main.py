@@ -14,7 +14,7 @@ s_pad = 160
 
 font_40 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 40)
 font_25 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 25)
-credit = "= 受かる君DX_v0.76 ="
+credit = "= 受かる君DX_v0.77 ="
 
 # Load
 def load_questions(json_obj):
@@ -42,7 +42,7 @@ def load_questions(json_obj):
 		# QRCode
 		draw_qrcode(image_qs, url)
 		# Answer
-		#draw_answer(image_qs, answer)
+		if(json_obj["with_answer"]): draw_answer(image_qs, answer)
 		# Append
 		images.append(image_qs)
 

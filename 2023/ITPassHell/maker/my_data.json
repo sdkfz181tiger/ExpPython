@@ -1,8 +1,9 @@
 {
 	"jpg": "../assets_notitle/jpg",
 	"out": "./out",
-	"index_start": 0,
+	"index_start": 1,
 	"index_offset": 5,
+	"with_answer": false,
 	"shuffle": false,
 	"targets": [
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 58},
