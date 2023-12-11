@@ -3,7 +3,7 @@
 	"out": "./out",
 	"index_start": 1,
 	"index_offset": 5,
-	"with_answer": false,
+	"with_answer": true,
 	"shuffle": false,
 	"targets": [
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 58},
