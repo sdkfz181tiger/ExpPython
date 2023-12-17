@@ -28,6 +28,10 @@ def main():
 	
 	# 先頭の3件
 	print(df.head(3))
+
+	# カラム一覧
+	print(df.columns)
+
 	# 行数
 	print("行数:", df.shape[0])
 	# 列数
@@ -49,6 +53,16 @@ def main():
 	print("欠損数x3:", df["x3"].isnull().sum())
 
 	# 欠損がある場合、各列の中央値で埋める
+	colmedian = df.median()
+	df = df.fillna(colmedian)
+
+	# 欠損値の存在を確認
+	print("isnull:", df.isnull().any(axis=0))
+
+	# 特徴量xと正解データtに分割
+	x = df[["x0", "x1", "x2", "x3"]]
+	t = df["target"]
+
 	
 
 	"""
