@@ -1,7 +1,8 @@
 # coding: utf-8
 
 """
-1, original.mp4のフレームレートを合わせる事
+1, 視線計測時、各動画を1本にした動画を使う事(目線が泳がなく)
+2, original.mp4のフレームレートを合わせる事
 	$ ffmpeg -i original.mp4 -r 30 original_fps30.mp4
 """
 

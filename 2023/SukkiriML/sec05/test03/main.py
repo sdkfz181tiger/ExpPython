@@ -63,8 +63,6 @@ def main():
 	x = df[["x0", "x1", "x2", "x3"]]
 	t = df["target"]
 
-	
-
 	"""
 	# Fill lost data with average point
 	mean = df.mean(numeric_only=True)# 欠損値を除外して計算
