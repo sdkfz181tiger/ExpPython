@@ -1,7 +1,7 @@
 {
 	"jpg": "../assets_notitle/jpg",
 	"out": "./out",
-	"index_start": 2,
+	"index_start": 3,
 	"index_offset": 5,
 	"with_answer": false,
 	"shuffle": false,
