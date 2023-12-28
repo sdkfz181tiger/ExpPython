@@ -30,7 +30,7 @@ def main():
 
 	# Zundamon
 	params = (
-		("text", "ずんだもんを再生させるのだ!?"),
+		("text", "ずんだもんを再生させるのだ!!"),
 		("speaker", 3),
 	)
 
