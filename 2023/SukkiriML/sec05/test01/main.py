@@ -12,7 +12,7 @@ import pickle
 from sklearn import tree
 
 #==========
-# Data
+# Main
 
 def main():
 	print("main!!")

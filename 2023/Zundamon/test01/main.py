@@ -2,10 +2,10 @@
 
 """
 1, Docker
-	1-1, Download Docker and Install
+	1-1, Download DockerDesktop and Install
 		https://docs.docker.com/desktop/release-notes/
-	1-2, Run Docker Desktop
-		Launch Docker!!
+	1-2, Run DockerDesktop
+		Launch DockerDesktop!!
 	1-3, Check version
 		docker -v
 2, Zundamon

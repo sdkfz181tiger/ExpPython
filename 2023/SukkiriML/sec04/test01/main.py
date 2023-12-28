@@ -9,7 +9,9 @@
 import pandas as pd
 
 #==========
-# Data(Dictionary)
+# Main
+
+# Dictionary
 data = {
 	"Ariel":[160, 160, 160],
 	"Becky":[150, 175, 125]

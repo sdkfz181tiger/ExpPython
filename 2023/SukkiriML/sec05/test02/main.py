@@ -18,7 +18,7 @@ FILE_CSV = "./iris.csv"
 FILE_PKL = "./iris.pkl"
 
 #==========
-# Data
+# Main
 
 def main():
 	print("main!!")

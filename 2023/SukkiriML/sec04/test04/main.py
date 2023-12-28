@@ -17,7 +17,7 @@ COLUMNS_X = ["cm", "kg", "era"]
 COLUMNS_T = "group"
 
 #==========
-# Data
+# Main
 
 def main():
 	print("main!!")

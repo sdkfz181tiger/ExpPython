@@ -11,7 +11,7 @@ import pandas as pd
 from sklearn import tree
 
 #==========
-# Data
+# Main
 
 # Read
 df = pd.read_csv("data.csv")
