@@ -31,11 +31,11 @@ def main():
 	mean = df.mean(numeric_only=True)# 欠損値を除外して計算
 	df = df.fillna(mean)
 
-	# 説明変数xと目的変数tに分割
+	# 特徴量xと正解データtに分割
 	x = df[["GakuLen", "GakuWidth", "KabeLen", "KabeWidth"]]
 	t = df["Type"]
-	print("説明変数x", x)
-	print("目的変数t", t)
+	print("特徴量x", x)
+	print("正解データt", t)
 
 	# Model
 	# max_depth: 決定木の深さ
@@ -43,15 +43,15 @@ def main():
 	model = tree.DecisionTreeClassifier(
 		max_depth=2, random_state=0)
 
-	# テストデータと訓練データに分ける
-	# 3割をテストデータ、7割を訓練データ
+	# 訓練データとテストデータに分ける
+	# 7割を訓練データ、3割をテストデータ
 	x_train, x_test, y_train, y_test = train_test_split(
 		x, t, test_size=0.3, random_state=0)
 
 	print("x_train:", x_train.shape)
 	print("x_test:", x_test.shape)
 
-	# 訓練データを使って学習
+	# 訓練データを使って訓練
 	model.fit(x_train, y_train)
 
 	# テストデータを使って評価

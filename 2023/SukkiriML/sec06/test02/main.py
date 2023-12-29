@@ -37,7 +37,7 @@ def main():
 	print(df.isnull().any(axis=0))
 
 	# 散布図で確認(処理前)
-	# 	それぞれの列と教師データ"target"で確認すると良い
+	# 	それぞれの列と正解データ"target"で確認すると良い
 	#df.plot(kind="scatter", x="x0", y="target")
 	#df.plot(kind="scatter", x="x1", y="target")
 	#df.plot(kind="scatter", x="x2", y="target")
@@ -53,7 +53,7 @@ def main():
 	#df.plot(kind="scatter", x="x0", y="target")
 	#plt.show()
 
-	# 特徴量と正解データを取り出す
+	# 特徴量xと正解データtに分割
 	x = df[["x0", "x1", "x2", "x3"]]
 	t = df["target"]
 
@@ -65,11 +65,11 @@ def main():
 	# 0~5の行, x0~x2まで
 	print(df.loc[0:5, "x0":"x3"])
 
-	# 学習データと教師データに分割
+	# 訓練データとテストデータに分割
 	x_train, x_test, y_train, y_test = train_test_split(
 		x, t, test_size=0.2, random_state=0)
 
-	# 学習
+	# 訓練
 	model = LinearRegression()
 	print(model.fit(x_train, y_train))
 

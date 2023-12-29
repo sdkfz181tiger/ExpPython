@@ -63,8 +63,8 @@ def main():
 	x = df[["x0", "x1", "x2", "x3"]]
 	t = df["target"]
 
-	# テストデータと訓練データに分ける
-	# 2割をテストデータ、8割を訓練データ
+	# 訓練データとテストデータに分ける
+	# 8割を訓練データ、2割をテストデータ
 	x_train, x_test, y_train, y_test = train_test_split(
 		x, t, test_size=0.2, random_state=0)
 
@@ -77,7 +77,7 @@ def main():
 	model = tree.DecisionTreeClassifier(
 		max_depth=3, random_state=0)
 
-	# 訓練データを使って学習
+	# 訓練データを使って訓練
 	model.fit(x_train, y_train)
 
 	# テストデータを使って評価

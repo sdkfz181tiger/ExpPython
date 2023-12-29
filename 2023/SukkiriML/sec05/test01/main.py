@@ -60,11 +60,11 @@ def main():
 	mean = df.mean(numeric_only=True)# 欠損値を除外して計算
 	print(df.fillna(mean))
 
-	# 説明変数xと目的変数tに分割
+	# 特徴量xと正解データtに分割
 	x = df[["がく片長さ", "がく片幅", "花弁長さ", "花弁幅"]]
 	t = df["種類"]
-	print("説明変数x", x)
-	print("目的変数t", t)
+	print("特徴量x", x)
+	print("正解データt", t)
 
 if __name__ == "__main__":
 	main()
