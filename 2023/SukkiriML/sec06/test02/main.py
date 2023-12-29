@@ -14,8 +14,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
-FILE_CSV = "./cinema.csv"
-FILE_PKL = "./cinema.pkl"
+FILE_CSV = "./data.csv"
+FILE_PKL = "./data.pkl"
 
 #==========
 # Main
@@ -25,7 +25,7 @@ def main():
 
 	# CSVデータの読込
 	df = pd.read_csv(FILE_CSV)
-	print(df.head(3))
+	print(df.head(5))
 
 	# 欠損値の確認(処理前)
 	print(df.isnull().any(axis=0))
@@ -37,32 +37,33 @@ def main():
 	print(df.isnull().any(axis=0))
 
 	# 散布図で確認(処理前)
-	# 	それぞれの列と教師データ"sales"で確認すると良い
-	#df.plot(kind="scatter", x="SNS1",  y="sales")
-	#df.plot(kind="scatter", x="SNS2",  y="sales")
-	#df.plot(kind="scatter", x="actor", y="sales")
+	# 	それぞれの列と教師データ"target"で確認すると良い
+	#df.plot(kind="scatter", x="x0", y="target")
+	#df.plot(kind="scatter", x="x1", y="target")
+	#df.plot(kind="scatter", x="x2", y="target")
+	#df.plot(kind="scatter", x="x3", y="target")
 	#plt.show()
 
 	# 外れ値を特定しデータから削除
-	index = df[(1000<df["SNS2"])&(df["sales"]<8500)].index
+	index = df[(df["x0"]<-2.0)|(1.5<df["x0"])].index
 	# axis_0:行を削除/1:列を削除
 	df = df.drop(index, axis=0)
 
 	# 散布図で確認(処理後)
-	#df.plot(kind="scatter", x="SNS2", y="sales")
+	#df.plot(kind="scatter", x="x0", y="target")
 	#plt.show()
 
 	# 特徴量と正解データを取り出す
-	x = df[["SNS1", "SNS2", "actor", "original"]]
-	t = df["sales"]
+	x = df[["x0", "x1", "x2", "x3"]]
+	t = df["target"]
 
 	# 特定の行、列の値を確認
-	#index = [0, 1, 2]
-	#col = ["SNS1", "SNS2"]
+	#index = [0, 1, 2]# 削除されている行の場合はエラー
+	#col = ["x0", "x1"]
 	#print(df.loc[index, col])
 
-	# 0~5の行, SNS1~originalまで
-	#print(df.loc[0:5, "SNS1":"original"])
+	# 0~5の行, x0~x2まで
+	print(df.loc[0:5, "x0":"x3"])
 
 	# 学習データと教師データに分割
 	x_train, x_test, y_train, y_test = train_test_split(
@@ -73,13 +74,13 @@ def main():
 	print(model.fit(x_train, y_train))
 
 	# 予測
-	data = [[150, 700, 300, 0]]
-	print(model.predict(data))# 6874.109753
+	data = [[0.5, 1.1, 0.9, 1.0]]
+	print(model.predict(data))
 
 	# 平均絶対誤差で評価(MAE)
 	pred = model.predict(x_test)
 	# y_pred=予測結果データ, y_true=実際のデータ
-	print(mean_absolute_error(y_pred=pred, y_true=y_test))# 277.12236964086276
+	print(mean_absolute_error(y_pred=pred, y_true=y_test))
 
 	# 決定係数を求めて評価(0.0 ~ 1.0)
 	print(model.score(x_test, y_test))
@@ -89,7 +90,7 @@ def main():
 	print("切片:", model.intercept_)# 切片
 
 	# DataFrameで見やすく...
-	# 計算式: 1.1*SNS1 + 0.5*SNS2 + 0.3*actor + 214*original + 6253.4
+	# 計算式: 40.9*x0 + 67.1*x1 + 71.7*x2 + -1.4*x3 + 14.5
 	tmp = pd.DataFrame(model.coef_)
 	tmp.index = x_train.columns
 	print(tmp)
