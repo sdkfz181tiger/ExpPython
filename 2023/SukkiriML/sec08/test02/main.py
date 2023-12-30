@@ -136,9 +136,31 @@ def main():
 		score_valid = model.score(sc_x_valid, sc_y_valid)
 		return score_train, score_valid
 
-	# Learn関数を実行!!
+	# 訓練データと検証データでLearn関数を実行
 	score_train, score_valid = learn(x, t)
-	print("Learn関数:", score_train, score_valid)
+	print("Learn関数(訓練データと検証データ):", score_train, score_valid)
+
+	#==========
+	# チューニング後に訓練データとテストデータで評価
+	test = test.fillna(train_valid_mean)# 欠損値を平均値で穴埋め
+	x_test = test.loc[:, ["RM", "LSTAT", "PTRATIO"]]
+	y_test = test[["PRICE"]]
+	x_test["RM2"] = x_test["RM"] ** 2
+	x_test["LSTAT2"] = x_test["LSTAT"] ** 2
+	x_test["PTRATIO2"] = x_test["PTRATIO"] ** 2
+	x_test["RM*LSTAT*PTRATIO"] = x_test["RM"] * x_test["LSTAT"] * x_test["PTRATIO"]
+	sc_x_test = sc_model_x.transform(x_test)
+	sc_y_test = sc_model_y.transform(y_test)
+	score_test = model.score(sc_x_test, sc_y_test)# 決定係数
+	print("訓練データ&検証データとテストデータ:", score_test)
+
+	#==========
+	# Save(Model)
+	pickle.dump(model, open(FILE_PKL, "wb"))# Model
+	
+	# Save(標準化を行う為)
+	pickle.dump(sc_model_x, open("sc_model_x.pkl", "wb"))
+	pickle.dump(sc_model_y, open("sc_model_y.pkl", "wb"))
 
 if __name__ == "__main__":
 	main()
