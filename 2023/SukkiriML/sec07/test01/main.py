@@ -77,7 +77,7 @@ def main():
 	#sex_mean.plot(kind="bar")
 	#plt.show()
 
-	# Sexをダミー変数sex_maleで置き換えて特徴量xに追加する
+	# Sexをダミー変数に置き換えて特徴量xに追加する
 	sex_male = pd.get_dummies(df["Sex"], drop_first=True)
 	x = pd.concat([x, sex_male], axis=1)
 
@@ -109,6 +109,7 @@ def main():
 
 	# 特徴量重要度を確認する
 	print("特徴量縦横度:", model.feature_importances_)
+	print(pd.DataFrame(model.feature_importances_, index=x.columns))
 
 	# Save
 	pickle.dump(model, open(FILE_PKL, "wb"))
