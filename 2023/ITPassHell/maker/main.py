@@ -14,7 +14,7 @@ s_pad = 160
 
 font_40 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 40)
 font_25 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 25)
-credit = "= 受かる君DX_v0.77 ="
+credit = "= 受かる君DX_v0.78 ="
 
 # Load
 def load_questions(json_obj):
@@ -47,7 +47,7 @@ def load_questions(json_obj):
 		images.append(image_qs)
 
 	# Shuffle
-	if(json_obj["shuffle"]): random.shuffle(images)
+	if(json_obj["with_shuffle"]): random.shuffle(images)
 
 	save_pdf(json_obj, images, "out_question.pdf")# Questions
 
@@ -59,6 +59,7 @@ def save_pdf(json_obj, images, name):
 	out_dir = Path(json_obj["out"])
 	index_start = int(json_obj["index_start"])
 	index_offset = int(json_obj["index_offset"])
+	image_total = int(json_obj["image_total"])
 
 	# Positions
 	p_y = 0
@@ -68,16 +69,19 @@ def save_pdf(json_obj, images, name):
 	pieces = []
 	pages = []
 
-	num = 0
+	# Number
+	num = 1
 	for i in range(index_start, len(images), index_offset):
+		if(image_total < num): break
+
 		# Image
 		image = images[i]
 		w = image.size[0]
 		h = image.size[1]
 		
 		# Number
-		num += 1
 		draw_number(image, num)# Draw number
+		num += 1
 		
 		p_y += h + s_pad
 		if(p_max < p_y):

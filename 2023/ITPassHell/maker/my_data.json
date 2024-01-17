@@ -1,10 +1,11 @@
 {
 	"jpg": "../assets_notitle/jpg",
 	"out": "./out",
-	"index_start": 4,
-	"index_offset": 5,
-	"with_answer": true,
-	"shuffle": false,
+	"index_start": 1,
+	"index_offset": 3,
+	"image_total": 50,
+	"with_answer": false,
+	"with_shuffle": false,
 	"targets": [
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 58},
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 60},
