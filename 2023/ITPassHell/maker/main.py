@@ -14,7 +14,7 @@ s_pad = 160
 
 font_40 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 40)
 font_25 = ImageFont.truetype("/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc", 25)
-credit = "= 受かる君DX_v0.78 ="
+credit = "= 受かる君DX_v0.99 ="
 
 # Load
 def load_questions(json_obj):
@@ -47,7 +47,10 @@ def load_questions(json_obj):
 		images.append(image_qs)
 
 	# Shuffle
-	if(json_obj["with_shuffle"]): random.shuffle(images)
+	seed = json_obj["with_shuffle"]
+	if(0 <= seed):
+		random.seed(seed)
+		random.shuffle(images)
 
 	save_pdf(json_obj, images, "out_question.pdf")# Questions
 
