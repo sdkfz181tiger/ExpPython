@@ -60,9 +60,7 @@ def save_pdf(json_obj, images, name):
 
 	# JSON
 	out_dir = Path(json_obj["out"])
-	index_start = int(json_obj["index_start"])
-	index_offset = int(json_obj["index_offset"])
-	image_total = int(json_obj["image_total"])
+	total = int(json_obj["total"]) if int(json_obj["total"]) < len(images) else len(images)
 
 	# Positions
 	p_y = 0
@@ -74,8 +72,7 @@ def save_pdf(json_obj, images, name):
 
 	# Number
 	num = 1
-	for i in range(index_start, len(images), index_offset):
-		if(image_total < num): break
+	for i in range(0, total, 1):
 
 		# Image
 		image = images[i]
