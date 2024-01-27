@@ -2,8 +2,8 @@
 	"jpg": "../assets_notitle/jpg",
 	"out": "./out",
 	"total": 60,
-	"with_answer": false,
-	"with_shuffle": 0,
+	"with_answer": true,
+	"with_shuffle": 2,
 	"targets": [
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 58},
 		{"folder": "ip", "key": "2023r05_ip_qs", "num": 60},
