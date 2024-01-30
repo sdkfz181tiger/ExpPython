@@ -7,7 +7,7 @@
 import os, math, random
 from PIL import Image, ImageFont, ImageDraw
 
-text_title = "BINARY \\(x_x;)/ HELL100"
+text_title = "BINARY \\(x_x;)/ HELL 100"
 text_explain = "次にある10進数の値を、全て2進数に変換しなさい"
 text_example = "(例)\n\n  12 = 1100"
 dir_name = "01"
@@ -25,7 +25,7 @@ pad_y  = 360
 rows = 5
 cols = 2
 
-seed = 0
+seed = 0# 偶数ジャンプする事!!
 
 # Random
 rdms = list(range(100))
