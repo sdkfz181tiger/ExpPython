@@ -25,9 +25,16 @@ pad_y  = 360
 rows = 5
 cols = 2
 
-# Numbers
-nums = list(range(16, 256))
-random.shuffle(nums)
+seed = 0# 偶数ジャンプする事!!
+
+# Random
+rdms = list(range(100))
+random.seed(seed)
+random.shuffle(rdms)
+
+# Nums
+nums = rdms[0:10]
+nums.sort()
 
 # Alphabets
 alphabets = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
@@ -47,49 +54,40 @@ for i in range(2):
 
 	images = []
 
-	for o in range(10):
-		offset = o * 10
-		if(len(nums) <= offset): break
+	# Image
+	image = Image.new("RGB", (2150, 3035), (255, 255, 255))
 
-		# Image
-		image = Image.new("RGB", (2150, 3035), (255, 255, 255))
+	# Draw
+	draw = ImageDraw.Draw(image)
+	# Title
+	font = ImageFont.truetype(font_path_w6, 80)
+	draw.text((base_x, 200), text_title, font=font, fill=font_color)
+	# Name
+	font = ImageFont.truetype(font_path_w6, 40)
+	draw.text((image.size[0]/2 + 500, 250), "氏名:", font=font, fill=font_color)
+	# Explain
+	font = ImageFont.truetype(font_path_w6, 50)
+	draw.text((260, 420), text_explain, font=font, fill=font_color)
+	# Example
+	font = ImageFont.truetype(font_path_w4, 60)
+	draw.text((base_x, base_y - pad_y), text_example, font=font, fill=font_color)
 
-		# Draw
-		draw = ImageDraw.Draw(image)
-		# Title
-		font = ImageFont.truetype(font_path_w6, 80)
-		draw.text((base_x, 200), text_title, font=font, fill=font_color)
-		# Name
-		font = ImageFont.truetype(font_path_w6, 40)
-		draw.text((image.size[0]/2 + 500, 250), "氏名:", font=font, fill=font_color)
-		# Explain
-		font = ImageFont.truetype(font_path_w6, 50)
-		draw.text((260, 420), text_explain, font=font, fill=font_color)
-		# Example
-		font = ImageFont.truetype(font_path_w4, 60)
-		draw.text((base_x, base_y - pad_y), text_example, font=font, fill=font_color)
-		# Page
-		page = "= " + str(o+1) + " ="
-		font = ImageFont.truetype(font_path_w6, 40)
-		draw.text((image.size[0]/2, image.size[1]-120), page, font=font, fill=font_color, anchor="mm")
+	for r in range(rows):
+		for c in range(cols):
+			i = c + r * cols
+			num = nums[i]
+			text = "(" + str(i+1) + ")" + "\n\n  " + int2hex(num) + " = "
+			if type_flg == 0: text += str(num)
+			pos_x = base_x + c * pad_x
+			pos_y = base_y + r * pad_y
+			pos = (pos_x, pos_y)
+			font = ImageFont.truetype(font_path_w4, 60)
+			draw.text(pos, text, font=font, fill=font_color)
 
-		for r in range(rows):
-			for c in range(cols):
-				i = c + r * cols
-				if(len(nums) <= i+offset): continue
-				num = nums[i+offset]
-				text = "(" + str(i+1) + ")" + "\n\n  " + int2hex(num) + " = "
-				if type_flg == 0: text += str(num)
-				pos_x = base_x + c * pad_x
-				pos_y = base_y + r * pad_y
-				pos = (pos_x, pos_y)
-				font = ImageFont.truetype(font_path_w4, 60)
-				draw.text(pos, text, font=font, fill=font_color)
+	# Directory
+	if(not os.path.isdir(dir_name)): os.mkdir(dir_name)
 
-		# Directory
-		if(not os.path.isdir(dir_name)): os.mkdir(dir_name)
-
-		images.append(image)
+	images.append(image)
 
 	# Save
 	image_out = "./" + dir_name + "/" + type_name + ".pdf"
