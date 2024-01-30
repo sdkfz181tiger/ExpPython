@@ -1,15 +1,15 @@
 # coding: utf-8
 
 """
-基数変換問題ジェネレーター(10進整数 -> 2進数)
+基数変換問題ジェネレーター(16進整数 -> 10進整数)
 """
 
 import os, math, random
 from PIL import Image, ImageFont, ImageDraw
 
-text_title = "BINARY \\(x_x;)/ HELL 100"
-text_explain = "次にある10進数の値を、全て2進数に基数変換しなさい"
-text_example = "(例)\n\n  12 = 1100"
+text_title = "BINARY \\(x_x;)/ HELL"
+text_explain = "次にある16進数の値を、全て10進数に基数変換しなさい"
+text_example = "(例)\n\n  A4 = 20"
 dir_name = "01"
 
 # Font
@@ -36,12 +36,15 @@ random.shuffle(rdms)
 nums = rdms[0:10]
 nums.sort()
 
-# Int to Binary
-def int2binary(num):
+# Alphabets
+alphabets = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
+
+# Int to Hex
+def int2hex(num):
 	result = ""
 	while(0 < num):
-		result = str(num % 2) + result
-		num = int(num / 2)
+		result = alphabets[num%16] + result
+		num = int(num / 16)
 	return result
 
 for i in range(2):
@@ -73,8 +76,8 @@ for i in range(2):
 		for c in range(cols):
 			i = c + r * cols
 			num = nums[i]
-			text = "(" + str(i+1) + ")" + "\n\n  " + str(num) + " = "
-			if type_flg == 0: text += int2binary(num)
+			text = "(" + str(i+1) + ")" + "\n\n  " + int2hex(num) + " = "
+			if type_flg == 0: text += str(num)
 			pos_x = base_x + c * pad_x
 			pos_y = base_y + r * pad_y
 			pos = (pos_x, pos_y)

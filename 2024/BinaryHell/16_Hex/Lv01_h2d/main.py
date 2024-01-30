@@ -8,8 +8,8 @@ import os, math, random
 from PIL import Image, ImageFont, ImageDraw
 
 text_title = "BINARY \\(x_x;)/ HELL"
-text_explain = "次にある16進数の値を、全て10進数に変換しなさい"
-text_example = "(例)\n\n  A4 = 20"
+text_explain = "次にある10進数の値を、全て16進数に基数変換しなさい"
+text_example = "(例)\n\n  20 = A4"
 dir_name = "01"
 
 # Font
@@ -25,7 +25,7 @@ pad_y  = 360
 rows = 5
 cols = 2
 
-seed = 0# 偶数ジャンプする事!!
+seed = 1# 奇数ジャンプする事!!
 
 # Random
 rdms = list(range(100))
@@ -76,8 +76,8 @@ for i in range(2):
 		for c in range(cols):
 			i = c + r * cols
 			num = nums[i]
-			text = "(" + str(i+1) + ")" + "\n\n  " + int2hex(num) + " = "
-			if type_flg == 0: text += str(num)
+			text = "(" + str(i+1) + ")" + "\n\n  " + str(num) + " = "
+			if type_flg == 0: text += int2hex(num)
 			pos_x = base_x + c * pad_x
 			pos_y = base_y + r * pad_y
 			pos = (pos_x, pos_y)

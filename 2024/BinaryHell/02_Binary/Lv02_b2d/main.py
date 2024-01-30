@@ -8,7 +8,7 @@ import os, math, random
 from PIL import Image, ImageFont, ImageDraw
 
 text_title = "BINARY \\(x_x;)/ HELL 100"
-text_explain = "次にある2進数の値を、全て10進数に変換しなさい"
+text_explain = "次にある2進数の値を、全て10進数に基数変換しなさい"
 text_example = "(例)\n\n  1100 = 12"
 dir_name = "01"
 
