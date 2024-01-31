@@ -1,15 +1,15 @@
 # coding: utf-8
 
 """
-基数変換問題ジェネレーター(16進整数 -> 10進整数)
+基数変換問題ジェネレーター(10進整数 -> 16進数)
 """
 
 import os, math, random
 from PIL import Image, ImageFont, ImageDraw
 
-text_title = "BINARY \\(x_x;)/ HELL"
-text_explain = "次にある16進数の値を、全て10進数に基数変換しなさい"
-text_example = "(例)\n\n  A4 = 20"
+text_title = "HEX \\(x_x;)/ HELL 100"
+text_explain = "次にある10進数の値を、全て16進数に基数変換しなさい"
+text_example = "(例)\n\n  20 = A4"
 dir_name = "01"
 
 # Font
@@ -18,11 +18,11 @@ font_path_w6 = "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc";
 font_color = (0, 0, 0)
 
 base_x = 250
-base_y = 1000
+base_y = 800
 pad_x  = 980
-pad_y  = 360
+pad_y  = 210
 
-rows = 5
+rows = 10
 cols = 2
 
 seed = 0# 偶数ジャンプする事!!
@@ -33,7 +33,8 @@ random.seed(seed)
 random.shuffle(rdms)
 
 # Nums
-nums = rdms[0:10]
+nums = rdms[0:rows*cols]
+#nums = list(range(100))
 nums.sort()
 
 # Alphabets
@@ -69,19 +70,19 @@ for i in range(2):
 	font = ImageFont.truetype(font_path_w6, 50)
 	draw.text((260, 420), text_explain, font=font, fill=font_color)
 	# Example
-	font = ImageFont.truetype(font_path_w4, 60)
+	font = ImageFont.truetype(font_path_w4, 40)
 	draw.text((base_x, base_y - pad_y), text_example, font=font, fill=font_color)
 
 	for r in range(rows):
 		for c in range(cols):
 			i = c + r * cols
 			num = nums[i]
-			text = "(" + str(i+1) + ")" + "\n\n  " + int2hex(num) + " = "
-			if type_flg == 0: text += str(num)
+			text = "(" + str(i+1) + ")" + "\n\n     " + str(num) + " = "
+			if type_flg == 0: text += int2hex(num)
 			pos_x = base_x + c * pad_x
 			pos_y = base_y + r * pad_y
 			pos = (pos_x, pos_y)
-			font = ImageFont.truetype(font_path_w4, 60)
+			font = ImageFont.truetype(font_path_w6, 40)
 			draw.text(pos, text, font=font, fill=font_color)
 
 	# Directory

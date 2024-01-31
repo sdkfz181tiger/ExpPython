@@ -1,7 +1,7 @@
 # coding: utf-8
 
 """
-基数変換問題ジェネレーター(2進数 -> 10進整数)
+基数変換問題ジェネレーター(2進整数 -> 16進数)
 """
 
 import os, math, random
@@ -18,14 +18,14 @@ font_path_w6 = "/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc";
 font_color = (0, 0, 0)
 
 base_x = 250
-base_y = 1000
+base_y = 800
 pad_x  = 980
-pad_y  = 360
+pad_y  = 210
 
-rows = 5
+rows = 10
 cols = 2
 
-seed = 1# 奇数ジャンプする事!!
+seed = 0# 奇数ジャンプする事!!
 
 # Random
 rdms = list(range(100))
@@ -33,7 +33,8 @@ random.seed(seed)
 random.shuffle(rdms)
 
 # Nums
-nums = rdms[0:10]
+nums = rdms[0:rows*cols]
+#nums = list(range(100))
 nums.sort()
 
 # Int to Binary
@@ -66,19 +67,19 @@ for i in range(2):
 	font = ImageFont.truetype(font_path_w6, 50)
 	draw.text((260, 420), text_explain, font=font, fill=font_color)
 	# Example
-	font = ImageFont.truetype(font_path_w4, 60)
+	font = ImageFont.truetype(font_path_w4, 40)
 	draw.text((base_x, base_y - pad_y), text_example, font=font, fill=font_color)
 
 	for r in range(rows):
 		for c in range(cols):
 			i = c + r * cols
 			num = nums[i]
-			text = "(" + str(i+1) + ")" + "\n\n  " + int2binary(num) + " = "
+			text = "(" + str(i+1) + ")" + "\n\n     " + int2binary(num) + " = "
 			if type_flg == 0: text += str(num)
 			pos_x = base_x + c * pad_x
 			pos_y = base_y + r * pad_y
 			pos = (pos_x, pos_y)
-			font = ImageFont.truetype(font_path_w4, 60)
+			font = ImageFont.truetype(font_path_w6, 40)
 			draw.text(pos, text, font=font, fill=font_color)
 
 	# Directory
@@ -90,4 +91,3 @@ for i in range(2):
 	image_out = "./" + dir_name + "/" + type_name + ".pdf"
 	images[0].save(image_out, "PDF", 
 		quality=100, save_all=True, append_images=images[1:], optimize=True)
-	
