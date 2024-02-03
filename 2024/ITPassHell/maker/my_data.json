@@ -29,83 +29,83 @@
 	"titles":{
 		"tokurei_Mondai_20240128_FE": {
 			"title": "修了_令6年1月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R6_1&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R6_1&q={0}"
 		},
 		"tokurei_Mondai_20231210_FE": {
 			"title": "修了_令5年12月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R5_12&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R5_12&q={0}"
 		},
 		"tokurei_Mondai_20230723_FE": {
 			"title": "修了_令5年7月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R5_7&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R5_7&q={0}"
 		},
 		"tokurei_Mondai_20230611_FE": {
 			"title": "修了_令5年6月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R5_6&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R5_6&q={0}"
 		},
 		"tokurei_Mondai_20230122_FE": {
 			"title": "修了_令5年1月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R5_1&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R5_1&q={0}"
 		},
 		"tokurei_Mondai_20221211_FE": {
 			"title": "修了_令4年12月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R4_12&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R4_12&q={0}"
 		},
 		"tokurei_Mondai_20220724_FE": {
 			"title": "修了_令4年7月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R4_7&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R4_7&q={0}"
 		},
 		"tokurei_Mondai_20220612_FE": {
 			"title": "修了_令4年6月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R4_6&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R4_6&q={0}"
 		},
 		"tokurei_Mondai_20220123_FE": {
 			"title": "修了_令4年1月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R4_1&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R4_1&q={0}"
 		},
 		"tokurei_Mondai_20211212_FE": {
 			"title": "修了_令3年12月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R3_12&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R3_12&q={0}"
 		},
 		"tokurei_Mondai_20210725_FE": {
 			"title": "修了_令3年7月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R3_7&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R3_7&q={0}"
 		},
 		"tokurei_Mondai_20210613_FE": {
 			"title": "修了_令3年6月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R3_6&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R3_6&q={0}"
 		},
 		"tokurei_Mondai_20210124_FE": {
 			"title": "修了_令3年1月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R3_1&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R3_1&q={0}"
 		},
 		"tokurei_Mondai_20201213_FE": {
 			"title": "修了_令2年12月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R2_12&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R2_12&q={0}"
 		},
 		"tokurei_Mondai_20200726_FE": {
 			"title": "修了_令2年7月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R2_7&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R2_7&q={0}"
 		},
 		"tokurei_Mondai_20200614_FE": {
 			"title": "修了_令2年6月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R2_6&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R2_6&q={0}"
 		},
 		"tokurei_Mondai_20200126_FE": {
 			"title": "修了_令2年1月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R2_1&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R2_1&q={0}"
 		},
 		"tokurei_Mondai_20191208_FE": {
 			"title": "修了_令1年12月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R1_12&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R1_12&q={0}"
 		},
 		"tokurei_Mondai_20190728_FE": {
 			"title": "修了_令1年7月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R1_7&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R1_7&q={0}"
 		},
 		"tokurei_Mondai_20190609_FE": {
 			"title": "修了_令1年6月:問{:02}",
-			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tab=R1_6&q={0}"
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/?tokurei=R1_6&q={0}"
 		}
 	},
 	"answers":{
