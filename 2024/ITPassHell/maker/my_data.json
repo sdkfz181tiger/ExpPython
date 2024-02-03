@@ -1,20 +1,30 @@
 {
 	"jpg": "../assets_notitle/jpg",
 	"out": "./out",
-	"total": 10,
+	"total": 20,
 	"with_answer": true,
 	"with_shuffle": -1,
 	"targets": [
 		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 1},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 2},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 3},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 4},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 5},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 6},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 7},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 8},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 9},
-		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 10}
+		{"folder": "to", "key": "tokurei_Mondai_20231210_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20230723_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20230611_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20230122_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20221211_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20220724_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20220612_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20220123_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20211212_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20210725_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20210613_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20210124_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20201213_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20200726_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20200614_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20200126_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20191208_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20190728_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20190609_FE", "num": 1}
 	],
 	"titles":{
 		"tokurei_Mondai_20240128_FE": {
@@ -40,6 +50,8 @@
 		"tokurei_Mondai_20200726_FE": "ウアエアイイウイイウウアイアアイエアイウイイアアエアイウウイアエアウアアアウアイイエウエイウウイアウウエイエイアイアウエアウアエアエイイアアエイイウイイイウイエ",
 		"tokurei_Mondai_20200614_FE": "ウエアイウイイウイアウウアエウイウエアイウエウエウイエイイエアウウイアエイイアイアエエイイイウエイエエエエエイウウエイウイアイイエイイエアエエウエイエエイエイエ",
 		"tokurei_Mondai_20200126_FE": "イウイエエウエイウエエイエエアエイイウエイウイイイイアイアウイエイエウアエウウウウイアアアイエイイイエウエエウウアアエエエイウアアウウウウウアイイエエウイウアエ",
-		"tokurei_Mondai_20191208_FE": "",
+		"tokurei_Mondai_20191208_FE": "アアウイウアウウエウアウエアアイエエイウイアアイイイウアイウアアアウウアイアイウイエイエイウイエアエエウイエアイイエイアウウエイイウアウイエイイイエウイウウエア",
+		"tokurei_Mondai_20190728_FE": "アエエウイウウイエエウアエアアウアエエアウウエウアイアエウエウエエイアウイイアイアエウアエアエエウアエエウエエイアエイアイウイエウアイイエアウエウイイアイウアイ",
+		"tokurei_Mondai_20190609_FE": "ウアイアアエウアイウウエアエアイアエイアイエエエイエアアイウイエウイエエエアウエエウウイウイイエエウアウアエウアエアアエウアイエアエアアイウアウエエアウエイウウ"
 	}
 }
