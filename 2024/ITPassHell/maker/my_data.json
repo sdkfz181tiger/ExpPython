@@ -3,153 +3,26 @@
 	"out": "./out",
 	"total": 10,
 	"with_answer": true,
-	"with_shuffle": 0,
+	"with_shuffle": -1,
 	"targets": [
-		{"folder": "ip", "key": "2019r01a_ip_qs", "num": 59},
-		{"folder": "ip", "key": "2019r01a_ip_qs", "num": 60},
-		{"folder": "ip", "key": "2019r01a_ip_qs", "num": 62},
-		{"folder": "ip", "key": "2019r01a_ip_qs", "num": 67},
-		{"folder": "ip", "key": "2019r01a_ip_qs", "num": 70}
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 1},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 2},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 3},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 4},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 5},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 6},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 7},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 8},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 9},
+		{"folder": "to", "key": "tokurei_Mondai_20240128_FE", "num": 10}
 	],
 	"titles":{
-		"2013h25a_fe_am_qs": {
-			"title": "基本_平25秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/25_aki/q{0}.html"
-		},"2013h25h_fe_am_qs": {
-			"title": "基本_平25春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/25_haru/q{0}.html"
-		},"2014h26a_fe_am_qs": {
-			"title": "基本_平26秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/26_aki/q{0}.html"
-		},"2014h26h_fe_am_qs": {
-			"title": "基本_平26春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/26_haru/q{0}.html"
-		},"2015h27a_fe_am_qs": {
-			"title": "基本_平27秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/27_aki/q{0}.html"
-		},"2015h27h_fe_am_qs": {
-			"title": "基本_平27春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/27_haru/q{0}.html"
-		},"2016h28a_fe_am_qs": {
-			"title": "基本_平28秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/28_aki/q{0}.html"
-		},"2016h28h_fe_am_qs": {
-			"title": "基本_平28春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/28_haru/q{0}.html"
-		},"2017h29a_fe_am_qs": {
-			"title": "基本_平29秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/29_aki/q{0}.html"
-		},"2017h29h_fe_am_qs": {
-			"title": "基本_平29春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/29_haru/q{0}.html"
-		},"2018h30a_fe_am_qs": {
-			"title": "基本_平30秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/30_aki/q{0}.html"
-		},"2018h30h_fe_am_qs": {
-			"title": "基本_平30春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/30_haru/q{0}.html"
-		},"2019h31h_fe_am_qs": {
-			"title": "基本_平31春:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/31_haru/q{0}.html"
-		},"2019r01a_fe_am_qs": {
-			"title": "基本_令1秋:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/01_aki/q{0}.html"
-		},"2023r05_fe_kamoku_a_qs": {
-			"title": "基本_令5公A:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/05_haru/q{0}.html"
-		},"fe_kamoku_a_set_sample_qs": {
-			"title": "基本_科Aサ:問{:02}",
-			"url": "https://www.fe-siken.com/kakomon/sample/q{0}.html"
-		},"2013h25a_ip_qs": {
-			"title": "ITパ_平25秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/25_aki/q{0}.html"
-		},"2013h25h_ip_qs": {
-			"title": "ITパ_平25春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/25_haru/q{0}.html"
-		},"2014h26a_ip_qs": {
-			"title": "ITパ_平26秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/26_aki/q{0}.html"
-		},"2014h26h_ip_qs": {
-			"title": "ITパ_平26春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/26_haru/q{0}.html"
-		},"2015h27a_ip_qs": {
-			"title": "ITパ_平27秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/27_aki/q{0}.html"
-		},"2015h27h_ip_qs": {
-			"title": "ITパ_平27春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/27_haru/q{0}.html"
-		},"2016h28a_ip_qs": {
-			"title": "ITパ_平28秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/28_aki/q{0}.html"
-		},"2016h28h_ip_qs": {
-			"title": "ITパ_平28春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/28_haru/q{0}.html"
-		},"2017h29a_ip_qs": {
-			"title": "ITパ_平29秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/29_aki/q{0}.html"
-		},"2017h29h_ip_qs": {
-			"title": "ITパ_平29春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/29_haru/q{0}.html"
-		},"2018h30a_ip_qs": {
-			"title": "ITパ_平30秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/30_aki/q{0}.html"
-		},"2018h30h_ip_qs": {
-			"title": "ITパ_平30春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/30_haru/q{0}.html"
-		},"2019h31h_ip_qs": {
-			"title": "ITパ_平31春:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/31_haru/q{0}.html"
-		},"2019r01a_ip_qs": {
-			"title": "ITパ_令1秋:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/01_aki/q{0}.html"
-		},"2020r02o_ip_qs": {
-			"title": "ITパ_令2公:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/02_aki/q{0}.html"
-		},"2021r03_ip_qs": {
-			"title": "ITパ_令3公:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/03_haru/q{0}.html"
-		},"2022r04_ip_qs": {
-			"title": "ITパ_令4公:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/04_haru/q{0}.html"
-		},"2023r05_ip_qs": {
-			"title": "ITパ_令5公:問{:02}",
-			"url": "https://www.itpassportsiken.com/kakomon/05_haru/q{0}.html"
+		"tokurei_Mondai_20240128_FE": {
+			"title": "修了_令6年1月:問{:02}",
+			"url": "https://ozateck.sakura.ne.jp/fe/tokurei/index.php?name=tokurei_Mondai_20240128_FE&q={0}"
 		}
 	},
 	"answers":{
-		"2013h25a_fe_am_qs": "ウアウウウアエアイウイイアイウエアウアアウアエウイウアエエアイイエウアイウウイエイイウウウイウエアイウエアエウイアウイイエウアイイエイアイイアウエアウアイエウア",
-		"2013h25h_fe_am_qs": "イウウアウアイイアアイイエアアアエウアウエエエウイイウイイアイウアイウイアイウアウアエエイエイアイイアアアアイアアウイイアウエイイエウイエアウイエエアウエウアイ",
-		"2014h26a_fe_am_qs": "エアエエイアエエエイイウイエウイイウエウウエウエエイエウアアアウアエウイウエウウアイウエアウアイエエアウウイエエアイアウエウエエイエウエウエイイウウウウイイエウ",
-		"2014h26h_fe_am_qs": "アウエウウウイアエエイアエエアイイウアエエウアウアイウエイウエエウエアアウエアエアウエウエイアイイイウエエエウアイアエアアイイウアエイアエエエアイイイウエエアア",
-		"2015h27a_fe_am_qs": "ウエエイエエアウアイアエウエウアエエアアエウウエウウエイイエエアアイイアアウイウイアアアイエウエウエイアウエイウアアイウイアエエアウイアアエウエイイエイイウアア",
-		"2015h27h_fe_am_qs": "ウアエイイアエアアウアウエアイエエイウエアウウエエウアエイエエイウウイアイウアウイアイイイウウエウウウウイエイウアイエアエアウウウウウイエアエイウイイウウイエア",
-		"2016h28a_fe_am_qs": "ウエアエアイイウアエウアウエエウアウアイウエアエウイアアウエエイイイイアアアウエイアエアウエエエウエアアイエアイエアイアウエアイウウエエアイエウエエウイイエアア",
-		"2016h28h_fe_am_qs": "ウウエウアエウイアウイアウエウウイアウウアエウイイアアイアエエイウウアイアウイイウエイウウイウウアイエイイエウウアアイウエウイウエエイイイエアエウイウアアエエア",
-		"2017h29a_fe_am_qs": "アアウイウイイエエアイウアアアアアウエアイウウアイエウイアエアイエエイアイエアウエウイエウウイイイウウエエエイアアエイアウエエエアアウエアイイエエイアイエウイウ",
-		"2017h29h_fe_am_qs": "エエイアアイウエエエエイイウアウエアイアウアアイイエエアウウアイアイウイイアウウウウウエアアウエイイウウエウアウエウイアイウイエイイアウイウイウイエウイイウエウ",
-		"2018h30a_fe_am_qs": "エウアエウウエエエウウエエイウイウアエウエイエイアエイウアエエウエウアアエウイアエウウエウエイウイイエエイエアイイエエエエウイイアイアエエアイエエエウウイアエア",
-		"2018h30h_fe_am_qs": "アエウアウウウエエイウエアイアウエアイアウエアエエイイアエウエエアアアエウイアイアエエウイウイイエエエウイアアイエイアイイエウアエイイイウアアエウイウアイエエウ",
-		"2019h31h_fe_am_qs": "ウウエウイアエアウイエウエエエイアエアエエイアウウイイイウエアエエアウアウアアアイアアウイアイウアアイエエイイアエアエエイエイイアエイイイイエエエウイエアエエウ",
-		"2019r01a_fe_am_qs": "エウウアアウエウエイウエアイアウエウウエイイウエイウイイウエイイイイイイエウアウイウイエエイアエイウイウウイイアエアエイイアイウイアエアエウアアウエウウウイウア",
-		"2023r05_fe_kamoku_a_qs": "ウウエエイウイエウウエウエウエイウウエア",
-		"fe_kamoku_a_set_sample_qs": "エエエアイエイウエウウイエエエアエエエエアイアイアエイエアアエアウウイアエイイイウエウエイエエイアアエアエエイエウイイウ",
-		"2013h25a_ip_qs": "エアエウウエアイエウイウウウエイウエアウアウエウアアエウウイイイウアエアエエウアウアアエウエエウエウイアエイイイエウイエイイアウイエイウイアエエウウエエイアアアイイイエウエイイエイイエイイエウアアウア",
-		"2013h25h_ip_qs": "アウイアエウアアイイエエイウイウイイイアウエエアエアアエイエアアウエアアエイウイエエイアエイウアイウウウイアイイウエアエイイエウエアウアイエウエアイアウアエエエイイウイウアウイエイエウイウエイウエウア",
-		"2014h26a_ip_qs": "ウウアイウウアアウエウイエアイアアウエエエアアイエエアイイイアウイエアウウアイアウウイウエウウエウウウイアウウウイイエイエアウウエイアイウイアウウエイエイアアエエウアウエイウイイウウイイエイウウエアウ",
-		"2014h26h_ip_qs": "アエエイエウアウイウウウウエアアイウアイウイイエエウイアエエエエエエエイイエエアウアイアアアイイアイウエエアウウエアイウウアイウウウエエイウエエアアアウエエウウイアイアイウイウエウイイエアエウエイイア",
-		"2015h27a_ip_qs": "アアエアアウアウアイウイエアイウイエウアイウウイエアアアアアエアイイウイイエアアアアアウウイウアアアウアイウエアエエイウエアイエエエエウイウエウイウウウエアイウウアウアウウイエアイウウイエイイウウアイ",
-		"2015h27h_ip_qs": "ウアエウアアウアイエエエウアイエアエエアウウウイアイウイエウウウイウウウエイイエエアウウイエアアアイアウエイイイエイウエエウエウウエウイアウエウエエエエウイイイイアウアアイイウウエイアウエウエイエウア",
-		"2016h28a_ip_qs": "エアウエイイアウアアアエアイアイウエイウアエエエウアウウイウイイアエウイイエウエウアイアアアイイエイアウイアイアイエアイエアアイエウイイイウエウアエエアエアアウエエウエアイイエウウエエアアエイイイエウ",
-		"2016h28h_ip_qs": "アアエウウイウイアイアウウイアエイウエエアウイウウイイウエウアエイウイアウエウウウウイアイエアエエアウウウアアウイウウエアウイアエウエアエイアエウエアウイアアウウエエアアアイエエアエアイウイエウウイイ",
-		"2017h29a_ip_qs": "ウエアイアイアウイイエアアイアイエエエアウイイイイイエエイイエアエイウイイエエアウアアイウエアアイアイイエウウイエイウウアウウエウエウウエウアウウウウエイイイイイウアエウエウウアウウエウウウウウイエイ",
-		"2017h29h_ip_qs": "アイアイイエイイイエエアウエイウウウエエウエアエイエウイエイアウウエアエイエエエウエイエエエイアイウアエイエウイエエエエウエエイウイアエアアイエエエイエエエアウエウウウエウエイウアイイイエイウエアウウ",
-		"2018h30a_ip_qs": "アウウウウアウアイエエエイイイエイウウウエイエイエウアアアアエアイエウエエウエアアウエエエウイウウエイイイエウエエウウアイイウイウアエイウウエエエイイイイウウウアエイエエアウイエアウウエアイイアアアイ",
-		"2018h30h_ip_qs": "エウイアイウイエウイアアエウアイイウウイアウエイウアイエウアイウエウアアエイエウエアアアアアイウイアアアアアイアウアエエイウアエウエアウイエエエイアイアウイウウアエアイアアウウウエエウウエエアイエウウ",
-		"2019h31h_ip_qs": "エウアイアウウイイエウウエエイアエエアエイウエウウアアアイイアウイイエアウイアエウイアイウイエイエエアウアアエエイアイウイウアアウアウアウウアウエエエエエイウイエエアエウウエアウアイイエアイウアアエウ",
-		"2019r01a_ip_qs": "エアウエエウアイウアウウイイイイエイウエエアエイエアウアウイエエウエアエアエイウウイエアイウエエエエアアイエイイエアエウエウエエイエアウエイイエエアエイアアエエアウウアエエウアアウウエウウイエウイエア",
-		"2020r02o_ip_qs": "ウイイウイアアイイエエウイイイアウエウアイイイエエウアウイエイアエアウアアアエイエアエアアアアエエエエウイイエウイエウアアアイアウアウウエイウエエウウイアイイエエウウウイアアイアエウアエイエアウウエア",
-		"2021r03_ip_qs":  "ウエウアウウアアエエエウウイアウアエアイイアエアウウウウアアアイウウアエエイエアアエウウアウイエウアエイイエアイエアウウイアイエエエアアウアウアイエアイエエウアエイアエイウエイイエイイアアウエウエアイ",
-		"2022r04_ip_qs":  "エイウアイウイエアアイエエアエエウアエイイイイエアイエエアイエエアアイアイエアウイアエエエイウウアエイイエウアアウイエエエアアアアアイアアウイアウアウイイイイエアウウエアアアイウアイイアアウエエイアウ",
-		"2023r05_ip_qs":  "エアエイエウアイイエウウエアエエウウウウウウイアエイイアエアアエイウアアアイウウウエエウアウアエアアエエアエイイエウエアイエイウアイウエイアアウイエウウウイウエアアエエウアアウイイエエエエアイイイウエ"
+		"tokurei_Mondai_20240128_FE": "エウアアイイウエエアアイエイウエアウウエエエウイアエイウウウウエエエエウイウアイエウアエエアアエイエイアエウイウウウエエ"
 	}
 }
