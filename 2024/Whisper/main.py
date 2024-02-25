@@ -25,7 +25,7 @@
 2, ffmpeg
 
 	2-1, install
-		$brew install pyenv
+		$brew install ffmpeg
 
 3, Whisper: https://github.com/openai/whisper
 
@@ -44,8 +44,8 @@ import whisper
 def main():
 	print("main!!")
 
-	# Model
-	model = whisper.load_model("small")
+	# Model(tyny, base, small, medium, large)
+	model = whisper.load_model("medium")
 
 	# File
 	file_input = "./sample.mp3"
