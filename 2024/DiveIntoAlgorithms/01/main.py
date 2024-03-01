@@ -1,13 +1,24 @@
 # coding: utf-8
 
 """
-Dive Into Algorithms
+チャップマンアルゴリズムによる弾道計算
 """
 
 #==========
 # Main
 
+import math
 import matplotlib.pyplot as plt
+import numpy as np
+
+# 打者の弾の初速と重力
+vx = 0.99  # x方向の初速
+vy = 9.9   # y方向の初速
+gy = -9.81 # y方向の重力
+
+# 野手の位置(ほぼ着地位置である)
+xp = 2.0
+yp = 0.0
 
 def main():
 	print("main!!")
@@ -17,35 +28,55 @@ def main():
 	plt.xlabel("Horizontal Position of Ball")
 	plt.ylabel("Vertical Position of Ball")
 
-	# 自由落下での放物線を描画(0.1m単位)
+	# 打者の弾道の軌跡
 	xs0 = [x/100 for x in list(range(201))]
-	ys0 = [trajectory(x) for x in xs0]
+	ys0 = [calc_x2y(x) for x in xs0]
+	plt.plot(xs0, ys0)
 
-	# 着地点からの視線(x座標が0.1)
-	xs1 = [0.1, 2]
-	ys1 = [trajectory(0.1), 0]
+	# 0.1秒間隔で4つだけ弾道計算
+	xs1 = [pos_x(t/10) for t in list(range(4))]
+	ys1 = [pos_y(t/10) for t in list(range(4))]
+	plt.plot(xs1, ys1)
 
-	# 着地点からの視線(x座標が0.2)
-	xs2 = [0.2, 2]
-	ys2 = [trajectory(0.2), 0]
+	# 0.1秒間隔でタンジェント値を求める
+	tans = [(y-yp)/(xp-x) for x, y in zip(xs1, ys1)]
 
-	# 着地点からの視線(x座標が0.3)
-	xs3 = [0.3, 2]
-	ys3 = [trajectory(0.3), 0]
+	# タンジェント値の速度
+	diff_v = np.diff(tans)
 
-	plt.plot(xs0, ys0, xs1, ys1, xs2, ys2, xs3, ys3)
+	# タンジェント値の加速度
+	diff_a = np.diff(diff_v)
+
+	# 加速度が+なら後ろに下がり、-なら前に進む指示を出す
+	if 0.0 < diff_a[0]:
+		print("後ろに下がってください!!")
+	else:
+		print("前に進んでください!!")
+
+	# 野手の位置
+	plt.plot(xp, yp, "ro")
 	plt.show()
 
 # 自由落下での放物線の関数
 #	ここでは仮に、
-# 		v1: x方向の初速 -> 0.9
-# 		v2: y方向の初速 -> 10.0
-#   	a:  重力 -> 10
+# 		vx: x方向の初速 -> 0.99
+# 		vy: y方向の初速 -> 9.9
+#   	gy: y方向の重力 -> -9.81
 #	として、次の2つの方程式から求める
-# 		x = v1t
-# 		y = v2t + (at^2)/2
-def trajectory(x):
-	return 10*x - 5*(x**2)
+# 		x = vx*t
+# 		y = vy*t + (gy*t^2)/2
+
+# 打者の弾道の軌跡を計算する関数
+def calc_x2y(x):
+	return vy*(x/vx) + gy/2*(x/vx)**2
+
+# 経過時間からx座標を求める関数
+def pos_x(t):
+	return vx*t
+
+# 経過時間からy座標を求める関数
+def pos_y(t):
+	return vy*t + gy/2 * t**2
 
 if __name__ == "__main__":
 	main()
