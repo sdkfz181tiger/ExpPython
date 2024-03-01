@@ -65,7 +65,7 @@ vx = 0.99  # x方向の初速
 vy = 9.9   # y方向の初速
 gy = -9.81 # y方向の重力
 
-def trajectory(x):
+def calc_x2y(x):
 	return vy*(x/vx) + gy/2*(x/vx)**2
 
 def pos_x(t):
