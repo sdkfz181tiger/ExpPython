@@ -16,9 +16,9 @@ vx = 0.99  # x方向の初速
 vy = 9.9   # y方向の初速
 gy = -9.81 # y方向の重力
 
-# 野手の位置(ほぼ着地位置である)
-xp = 2.0
-yp = 0.0
+# 野手の位置(2.0がほぼ着地位置である)
+px = 1.9
+py = 0.0
 
 def main():
 	print("main!!")
@@ -28,18 +28,18 @@ def main():
 	plt.xlabel("Horizontal Position of Ball")
 	plt.ylabel("Vertical Position of Ball")
 
-	# 打者の弾道の軌跡
+	# 打者の弾道の軌跡(解答)
 	xs0 = [x/100 for x in list(range(201))]
 	ys0 = [calc_x2y(x) for x in xs0]
 	plt.plot(xs0, ys0)
 
-	# 0.1秒間隔で4つだけ弾道計算
+	# 0.1秒間隔で4つだけ弾道計算(予測)
 	xs1 = [pos_x(t/10) for t in list(range(4))]
 	ys1 = [pos_y(t/10) for t in list(range(4))]
 	plt.plot(xs1, ys1)
 
 	# 0.1秒間隔でタンジェント値を求める
-	tans = [(y-yp)/(xp-x) for x, y in zip(xs1, ys1)]
+	tans = [(y-py)/(px-x) for x, y in zip(xs1, ys1)]
 
 	# タンジェント値の速度
 	diff_v = np.diff(tans)
@@ -54,7 +54,7 @@ def main():
 		print("前に進んでください!!")
 
 	# 野手の位置
-	plt.plot(xp, yp, "ro")
+	plt.plot(px, py, "ro")
 	plt.show()
 
 # 自由落下での放物線の関数
