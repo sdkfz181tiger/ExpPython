@@ -19,13 +19,23 @@ def main():
 	#result = check_square(luoshu)
 	#print("result:{0}".format(result))
 
-	n = 5
+	# nxnの魔法陣を作る(奇数にする事)
+	n = 11
 	square = create_square(n)
+
+	# 久留島アルゴリズムは斜めに移動するので開始マスをずらして2回実行する
+	r = math.floor(n / 2) - 1
+	c = math.floor(n / 2)
+	square = fill_square(square, r, c, math.floor((n**2)/2)-4)# 1回目
+	#print_square(square)
 
 	r = math.floor(n / 2)
 	c = math.floor(n / 2)
-	square = fill_square(square, r, c, math.floor((n**2)/2-4))
+	square = fill_square(square, r, c, math.floor((n**2)/2))# 2回目
 	print_square(square)
+
+	result = check_square(square)
+	print("魔法陣判定: {0}".format(result))
 
 # nxnの行列を作る
 def create_square(n):
@@ -42,47 +52,52 @@ def create_square(n):
 # ルールに従って魔法陣を作る
 def fill_square(square, r, c, remain):
 	size = len(square)
-	print("fill_square[{0}, {1}]:{2}".format(r, c, remain))
+	#print("fill_square[{0}, {1}]:{2}".format(r, c, square[r][c]))
 	# Finished
 	if remain <= 0: return square
+
 	# Random walk
 	where_to_go = []
 	if 0 < r and c < size-1:      where_to_go.append("up_right")  # Up Right
 	if r < size-1 and 0 < c:      where_to_go.append("down_left") # Down Left
 	if 0 < r and 0 < c:           where_to_go.append("up_left")   # Up Left
 	if r < size-1 and c < size-1: where_to_go.append("down_right")# Down Right
+
+	# Next
 	next_to_go = random.choice(where_to_go)
 	next_r = WHERE[next_to_go][0] + r
 	next_c = WHERE[next_to_go][1] + c
 
 	# Countdown
-	if(square[next_r][next_c] == 0): remain = remain - 1
-	
-	# Rule1: up_right
-	if next_to_go == "up_right":
-		square[next_r][next_c] = rule1(square[r][c], size, True)
+	if(square[next_r][next_c] == 0): 
 
-	# Rule1: down_left
-	if next_to_go == "down_left":
-		square[next_r][next_c] = rule1(square[r][c], size, False)
+		# Rule1: up_right
+		if next_to_go == "up_right":
+			square[next_r][next_c] = rule1(square[r][c], size, True)
 
-	# Rule2: up_left
-	if next_to_go == "up_left" and (r+c) != size:
-		square[next_r][next_c] = rule2(square[r][c], size, True)
+		# Rule1: down_left
+		if next_to_go == "down_left":
+			square[next_r][next_c] = rule1(square[r][c], size, False)
 
-	# Rule2: down_right
-	if next_to_go == "down_right" and (r+c) != (size-2):
-		square[next_r][next_c] = rule2(square[r][c], size, False)
+		# Rule2: up_left
+		if next_to_go == "up_left" and (r+c) != size:
+			square[next_r][next_c] = rule2(square[r][c], size, True)
 
-	# Rule3: up_left
-	if next_to_go == "up_left" and (r+c) == size:
-		square[next_r][next_c] = rule3(square[r][c], size, True)
+		# Rule2: down_right
+		if next_to_go == "down_right" and (r+c) != (size-2):
+			square[next_r][next_c] = rule2(square[r][c], size, False)
 
-	# Rule3: down_right
-	if next_to_go == "down_right" and (r+c) == (size-2):
-		square[next_r][next_c] = rule3(square[r][c], size, False)
+		# Rule3: up_left
+		if next_to_go == "up_left" and (r+c) == size:
+			square[next_r][next_c] = rule3(square[r][c], size, True)
 
-	return fill_square(square, next_r, next_c, remain)
+		# Rule3: down_right
+		if next_to_go == "down_right" and (r+c) == (size-2):
+			square[next_r][next_c] = rule3(square[r][c], size, False)
+
+		return fill_square(square, next_r, next_c, remain-1)# 1マス埋めて再起処理
+
+	return fill_square(square, next_r, next_c, remain)# 既に埋まっているので次へ
 
 # ルール1(Trueで右上,Falseで左下)
 def rule1(x, n, upright):
