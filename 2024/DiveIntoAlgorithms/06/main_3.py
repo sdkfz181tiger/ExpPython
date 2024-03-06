@@ -1,8 +1,8 @@
 # coding: utf-8
 
 """
-ソートアルゴリズムの処理回数を比較
-InsertionSort vs MergeSort vs QuickSort
+ソートアルゴリズムをグラフで比較
+InsertionSort vs MergeSort vs QuickSort vs HeapSort
 """
 
 #==========
@@ -12,6 +12,7 @@ import math, random
 import matplotlib.pyplot as plt
 import numpy as np
 
+# やりすぎるとコードの可読性が下がるのでグローバルにしておく
 steps = 0# Steps
 
 def main():
@@ -22,20 +23,25 @@ def main():
 	plt.title("Steps required for various Sort Algorithm")
 	plt.xlabel("Total numbers")
 	plt.ylabel("Steps required to Sort")
-	xs = [i * 5 for i in range(30)]
+	xs = [i * 10 for i in range(30)]
 
 	# Insertion Sort
 	ys_insertion = [test_insertion(x) for x in xs]
-	plt.plot(xs, ys_insertion)
+	plt.plot(xs, ys_insertion, "r-", label="Insertion Sort")
 
 	# Merge Sort
 	ys_merge = [test_merge(x) for x in xs]
-	plt.plot(xs, ys_merge)
+	plt.plot(xs, ys_merge, "g-", label="Merge Sort")
 
 	# Quick Sort
 	ys_quick = [test_quick(x) for x in xs]
-	plt.plot(xs, ys_quick)
+	plt.plot(xs, ys_quick, "b-", label="Quick Sort")
 
+	# Heap Sort
+	ys_heap = [test_heap(x) for x in xs]
+	plt.plot(xs, ys_heap, "y-", label="Heap Sort")
+
+	plt.legend()
 	plt.show()
 
 def test_insertion(size):
@@ -62,6 +68,18 @@ def test_quick(size):
 	quick_sort(nums, 0, len(nums)-1)# Quick Sort
 	return steps
 
+def test_heap(size):
+	global steps; steps = 0# Reset
+	if size <= 0: return 0# Important
+	nums = [i for i in range(size)]# Numbers
+	random.shuffle(nums)# Shuffle
+	for i in reversed(range(len(nums)//2)):
+		heap_heapify(nums, i)
+	for i in reversed(range(len(nums))):
+		nums[0], nums[i] = nums[i], nums[0]
+		heap_sort(nums, 0, i-1)
+	return steps
+
 # Insertion Sort
 def insertion_sort(nums):
 	arr = []
@@ -76,6 +94,7 @@ def insertion_sort(nums):
 
 # Merge Sort
 def merge_sort(nums):
+	global steps; steps += 1
 	if len(nums) < 2: return 0
 	c = len(nums) // 2
 	left = nums[:c]
@@ -105,32 +124,64 @@ def merge(left, right, nums):
 			r += 1
 
 # Quick Sort
-def quick_sort(nums, i_min, i_max):
-	p = quick_find(nums, i_min, i_max)
+def quick_sort(nums, top, last):
+	global steps; steps += 1
+	p = quick_find(nums, top, last)
 	if p < 0: return
 	pivot = nums[p]# Pivot
-	r = quick_arrange(nums, i_min, i_max, pivot)
+	r = quick_arrange(nums, top, last, pivot)
 	l = r - 1
-	quick_sort(nums, i_min, l)
-	quick_sort(nums, r, i_max)
+	quick_sort(nums, top, l)
+	quick_sort(nums, r, last)
 
-def quick_find(nums, i_min, i_max):
-	pivot = nums[i_min]# Pivot
-	k = i_min + 1
-	while k <= i_max:
+def quick_find(nums, top, last):
+	pivot = nums[top]# Pivot
+	k = top + 1
+	while k <= last:
 		global steps; steps += 1
 		if pivot == nums[k]: k += 1; continue
 		if pivot < nums[k]: return k
-		return i_min
+		return top
 	return -1
 
-def quick_arrange(nums, i_min, i_max, pivot):
-	while i_min <= i_max:
+def quick_arrange(nums, top, last, pivot):
+	while top <= last:
 		global steps; steps += 1
-		nums[i_min], nums[i_max] = nums[i_max], nums[i_min]# Swap
-		if nums[i_min] < pivot: i_min += 1
-		if pivot <= nums[i_max]: i_max -= 1
-	return i_min
+		nums[top], nums[last] = nums[last], nums[top]# Swap
+		if nums[top] < pivot: top += 1
+		if pivot <= nums[last]: last -= 1
+	return top
+
+# Heap Sort
+def heap_heapify(nums, i):
+	global steps; steps += 1
+	m = i# Max
+	l = i * 2 + 1
+	r = l + 1
+	if l < len(nums) and nums[i] < nums[l]: m = l
+	if r < len(nums) and nums[m] < nums[r]: m = r
+	if m != i:
+		nums[m], nums[i] = nums[i], nums[m]
+		heap_heapify(nums, m)
+
+def heap_sort(nums, top, last):
+	global steps; steps += 1
+	l = (top+1) * 2 - 1
+	r = l + 1
+	if r <= last:
+		if nums[l] < nums[r]:
+			if nums[top] < nums[r]:
+				nums[top], nums[r] = nums[r], nums[top]
+				heap_sort(nums, r, last)
+		else:
+			if nums[top] < nums[l]:
+				nums[top], nums[l] = nums[l], nums[top]
+				heap_sort(nums, l, last)
+	else:
+		if l <= last:
+			if nums[top] < nums[l]:
+				nums[top], nums[l] = nums[l], nums[top]
+				heap_sort(nums, l, last)
 
 if __name__ == "__main__":
 	main()
