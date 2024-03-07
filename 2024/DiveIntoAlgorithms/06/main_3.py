@@ -92,6 +92,7 @@ def test_heap(size):
 		heap_sort(nums, 0, i-1)
 	return steps
 
+#==========
 # Insertion Sort
 def insertion_sort(nums):
 	global steps
@@ -105,6 +106,7 @@ def insertion_sort(nums):
 			i += 1
 		arr.insert(i, n)
 
+#==========
 # Bubble Sort
 def bubble_sort(nums):
 	global steps
@@ -114,6 +116,7 @@ def bubble_sort(nums):
 			if nums[r] < nums[l]:
 				nums[r], nums[l] = nums[l], nums[r]
 
+#==========
 # Merge Sort
 def merge_sort(nums):
 	global steps; steps += 1
@@ -145,6 +148,7 @@ def merge(left, right, nums):
 			nums[l+r] = right[r]
 			r += 1
 
+#==========
 # Quick Sort
 def quick_sort(nums, top, last):
 	global steps; steps += 1
@@ -174,6 +178,7 @@ def quick_arrange(nums, top, last, pivot):
 		if pivot <= nums[last]: last -= 1
 	return top
 
+#==========
 # Heap Sort
 def heap_heapify(nums, i):
 	global steps; steps += 1
