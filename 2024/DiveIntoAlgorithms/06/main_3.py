@@ -2,7 +2,7 @@
 
 """
 ソートアルゴリズムをグラフで比較
-InsertionSort vs MergeSort vs QuickSort vs HeapSort
+Insertion vs Bubble vs Merge vs Quick vs Heap
 """
 
 #==========
@@ -20,26 +20,30 @@ def main():
 	random.seed(0)# Seed
 
 	# Title
-	plt.title("Steps required for various Sort Algorithm")
-	plt.xlabel("Total numbers")
+	plt.title("Steps required for various Sort Algorithms")
+	plt.xlabel("Numbers of Array")
 	plt.ylabel("Steps required to Sort")
 	xs = [i * 10 for i in range(30)]
 
 	# Insertion Sort
-	ys_insertion = [test_insertion(x) for x in xs]
-	plt.plot(xs, ys_insertion, "r-", label="Insertion Sort")
+	ys = [test_insertion(x) for x in xs]
+	plt.plot(xs, ys, "r-", label="Insertion Sort")
+
+	# Bubble Sort
+	ys = [test_bubble(x) for x in xs]
+	plt.plot(xs, ys, "g-", label="Bubble Sort")
 
 	# Merge Sort
-	ys_merge = [test_merge(x) for x in xs]
-	plt.plot(xs, ys_merge, "g-", label="Merge Sort")
+	ys = [test_merge(x) for x in xs]
+	plt.plot(xs, ys, "b-", label="Merge Sort")
 
 	# Quick Sort
-	ys_quick = [test_quick(x) for x in xs]
-	plt.plot(xs, ys_quick, "b-", label="Quick Sort")
+	ys = [test_quick(x) for x in xs]
+	plt.plot(xs, ys, "c-", label="Quick Sort")
 
 	# Heap Sort
-	ys_heap = [test_heap(x) for x in xs]
-	plt.plot(xs, ys_heap, "y-", label="Heap Sort")
+	ys = [test_heap(x) for x in xs]
+	plt.plot(xs, ys, "m-", label="Heap Sort")
 
 	plt.legend()
 	plt.show()
@@ -50,6 +54,14 @@ def test_insertion(size):
 	nums = [i for i in range(size)]# Numbers
 	random.shuffle(nums)# Shuffle
 	insertion_sort(nums)# Insertion sort
+	return steps
+
+def test_bubble(size):
+	global steps; steps = 0# Reset
+	if size <= 0: return 0# Important
+	nums = [i for i in range(size)]# Numbers
+	random.shuffle(nums)# Shuffle
+	bubble_sort(nums)# Bubble sort
 	return steps
 
 def test_merge(size):
@@ -82,15 +94,25 @@ def test_heap(size):
 
 # Insertion Sort
 def insertion_sort(nums):
+	global steps
 	arr = []
 	while 0 < len(nums):
 		n = nums.pop(0)
 		i = 0
 		while i < len(arr):
-			global steps; steps += 1
+			steps += 1
 			if n < arr[i]: break
 			i += 1
 		arr.insert(i, n)
+
+# Bubble Sort
+def bubble_sort(nums):
+	global steps
+	for r in reversed(range(len(nums))):
+		for l in range(r):
+			steps += 1
+			if nums[r] < nums[l]:
+				nums[r], nums[l] = nums[l], nums[r]
 
 # Merge Sort
 def merge_sort(nums):
