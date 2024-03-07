@@ -161,18 +161,20 @@ def quick_sort(nums, top, last):
 	quick_sort(nums, r, last)
 
 def quick_find(nums, top, last):
+	global steps
 	pivot = nums[top]# Pivot
 	k = top + 1
 	while k <= last:
-		global steps; steps += 1
+		steps += 1
 		if pivot == nums[k]: k += 1; continue
 		if pivot < nums[k]: return k
 		return top
 	return -1
 
 def quick_arrange(nums, top, last, pivot):
+	global steps
 	while top <= last:
-		global steps; steps += 1
+		steps += 1
 		nums[top], nums[last] = nums[last], nums[top]# Swap
 		if nums[top] < pivot: top += 1
 		if pivot <= nums[last]: last -= 1
