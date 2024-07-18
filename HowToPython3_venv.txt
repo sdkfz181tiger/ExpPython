@@ -2,12 +2,14 @@
 //==========
 // Python仮想環境
 
-// Ubuntu
+// for Ubuntu
 
 	1, Install venv
 		$sudo apt install python3.12-venv
 
 	2, Ready venv
+
+		$cd your_directory
 		$python3 -m venv 仮想環境ファイル名
 
 	3, Activate
@@ -19,7 +21,7 @@
 	4, Deactivate
 		$deactivate
 
-// MacOS
+// for MacOS
 
 	1, Install
 		$brew install pyenv
@@ -37,9 +39,29 @@
 	4, Source(~/.zshrc or ~/.bash_profile)
 
 		$source ~/.zshrc
+		or
 		$source ~/.bash_profile
 
 	5, Install Python
 
 		$pyenv install --list
-		$pyenv install 3.11.0
+		$pyenv install 3.12.0
+
+	6, Change 
+
+		$pyenv global 3.12.0
+		$python3 --version
+
+	7, Ready venv
+
+		$cd your_directory
+		$python3 -m venv 仮想環境ファイル名
+
+	8, Activate
+		$source ./仮想環境ファイル名/bin/activate
+
+		$pip3 install hoge
+		$python3 hoge.py
+
+	9, Deactivate
+		$deactivate
