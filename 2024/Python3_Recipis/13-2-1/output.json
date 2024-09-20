@@ -1,0 +1,51 @@
+{
+    "tokai": [
+        {
+            "pref": "aichi",
+            "population": 100,
+            "area": 100
+        },
+        {
+            "pref": "mie",
+            "population": 200,
+            "area": 100
+        },
+        {
+            "pref": "gifu",
+            "population": 300,
+            "area": 100
+        }
+    ],
+    "tohoku": [
+        {
+            "pref": "aomori",
+            "population": 100,
+            "area": 100
+        },
+        {
+            "pref": "akita",
+            "population": 200,
+            "area": 100
+        },
+        {
+            "pref": "iwate",
+            "population": 300,
+            "area": 100
+        },
+        {
+            "pref": "yamagata",
+            "population": 400,
+            "area": 100
+        },
+        {
+            "pref": "miyagi",
+            "population": 500,
+            "area": 100
+        },
+        {
+            "pref": "fukushima",
+            "population": 600,
+            "area": 100
+        }
+    ]
+}
