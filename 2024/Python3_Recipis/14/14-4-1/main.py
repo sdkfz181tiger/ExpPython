@@ -32,5 +32,5 @@ print(decoded.decode())
 #==========
 # 画像データをbase64に変換
 with open("./i_apple.png", mode="rb") as f:
-   encoded = base64.b64encode(f.read())
-   print(encoded)
+    encoded = base64.b64encode(f.read())
+    print(encoded)
