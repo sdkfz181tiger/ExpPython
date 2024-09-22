@@ -13,17 +13,17 @@ import hashlib
 print(hashlib.algorithms_available)
 # {'ripemd160', 'sha384', 'sha512', 'sha3_256', ...(以下略)}
 
-# sha512
-print(hashlib.sha512(b"Hello, hashlib!!").hexdigest())
-# ec3fcf998b9f8823824e69ade572...(以下略)
+# sha256
+print(hashlib.sha256(b"Hello, hashlib!!").hexdigest())
+# 55dd59f6667894e79bbbe16233ce...(以下略)
 
 # sha384
 print(hashlib.sha384(b"Hello, hashlib!!").hexdigest())
 # 58a931d8269d66084a8bc824967e...(以下略)
 
-# sha256
-print(hashlib.sha256(b"Hello, hashlib!!").hexdigest())
-# 55dd59f6667894e79bbbe16233ce...(以下略)
+# sha512
+print(hashlib.sha512(b"Hello, hashlib!!").hexdigest())
+# ec3fcf998b9f8823824e69ade572...(以下略)
 
 #==========
 # 安全なパスワードハッシュの生成
