@@ -9,9 +9,13 @@ hashlibモジュール
 
 import hashlib
 
-# 利用可能なハッシュ関数
+# 利用可能なハッシュ関数(全てのプラットフォーム)
+print(hashlib.algorithms_guaranteed)
+# {'sha224', 'sha256', 'sha384', 'sha512', ...(以下略)}
+
+# 利用可能なハッシュ関数(実行中の端末)
 print(hashlib.algorithms_available)
-# {'ripemd160', 'sha384', 'sha512', 'sha3_256', ...(以下略)}
+# {'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512', ...(以下略)}
 
 # sha256
 print(hashlib.sha256(b"Hello, hashlib!!").hexdigest())

@@ -53,35 +53,40 @@ print(secrets.compare_digest(token, query["reset"][0]))
 
 #==========
 # 10文字のパスワードを生成
-# 英字、数字、特殊文字をそれぞれ1文字以上含む
+# 英字、数字、記号をそれぞれ1文字以上含む
 
-# Letters
+# 1, 英字を配列に
 letters = [i for i in string.ascii_letters]
 random.shuffle(letters)
 #print(letters)
 
-# Digits
+# 2, 数字を配列に
 digits = [i for i in string.digits]
 random.shuffle(digits)
 #print(digits)
 
-# Punctuation
+# 3, 記号を配列に
 puncs = [i for i in string.punctuation]
 random.shuffle(puncs)
 #print(puncs)
 
+# 4, 3つの要素数を確定
 len_pass = 10# パスワード文字数
-nums = [i for i in range(len_pass-1)]
+nums = [i+1 for i in range(len_pass-1)]
 random.shuffle(nums)
-thres = sorted(nums[:2])
+thres = sorted(nums[:2])# 文字、数字、記号の境界
+print(thres)
 
-# Passwords
-psw_a = "".join(letters[0:thres[0]])
-psw_b = "".join(digits[thres[0]:thres[1]])
-psw_c = "".join(puncs[thres[1]:len_pass])
-psw_arr = [i for i in (psw_a + psw_b + psw_c)]
-random.shuffle(psw_arr)
-password = "".join(psw_arr)
+# 5, 3つの要素数分だけ英字、数字、記号から抜き出し連結
+letters = letters[0:thres[0]]
+digits = digits[0:thres[1]-thres[0]]
+puncs = puncs[0:len_pass-thres[1]]
+
+# 6, 3つの配列を連結しシャッフル
+arr = letters
+arr += digits
+arr += puncs
+random.shuffle(arr)
+password = "".join(arr)
 print(password)
-# 5+yw`P.'VB
-
+# s$efK{\`U3
