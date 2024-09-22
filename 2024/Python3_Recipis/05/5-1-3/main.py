@@ -50,5 +50,3 @@ def get_rdm_data():
 data: Any = get_rdm_data()# 型付けされていない関数の値
 get_test_any(data)
 # Hello is str!!
-
-
