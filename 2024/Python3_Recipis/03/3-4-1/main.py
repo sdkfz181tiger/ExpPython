@@ -60,3 +60,20 @@ print(f"{a}, {b}, {c}")
 
 # *を2つ使うとエラー
 #*a, *b, c = (0, 1, 2, 3, 4)
+
+#==========
+# リスト, 辞書のアンパック
+
+def my_func(a, b, c):
+	print(f"{a}, {b}, {c}")
+
+# リストを位置引数にアンパック
+commands = ["Punch", "Kick", "Chop"]
+my_func(*commands)
+# Punch, Kick, Chop
+
+# 辞書をキーワード引数にアンパック
+commands = {"a": "Punch", "b": "Kick", "c": "Chop"}
+my_func(**commands)
+# Punch, Kick, Chop
+
