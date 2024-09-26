@@ -49,3 +49,10 @@ nums = [10, 20, 31, 45, 50, 61]
 it_odd = itertools.groupby(nums, is_odd)
 for value, group in it_odd:
 	print(f"{value}: {list(group)}")
+
+"""
+False: [10, 20]
+True: [31, 45]
+False: [50]
+True: [61]
+"""
