@@ -9,7 +9,7 @@
 
 from datetime import datetime, timedelta
 
-# timedeltaオブジェクト
+# timedeltaモジュール
 
 # 現在
 dt_now = datetime.now()
