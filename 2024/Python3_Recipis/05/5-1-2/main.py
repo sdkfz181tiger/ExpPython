@@ -8,7 +8,7 @@
 # Main
 
 from random import random
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict, astuple
 
 # データクラス
 @dataclass
@@ -32,3 +32,9 @@ def get_chip(arr: list[Chip]) -> Chip:
 chip: Chip = get_chip(chips)
 print(f"{chip.name}({chip.maker}): {chip.price}yen")
 # カラムーチョ(湖池屋): 130yen
+
+# データクラス -> 辞書/タプル
+print(asdict(chip))
+# {'name': 'わさビーフ', 'maker': '山芳製菓', 'price': 110}
+print(astuple(chip))
+# ('のりしお', 'カルビー', 120)
