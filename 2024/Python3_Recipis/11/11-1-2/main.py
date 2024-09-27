@@ -68,7 +68,7 @@ print(pp3.stem)
 print(pp3.with_name("uhyo.txt"))
 # dir1/dir2/dir3/uhyo.txt
 
-#print(pp3.with_suffix("json"))
+print(pp3.with_suffix(".json"))
 # dir1/dir2/dir3/uhyo.json
 
 print(pp3.with_stem("uhya"))
