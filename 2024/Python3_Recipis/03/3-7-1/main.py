@@ -97,3 +97,32 @@ my_func()
 
 # 次の書き方と同義(@my_decoratorを外してテストしてね)
 #my_decorator(my_func)()
+
+#==========
+# functools.wrapsを利用する
+
+# @wrapsデコレーターを使う事で、
+# __name__や、__doc__が上書きされるのを防ぐ
+
+from functools import wraps
+
+def my_decorator(func):
+    @wraps(func)# これだけでOK!!
+    def wrapper(a):
+        """wrap_functionのドキュメントです"""
+        func(a)
+    return wrapper
+
+@my_decorator
+def my_greeting(name):
+    """my_greetingのドキュメントです"""
+    print(f"こんにちは、{name}さん")
+
+# テスト(成功)
+# __name__や、__doc__が上書きされていない
+# @wrapsが無い場合はwrapperの方が表示されてしまう
+print(my_greeting.__name__)
+# my_greeting
+
+print(my_greeting.__doc__)
+# my_greetingのドキュメントです
