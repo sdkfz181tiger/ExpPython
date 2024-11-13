@@ -45,9 +45,9 @@ def main():
 	]
 
 	# CircleRenderer
-	cRendrer = CircleRenderer(dir_input + "original.mp4")# レンダー元映像
+	cRendrer = CircleRenderer(dir_input + "original_fps30.mp4")# レンダー元映像
 	cRendrer.renderFrame(dir_output, "out_01.mp4", render_list)# 視線データを描画
-	cRendrer.writeAudio(dir_output, dir_input + "original.mp4", "audio.mp3", "out_01.mp4", "comp_01.mp4")# Audio
+	cRendrer.writeAudio(dir_output, dir_input + "original_fps30.mp4", "audio.mp3", "out_01.mp4", "comp_01.mp4")# Audio
 	
 if __name__ == "__main__":
 	main()
