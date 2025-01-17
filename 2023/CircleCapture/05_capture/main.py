@@ -35,17 +35,18 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "w_left/01/12_fps30.mp4",  "file_png": "cap_01.png", "file_json": "cap_01.json"},
-		{"path_movie": "w_left/02/12_fps30.mp4",  "file_png": "cap_02.png", "file_json": "cap_02.json"},
-		{"path_movie": "w_left/03/12_fps30.mp4",  "file_png": "cap_03.png", "file_json": "cap_03.json"},
-		{"path_movie": "w_left/04/12_fps30.mp4",  "file_png": "cap_04.png", "file_json": "cap_04.json"},
-		{"path_movie": "w_right/01/12_fps30.mp4", "file_png": "cap_05.png", "file_json": "cap_05.json"},
-		{"path_movie": "w_right/02/12_fps30.mp4", "file_png": "cap_06.png", "file_json": "cap_06.json"},
-		{"path_movie": "w_right/03/12_fps30.mp4", "file_png": "cap_07.png", "file_json": "cap_07.json"},
-		{"path_movie": "w_right/04/12_fps30.mp4", "file_png": "cap_08.png", "file_json": "cap_08.json"},
-		{"path_movie": "door/01/12_fps30.mp4",    "file_png": "cap_09.png", "file_json": "cap_09.json"},
-		{"path_movie": "door/02/12_fps30.mp4",    "file_png": "cap_10.png", "file_json": "cap_10.json"},
-		{"path_movie": "door/03/12_fps30.mp4",    "file_png": "cap_11.png", "file_json": "cap_11.json"}
+		{"path_movie": "door/01/12_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"},
+		{"path_movie": "door/02/12_fps30.mp4",    "file_png": "cap_02.png", "file_json": "cap_02.json"},
+		{"path_movie": "door/03/12_fps30.mp4",    "file_png": "cap_03.png", "file_json": "cap_03.json"},
+		{"path_movie": "door/04/12_fps30.mp4",    "file_png": "cap_04.png", "file_json": "cap_04.json"},
+		{"path_movie": "w_left/01/12_fps30.mp4",  "file_png": "cap_05.png", "file_json": "cap_05.json"},
+		{"path_movie": "w_left/02/12_fps30.mp4",  "file_png": "cap_06.png", "file_json": "cap_06.json"},
+		{"path_movie": "w_left/03/12_fps30.mp4",  "file_png": "cap_07.png", "file_json": "cap_07.json"},
+		{"path_movie": "w_left/04/12_fps30.mp4",  "file_png": "cap_08.png", "file_json": "cap_08.json"},
+		{"path_movie": "w_right/01/12_fps30.mp4", "file_png": "cap_09.png", "file_json": "cap_09.json"},
+		{"path_movie": "w_right/02/12_fps30.mp4", "file_png": "cap_10.png", "file_json": "cap_10.json"},
+		{"path_movie": "w_right/03/12_fps30.mp4", "file_png": "cap_11.png", "file_json": "cap_11.json"},
+		{"path_movie": "w_right/04/12_fps30.mp4", "file_png": "cap_12.png", "file_json": "cap_12.json"}
 	]
 	
 	for capture in capture_list:
