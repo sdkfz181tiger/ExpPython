@@ -27,7 +27,7 @@ def main():
 	dir_input  = "../assets/movies/"
 	dir_output = "test_output"
 
-	team_no = "12" # Team No
+	team_no = "03" # Team No
 	original_input = team_no + "_original_fps30.mp4"
 
 	# Clean
