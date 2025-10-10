@@ -36,7 +36,9 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "door/01/" + team_no + "_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"}
+		{"path_movie": "door/" + team_no + "/01_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"},
+		{"path_movie": "door/" + team_no + "/02_fps30.mp4",    "file_png": "cap_02.png", "file_json": "cap_02.json"},
+		{"path_movie": "door/" + team_no + "/03_fps30.mp4",    "file_png": "cap_03.png", "file_json": "cap_03.json"}
 	]
 	
 	for capture in capture_list:
@@ -47,7 +49,9 @@ def main():
 	
 	# Render
 	render_list = [
-		{"file_json": "cap_01.json", "color": (255,   0,   0)}
+		{"file_json": "cap_01.json", "color": (255,   0,   0)},
+		{"file_json": "cap_02.json", "color": (  0, 255,   0)},
+		{"file_json": "cap_03.json", "color": (  0,   0, 255)}
 	]
 
 	# CircleRenderer
