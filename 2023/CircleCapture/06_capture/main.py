@@ -3,7 +3,7 @@
 """
 1, Install
 	$ brew install ffmpeg
-2, Fix fps to 30fps
+2, All movies needs same fps to 30fps
 	$ ffmpeg -i original.mp4 -r 30 original_fps30.mp4
 3, Ready venv
 	source your_location_of_venv_directory/bin/activate
@@ -27,7 +27,7 @@ def main():
 	dir_input  = "../assets/movies/"
 	dir_output = "test_output"
 
-	team_no = "03" # Team No
+	team_no = "99" # Team No
 	original_input = team_no + "_original_fps30.mp4"
 
 	# Clean
@@ -36,18 +36,7 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "door/01/" + team_no + "_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"},
-		{"path_movie": "door/02/" + team_no + "_fps30.mp4",    "file_png": "cap_02.png", "file_json": "cap_02.json"},
-		{"path_movie": "door/03/" + team_no + "_fps30.mp4",    "file_png": "cap_03.png", "file_json": "cap_03.json"},
-		{"path_movie": "door/04/" + team_no + "_fps30.mp4",    "file_png": "cap_04.png", "file_json": "cap_04.json"},
-		{"path_movie": "w_left/01/" + team_no + "_fps30.mp4",  "file_png": "cap_05.png", "file_json": "cap_05.json"},
-		{"path_movie": "w_left/02/" + team_no + "_fps30.mp4",  "file_png": "cap_06.png", "file_json": "cap_06.json"},
-		{"path_movie": "w_left/03/" + team_no + "_fps30.mp4",  "file_png": "cap_07.png", "file_json": "cap_07.json"},
-		{"path_movie": "w_left/04/" + team_no + "_fps30.mp4",  "file_png": "cap_08.png", "file_json": "cap_08.json"},
-		{"path_movie": "w_right/01/" + team_no + "_fps30.mp4", "file_png": "cap_09.png", "file_json": "cap_09.json"},
-		{"path_movie": "w_right/02/" + team_no + "_fps30.mp4", "file_png": "cap_10.png", "file_json": "cap_10.json"},
-		{"path_movie": "w_right/03/" + team_no + "_fps30.mp4", "file_png": "cap_11.png", "file_json": "cap_11.json"},
-		{"path_movie": "w_right/04/" + team_no + "_fps30.mp4", "file_png": "cap_12.png", "file_json": "cap_12.json"}
+		{"path_movie": "door/01/" + team_no + "_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"}
 	]
 	
 	for capture in capture_list:
@@ -58,17 +47,7 @@ def main():
 	
 	# Render
 	render_list = [
-		{"file_json": "cap_01.json", "color": (255,   0,   0)},
-		{"file_json": "cap_02.json", "color": (  0, 255,   0)},
-		{"file_json": "cap_03.json", "color": (  0,   0, 255)},
-		{"file_json": "cap_04.json", "color": (255, 255,   0)},
-		{"file_json": "cap_05.json", "color": (255,   0, 255)},
-		{"file_json": "cap_06.json", "color": (  0, 255, 255)},
-		{"file_json": "cap_07.json", "color": (255,   0,   0)},
-		{"file_json": "cap_08.json", "color": (  0,   0,   0)},
-		{"file_json": "cap_09.json", "color": (  0,   0, 255)},
-		{"file_json": "cap_10.json", "color": (255,   0,   0)},
-		{"file_json": "cap_11.json", "color": (  0, 255,   0)}
+		{"file_json": "cap_01.json", "color": (255,   0,   0)}
 	]
 
 	# CircleRenderer

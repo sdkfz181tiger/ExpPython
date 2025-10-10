@@ -2,7 +2,7 @@
 
 import cv2, datetime, ffmpeg, json, os
 import numpy as np
-import moviepy.editor as mp
+from moviepy import VideoFileClip, AudioFileClip, AudioArrayClip
 from PIL import Image
 
 # CircleRenderer
@@ -74,15 +74,15 @@ class CircleRenderer:
 	def writeAudio(self, dir, path_from, file_audio, file_target, file_comp):
 		print("writeAudio!!")
 		# From
-		clip_from = mp.VideoFileClip(path_from).subclip()
+		clip_from = VideoFileClip(path_from).subclipped()
 		# Audio
 		path = os.path.join(dir, file_audio)
 		clip_from.audio.write_audiofile(path)
-		clip_audio = mp.AudioFileClip(path)
+		clip_audio = AudioFileClip(path)
 		# Target
 		path = os.path.join(dir, file_target)
-		clip_target = mp.VideoFileClip(path).subclip()
+		clip_target = VideoFileClip(path).subclipped()
 		# Comp
 		path = os.path.join(dir, file_comp)
-		clip_comp = clip_target.set_audio(clip_audio)
+		clip_comp = clip_target.with_audio(clip_audio)
 		clip_comp.write_videofile(path, codec="libx264", audio_codec="aac")
