@@ -27,7 +27,7 @@ def main():
 	dir_input  = "../assets/movies/"
 	dir_output = "test_output"
 
-	team_no = "99" # Team No
+	team_no = "01" # Team No
 	original_input = team_no + "_original_fps30.mp4"
 
 	# Clean
@@ -36,9 +36,18 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "door/" + team_no + "/01_fps30.mp4",    "file_png": "cap_01.png", "file_json": "cap_01.json"},
-		{"path_movie": "door/" + team_no + "/02_fps30.mp4",    "file_png": "cap_02.png", "file_json": "cap_02.json"},
-		{"path_movie": "door/" + team_no + "/03_fps30.mp4",    "file_png": "cap_03.png", "file_json": "cap_03.json"}
+		{"path_movie": "captured/" + team_no + "/door_01_01.mov",  "file_png": "door_01_01.png",  "file_json": "01.json"},
+		{"path_movie": "captured/" + team_no + "/door_02_01.mov",  "file_png": "door_02_01.png",  "file_json": "02.json"},
+		{"path_movie": "captured/" + team_no + "/door_03_01.mov",  "file_png": "door_03_01.png",  "file_json": "03.json"},
+		{"path_movie": "captured/" + team_no + "/door_04_01.mov",  "file_png": "door_04_01.png",  "file_json": "04.json"},
+		{"path_movie": "captured/" + team_no + "/left_01_01.mov",  "file_png": "left_01_01.png",  "file_json": "05.json"},
+		{"path_movie": "captured/" + team_no + "/left_02_01.mov",  "file_png": "left_02_01.png",  "file_json": "06.json"},
+		{"path_movie": "captured/" + team_no + "/left_03_01.mov",  "file_png": "left_03_01.png",  "file_json": "07.json"},
+		{"path_movie": "captured/" + team_no + "/left_04_01.mov",  "file_png": "left_04_01.png",  "file_json": "08.json"},
+		{"path_movie": "captured/" + team_no + "/right_01_01.mov", "file_png": "right_01_01.png", "file_json": "09.json"},
+		{"path_movie": "captured/" + team_no + "/right_02_01.mov", "file_png": "right_02_01.png", "file_json": "10.json"},
+		{"path_movie": "captured/" + team_no + "/right_03_01.mov", "file_png": "right_03_01.png", "file_json": "11.json"},
+		{"path_movie": "captured/" + team_no + "/right_04_01.mov", "file_png": "right_04_01.png", "file_json": "12.json"}
 	]
 	
 	for capture in capture_list:
@@ -49,9 +58,18 @@ def main():
 	
 	# Render
 	render_list = [
-		{"file_json": "cap_01.json", "color": (255,   0,   0)},
-		{"file_json": "cap_02.json", "color": (  0, 255,   0)},
-		{"file_json": "cap_03.json", "color": (  0,   0, 255)}
+		{"file_json": "01.json", "color": (  0,   0,   0)},
+		{"file_json": "02.json", "color": (255, 255, 255)},
+		{"file_json": "03.json", "color": (255,   0,   0)},
+		{"file_json": "04.json", "color": (  0, 255,   0)},
+		{"file_json": "05.json", "color": (  0,   0, 255)},
+		{"file_json": "06.json", "color": (255, 255,   0)},
+		{"file_json": "07.json", "color": (  0, 255, 255)},
+		{"file_json": "08.json", "color": (255,   0, 255)},
+		{"file_json": "09.json", "color": (100, 100, 100)},
+		{"file_json": "10.json", "color": (100, 255, 255)},
+		{"file_json": "11.json", "color": (255, 100, 255)},
+		{"file_json": "12.json", "color": (255, 255, 100)}
 	]
 
 	# CircleRenderer
