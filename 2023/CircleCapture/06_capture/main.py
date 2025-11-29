@@ -27,7 +27,7 @@ def main():
 	dir_input  = "../assets/movies/"
 	dir_output = "test_output"
 
-	team_no = "01" # Team No
+	team_no = "13" # Team No
 	original_input = team_no + "_original_fps30.mp4"
 
 	# Clean
@@ -36,18 +36,18 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "captured/" + team_no + "/door_01_01.mov",  "file_png": "door_01_01.png",  "file_json": "01.json"},
-		{"path_movie": "captured/" + team_no + "/door_02_01.mov",  "file_png": "door_02_01.png",  "file_json": "02.json"},
-		{"path_movie": "captured/" + team_no + "/door_03_01.mov",  "file_png": "door_03_01.png",  "file_json": "03.json"},
-		{"path_movie": "captured/" + team_no + "/door_04_01.mov",  "file_png": "door_04_01.png",  "file_json": "04.json"},
-		{"path_movie": "captured/" + team_no + "/left_01_01.mov",  "file_png": "left_01_01.png",  "file_json": "05.json"},
-		{"path_movie": "captured/" + team_no + "/left_02_01.mov",  "file_png": "left_02_01.png",  "file_json": "06.json"},
-		{"path_movie": "captured/" + team_no + "/left_03_01.mov",  "file_png": "left_03_01.png",  "file_json": "07.json"},
-		{"path_movie": "captured/" + team_no + "/left_04_01.mov",  "file_png": "left_04_01.png",  "file_json": "08.json"},
-		{"path_movie": "captured/" + team_no + "/right_01_01.mov", "file_png": "right_01_01.png", "file_json": "09.json"},
-		{"path_movie": "captured/" + team_no + "/right_02_01.mov", "file_png": "right_02_01.png", "file_json": "10.json"},
-		{"path_movie": "captured/" + team_no + "/right_03_01.mov", "file_png": "right_03_01.png", "file_json": "11.json"},
-		{"path_movie": "captured/" + team_no + "/right_04_01.mov", "file_png": "right_04_01.png", "file_json": "12.json"}
+		{"path_movie": "captured/" + team_no + "/door_01_"  + team_no + ".mov",  "file_png": "door_01_01.png",  "file_json": "01.json"},
+		{"path_movie": "captured/" + team_no + "/door_02_"  + team_no + ".mov",  "file_png": "door_02_01.png",  "file_json": "02.json"},
+		{"path_movie": "captured/" + team_no + "/door_03_"  + team_no + ".mov",  "file_png": "door_03_01.png",  "file_json": "03.json"},
+		{"path_movie": "captured/" + team_no + "/door_04_"  + team_no + ".mov",  "file_png": "door_04_01.png",  "file_json": "04.json"},
+		{"path_movie": "captured/" + team_no + "/left_01_"  + team_no + ".mov",  "file_png": "left_01_01.png",  "file_json": "05.json"},
+		{"path_movie": "captured/" + team_no + "/left_02_"  + team_no + ".mov",  "file_png": "left_02_01.png",  "file_json": "06.json"},
+		{"path_movie": "captured/" + team_no + "/left_03_"  + team_no + ".mov",  "file_png": "left_03_01.png",  "file_json": "07.json"},
+		{"path_movie": "captured/" + team_no + "/left_04_"  + team_no + ".mov",  "file_png": "left_04_01.png",  "file_json": "08.json"},
+		{"path_movie": "captured/" + team_no + "/right_01_" + team_no + ".mov",  "file_png": "right_01_01.png", "file_json": "09.json"},
+		{"path_movie": "captured/" + team_no + "/right_02_" + team_no + ".mov",  "file_png": "right_02_01.png", "file_json": "10.json"},
+		{"path_movie": "captured/" + team_no + "/right_03_" + team_no + ".mov",  "file_png": "right_03_01.png", "file_json": "11.json"},
+		{"path_movie": "captured/" + team_no + "/right_04_" + team_no + ".mov",  "file_png": "right_04_01.png", "file_json": "12.json"}
 	]
 	
 	for capture in capture_list:
