@@ -10,7 +10,7 @@ import sprite
 import tkinter
 
 # キャンバスの幅と高さ
-W, H = 600, 400
+W, H = 600, 420
 
 # Font
 FONT = ("Arial", 16)
@@ -18,27 +18,27 @@ FONT = ("Arial", 16)
 # マウスの座標
 mx, my = 0, 0
 
-# Balls
-balls = []
+# 鬼軍団
+demons = []
 
-# Counter
+# カウンタ
 counter = 0
 
 def init():
     global counter
 
-    # Balls
+    # 鬼軍団
     for i in range(10):
         x = random.random() * W
         y = random.random() * H
-        ball = sprite.Ball(cvs, x, y, 20)
+        demon = sprite.Demon(cvs, x, y, 20)
         spd = random.randint(1, 4)
         deg = random.randint(0, 360)
-        ball.move(spd, deg) # Move
-        balls.append(ball)
+        demon.move(spd, deg) # ランダムで移動
+        demons.append(demon)
 
-    # Counter
-    counter = len(balls)
+    # カウンタ
+    counter = len(demons)
     
 def update():
     
@@ -54,11 +54,12 @@ def update():
     cvs.create_text(20, 20, text=msg,
                     fill="white", font=FONT, tag="hud", anchor="nw")
 
-    for ball in balls:
-        overlap_area(ball) # Overlap
-        ball.update(cvs)
+    # 鬼軍団
+    for demon in demons:
+        overlap_area(demon) # オーバーラップ
+        demon.update(cvs)
 
-    # Update
+    # 画面更新
     if 0 < counter:
         root.after(30, update)
 
@@ -76,19 +77,13 @@ def on_mouse_clicked(e):
     global counter
     #print("Clicked:", e.x, e.y)
 
-    # Balls
-    for ball in balls:
-        if ball.is_inside(e.x, e.y):
-            if ball.is_dead(): continue
-            ball.die(cvs)
-            counter = counter - 1 # Counter
+    # 鬼軍団
+    for demon in demons:
+        if demon.is_inside(e.x, e.y):
+            if demon.is_dead(): continue
+            demon.die(cvs)
+            counter = counter - 1 # カウンタ
             break
-
-def on_key_pressed(e):
-    print("Key:", e.keysym)
-
-def on_key_released(e):
-    print("Key:", e.keysym)
 
 # Tkinter
 root = tkinter.Tk()
@@ -96,8 +91,6 @@ root.title("Hello, Tkinter!!")
 root.resizable(False, False)
 root.bind("<Motion>", on_mouse_moved) # マウス(Motion)
 root.bind("<Button>", on_mouse_clicked) # マウス(Click)
-root.bind("<KeyPress>", on_key_pressed) # キーボード(Press)
-root.bind("<KeyRelease>", on_key_released) # キーボード(Release)
 
 # キャンバス
 cvs = tkinter.Canvas(width=W, height=H, bg="black")

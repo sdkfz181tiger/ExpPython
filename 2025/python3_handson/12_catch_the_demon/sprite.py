@@ -8,7 +8,8 @@ import math
 import random
 import tkinter
 
-class Ball:
+# 鬼クラス
+class Demon:
 
     def __init__(self, cvs, x, y, r):
         self.x = x
@@ -17,10 +18,10 @@ class Ball:
         self.vx = 0
         self.vy = 0
         self.dead = False
-        # Oval
+        # 円
         self.oval = cvs.create_oval(x-r, y-r, x+r, y+r,
                                     fill="gray", width=0)
-        # Image
+        # イメージ
         choice = random.choice(("r", "g", "b"))
         file = "images/demon_{}.png".format(choice)
         self.photo = tkinter.PhotoImage(file=file)
@@ -29,15 +30,16 @@ class Ball:
 
     def update(self, cvs):
 
-        # Move
+        # 座標の更新
         self.x = self.x + self.vx
         self.y = self.y + self.vy
         
-        # Draw
+        # 円の座標を更新
         cvs.coords(self.oval,
                    self.x - self.r, self.y - self.r,
                    self.x + self.r, self.y + self.r)
-
+        
+        # イメージの座標を更新
         cvs.coords(self.image, self.x, self.y)
 
     def set_x(self, x):
@@ -56,7 +58,7 @@ class Ball:
     def die(self, cvs):
         self.dead = True
         self.stop()
-        # Oval
+        # 円の色を更新
         cvs.itemconfig(self.oval, fill="red")
 
     def is_dead(self):
