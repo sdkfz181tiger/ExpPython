@@ -50,6 +50,9 @@ def update():
     
     cvs.delete("hud")
 
+    # HUD
+    show_hud()
+
     # カウンタ
     cnt = cnt + 1
 
@@ -69,9 +72,6 @@ def update():
     if interval_limit < interval_cnt:
         interval_cnt = 0
         append_enemy()
-
-    # HUD
-    show_hud()
 
     # Update
     if not player.is_dead():
@@ -105,9 +105,16 @@ def overlap_area(obj):
     if obj.y < 0: obj.set_y(H)
     if H < obj.y: obj.set_y(0)
 
+def on_mouse_moved(e):
+    global mx, my
+    mx, my = e.x, e.y
+
+def on_mouse_clicked(e):
+    print("Mouse:", e)
+
 def on_key_pressed(e):
     global player
-    #print("key:", e)
+    #print("Key:", e)
     k = e.keysym
     if k == "w":
         player.move(SPD_PLAYER, 270)
@@ -120,22 +127,15 @@ def on_key_pressed(e):
 
 def on_key_released(e):
     player.stop()
-
-def on_mouse_moved(e):
-    global mx, my
-    mx, my = e.x, e.y
-
-def on_mouse_clicked(e):
-    print("Mouse:", e)
     
 # Tkinter
 root = tkinter.Tk()
 root.title("Hello, Tkinter!!")
 root.resizable(False, False)
-root.bind("<KeyPress>", on_key_pressed) # キーボード(Press)
-root.bind("<KeyRelease>", on_key_released) # キーボード(Release)
 root.bind("<Motion>", on_mouse_moved) # マウス(Motion)
 root.bind("<Button>", on_mouse_clicked) # マウス(Click)
+root.bind("<KeyPress>", on_key_pressed) # キーボード(Press)
+root.bind("<KeyRelease>", on_key_released) # キーボード(Release)
 
 # キャンバス
 cvs = tkinter.Canvas(width=W, height=H, bg="black")

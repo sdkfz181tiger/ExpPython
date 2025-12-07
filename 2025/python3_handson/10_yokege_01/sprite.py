@@ -71,10 +71,10 @@ class ImageLoader:
         if file not in ImageLoader.photos:
             ImageLoader.photos[file] = tkinter.PhotoImage(file=file)
         photo = ImageLoader.photos[file]
-        return (photo, photo.width(), photo.height())
+        return photo, photo.width(), photo.height()
 
     @staticmethod
     def load_image(cvs, file, x=0, y=0):
         photo, w, h = ImageLoader.load_photo(file)
-        return (cvs.create_image(x, y, image=photo), w, h)
+        return cvs.create_image(x, y, image=photo), w, h
         
