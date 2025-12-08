@@ -10,25 +10,35 @@ import sprite
 import tkinter
 
 # キャンバスの幅と高さ
-W, H = 600, 420
+W, H = 480, 320
 
-# Font
+# フォント
 FONT = ("Arial", 16)
 
 # マウスの座標
 mx, my = 0, 0
 
+# 背景
+bg_photo, bg_image = None, None
+
+# 鬼軍団の数
+TOTAL_DEMONS = 10
+
 # 鬼軍団
 demons = []
 
-# カウンタ
-counter = 0
+# 鬼カウンタ
+counter = TOTAL_DEMONS
 
 def init():
-    global counter
+    global bg_photo, bg_image
+
+    # 背景
+    bg_photo = tkinter.PhotoImage(file="images/bg_jigoku.png")
+    bg_image = cvs.create_image(W/2, H/2, image=bg_photo)
 
     # 鬼軍団
-    for i in range(10):
+    for i in range(TOTAL_DEMONS):
         x = random.random() * W
         y = random.random() * H
         demon = sprite.Demon(cvs, x, y, 20)
@@ -36,9 +46,6 @@ def init():
         deg = random.randint(0, 360)
         demon.move(spd, deg) # ランダムで移動
         demons.append(demon)
-
-    # カウンタ
-    counter = len(demons)
     
 def update():
     
@@ -49,7 +56,7 @@ def update():
     cvs.create_text(mx, my, text=msg,
                     fill="white", font=FONT, tag="hud")
 
-    # カウンター
+    # 鬼カウンタ
     msg = "COUNTER: {}".format(counter)
     cvs.create_text(20, 20, text=msg,
                     fill="white", font=FONT, tag="hud", anchor="nw")
@@ -82,7 +89,7 @@ def on_mouse_clicked(e):
         if demon.is_inside(e.x, e.y):
             if demon.is_dead(): continue
             demon.die(cvs)
-            counter = counter - 1 # カウンタ
+            counter = counter - 1 # 鬼カウンタ
             break
 
 # Tkinter

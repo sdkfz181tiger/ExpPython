@@ -21,12 +21,16 @@ class Demon:
         # 円
         self.oval = cvs.create_oval(x-r, y-r, x+r, y+r,
                                     fill="gray", width=0)
-        # イメージ
-        choice = random.choice(("r", "g", "b"))
-        file = "images/demon_{}.png".format(choice)
-        self.photo = tkinter.PhotoImage(file=file)
-        self.resized = self.photo.zoom(3, 3)
-        self.image = cvs.create_image(x, y, image=self.resized)
+        # イメージ(赤鬼、緑鬼、青鬼)
+        self.type = random.choice(("r", "g", "b"))
+        
+        file_alive = "images/dmn_alive_{}.png".format(self.type)
+        self.photo_alive = tkinter.PhotoImage(file=file_alive)
+        
+        file_dead = "images/dmn_dead_{}.png".format(self.type)
+        self.photo_dead = tkinter.PhotoImage(file=file_dead)
+
+        self.image = cvs.create_image(x, y, image=self.photo_alive)
 
     def update(self, cvs):
 
@@ -60,6 +64,8 @@ class Demon:
         self.stop()
         # 円の色を更新
         cvs.itemconfig(self.oval, fill="red")
+        # イメージの画像を更新
+        cvs.itemconfig(self.image, image=self.photo_dead)
 
     def is_dead(self):
         return self.dead
