@@ -21,7 +21,7 @@ class DemonSprite:
         # 円
         self.oval = cvs.create_oval(x-r, y-r, x+r, y+r,
                                     fill="white", width=0)
-        # イメージ(赤鬼、緑鬼、青鬼)
+        # r, g, bからランダムで選ぶ
         self.type = random.choice(("r", "g", "b"))
         
         file_alive = "images/dmn_alive_{}.png".format(self.type)
