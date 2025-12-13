@@ -35,7 +35,7 @@ demons = []
 counter = TOTAL_DEMONS
 
 # タイマー
-timer = F_RATE * 30 # 残り時間(30秒)
+timer = F_RATE * 10 # 残り時間(10秒)
 
 def init():
     """ 初期化関数 """
@@ -67,7 +67,7 @@ def update():
                     fill="white", font=FONT, tag="hud")
 
     # 鬼カウンタを描画
-    msg = "残り鬼軍団: {}".format(counter)
+    msg = "残り鬼数: {}".format(counter)
     cvs.create_text(20, 20, text=msg,
                     fill="white", font=FONT, tag="hud", anchor="nw")
 
