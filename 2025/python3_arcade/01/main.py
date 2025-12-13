@@ -40,7 +40,7 @@ class GameView(arcade.View):
         pass
 
 def main():
-    """ Main function """
+    """ メイン処理 """
 
     # Window
     window = arcade.Window(W, H, TITLE)

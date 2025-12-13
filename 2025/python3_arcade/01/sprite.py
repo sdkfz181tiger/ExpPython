@@ -18,8 +18,12 @@ class DemonSprite:
         self.vy = 0
         self.dead = False
 
-    def update(self):
-        pass
+    def update(self, delta_time):
+        # Update
+        self.x += self.vx * delta_time
+        self.y += self.vy * delta_time
+        # Draw
+        # TODO: draw circle...!?
 
     def set_x(self, x):
         self.x = x
