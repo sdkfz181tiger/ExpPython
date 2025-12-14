@@ -33,16 +33,15 @@ class GameView(arcade.View):
     def reset(self):
         pass
 
+    def on_key_press(self, key, key_modifiers):
+        self.stats.key_press(key) # Stats
+
     def on_update(self, delta_time):
         self.stats.update(delta_time) # Stats
 
     def on_draw(self):
         self.clear() # 背景色でクリア
-
         self.stats.draw() # Stats
-
-    def on_key_press(self, key, key_modifiers):
-        pass
 
 def main():
     """ メイン処理 """
