@@ -15,9 +15,8 @@ W, H = 480, 320
 # タイトル
 TITLE = "Hello, Arcade!!"
 
-# フレームレート
-F_RATE = 30 # 1秒間に実行するフレーム回数
-F_INTERVAL = int(1000 / F_RATE) # 1フレームの間隔
+# Font
+FONT_SIZE = 10
 
 class GameView(arcade.View):
 
@@ -27,14 +26,31 @@ class GameView(arcade.View):
         # 背景色
         self.background_color = arcade.color.AMAZON
 
+        # FPS, Elapsed
+        self.elapsed = 0.0
+        self.fps = 0.0
+
     def reset(self):
         pass
 
     def on_update(self, delta_time):
-        pass
+        self.elapsed += delta_time
+        self.fps = 1.0 / delta_time
 
     def on_draw(self):
         self.clear() # 背景色でクリア
+
+        # Elapsed
+        msg = "Elapsed: {:.2f}".format(self.elapsed)
+        arcade.draw_text(msg, 20, 20,
+                         arcade.color.WHITE,
+                         FONT_SIZE, anchor_x="left")
+
+        # FPS
+        msg = "FPS: {:.2f}".format(self.fps)
+        arcade.draw_text(msg, W-20, 20,
+                         arcade.color.WHITE,
+                         FONT_SIZE, anchor_x="right")
 
     def on_key_press(self, key, key_modifiers):
         pass
