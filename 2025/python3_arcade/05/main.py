@@ -30,12 +30,14 @@ class GameView(arcade.View):
         self.background_color = arcade.color.PAYNE_GREY
         self.utility = utility.Utility(W, H) # Utility
 
-        # Sprites
-        self.sprites = []
+        # Player
+        self.player = sprite.Ninja("images/ninja.png",
+                                   scale=SPRITE_SCALE)
+        self.player.set_position(W/2, H/2)
 
-        # Sprite
-        shape = sprite.Shape(W/2, H/2, 30)
-        self.sprites.append(shape)
+        # Sprites
+        self.sprites = arcade.SpriteList()
+        self.sprites.append(self.player)
 
     def on_key_press(self, key, key_modifiers):
         self.utility.key_press(key) # Utility
@@ -50,10 +52,7 @@ class GameView(arcade.View):
     def on_draw(self):
         self.clear() # Clear
         self.utility.draw_stats() # Utility
-
-        # Draw
-        for sprite in self.sprites:
-            sprite.draw()
+        self.sprites.draw() # Draw
 
 def main():
     """ メイン処理 """
