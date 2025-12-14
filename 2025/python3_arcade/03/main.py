@@ -8,6 +8,7 @@ import arcade
 import math
 import random
 import sprite
+import utility
 
 # キャンバスの幅と高さ
 W, H = 480, 320
@@ -26,31 +27,19 @@ class GameView(arcade.View):
         # 背景色
         self.background_color = arcade.color.AMAZON
 
-        # FPS, Elapsed
-        self.elapsed = 0.0
-        self.fps = 0.0
+        # Stats
+        self.stats = utility.Stats(W, H)
 
     def reset(self):
         pass
 
     def on_update(self, delta_time):
-        self.elapsed += delta_time
-        self.fps = 1.0 / delta_time
+        self.stats.update(delta_time) # Stats
 
     def on_draw(self):
         self.clear() # 背景色でクリア
 
-        # Elapsed
-        msg = "Elapsed: {:.2f}".format(self.elapsed)
-        arcade.draw_text(msg, 20, 20,
-                         arcade.color.WHITE,
-                         FONT_SIZE, anchor_x="left")
-
-        # FPS
-        msg = "FPS: {:.2f}".format(self.fps)
-        arcade.draw_text(msg, W-20, 20,
-                         arcade.color.WHITE,
-                         FONT_SIZE, anchor_x="right")
+        self.stats.draw() # Stats
 
     def on_key_press(self, key, key_modifiers):
         pass
