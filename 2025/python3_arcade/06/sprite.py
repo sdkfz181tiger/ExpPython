@@ -8,10 +8,13 @@ import arcade
 import math
 import random
 
-class AnimSprite(arcade.Sprite):
+class BaseSprite(arcade.Sprite):
 
-    def __init__(self, filename, x, y, scale):
+    def __init__(self, filename, scale):
         super().__init__(filename, scale=scale)
+        # Velocity
+        self.vx = 0
+        self.vy = 0
         # Animation
         self.anim_interval = 4
         self.anim_counter = 0
@@ -21,7 +24,7 @@ class AnimSprite(arcade.Sprite):
         self.anims = {}
 
     def update_animation(self):
-        """ Animation """
+        """ Update Animation """
         if not self.anim_key in self.anims: return
         if self.anim_pause: return
         self.anim_counter += 1
@@ -57,23 +60,23 @@ class AnimSprite(arcade.Sprite):
         self.anim_pause = True
 
     def move(self, spd, deg, tag=""):
+        """ Move Sprite """
         rad = deg * math.pi / 180
         self.vx = spd * math.cos(rad)
         self.vy = spd * math.sin(rad)
         if 0 < len(tag): self.change_animation(tag) # Animation
 
     def stop(self):
+        """ Stop Sprite """
         self.move(0, 0)
         self.stop_animation() # Animation
 
-class Ninja(AnimSprite):
+class Ninja(BaseSprite):
 
     def __init__(self, filename, x, y, scale):
-        super().__init__(filename, x, y, scale=scale)
+        super().__init__(filename, scale=scale)
         self.center_x = x
         self.center_y = y
-        self.vx = 0
-        self.vy = 0
 
         # Animation
         self.load_animation("front", "images/ninja/front_{:02d}.png", 5)
