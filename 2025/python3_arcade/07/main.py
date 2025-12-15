@@ -23,7 +23,13 @@ class GameView(arcade.View):
 
         # 背景色
         self.background_color = arcade.color.PAYNE_GREY
-        self.stats = utility.Stats(W, H) # Stats
+
+        # 背景
+        self.backgrounds = arcade.SpriteList()
+        bkg = arcade.Sprite("images/bg_temple.png")
+        bkg.center_x = W/2
+        bkg.center_y = H/2
+        self.backgrounds.append(bkg)
 
         # Player
         self.players = arcade.SpriteList()
@@ -40,6 +46,8 @@ class GameView(arcade.View):
                                x=x, y=y)
             self.coins.append(coin)
 
+        self.stats = utility.Stats(W, H) # Stats
+
     def on_key_press(self, key, key_modifiers):
         self.stats.key_press(key) # Stats
 
@@ -53,7 +61,6 @@ class GameView(arcade.View):
         self.player.stop() # Stop
 
     def on_update(self, delta_time):
-        self.stats.update(delta_time) # Stats
 
         # Update
         self.players.update()
@@ -65,11 +72,14 @@ class GameView(arcade.View):
         for coin in hit_coins:
             coin.remove_from_sprite_lists()
 
+        self.stats.update(delta_time) # Stats
+
     def on_draw(self):
         self.clear() # Clear
-        self.stats.draw_stats() # Stats
-        self.players.draw() # Draw
+        self.backgrounds.draw()
+        self.players.draw()
         self.coins.draw()
+        self.stats.draw() # Stats
 
 def main():
     """ メイン処理 """

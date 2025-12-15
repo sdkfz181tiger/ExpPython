@@ -5,8 +5,6 @@
 """
 
 import arcade
-import math
-import random
 
 # Statsクラス
 class Stats:
@@ -54,7 +52,7 @@ class Stats:
         # FPS
         self.fps = 1.0 / delta_time
 
-    def draw_stats(self):
+    def draw(self):
 
         # Key
         self.text_key.text = "Key: {}".format(self.key)
