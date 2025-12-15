@@ -10,8 +10,8 @@ import random
 
 class BaseSprite(arcade.Sprite):
 
-    def __init__(self, filename, x, y, scale):
-        super().__init__(filename, scale=scale)
+    def __init__(self, filename, x, y):
+        super().__init__(filename)
         # Position
         self.center_x = x
         self.center_y = y
@@ -41,7 +41,7 @@ class BaseSprite(arcade.Sprite):
 
     def move(self, spd, deg, tag=""):
         """ Move Sprite """
-        rad = deg * math.pi / 180
+        rad = deg * math.pi / 180 # Radian
         self.vx = spd * math.cos(rad)
         self.vy = spd * math.sin(rad)
         if 0 < len(tag): self.change_animation(tag) # Animation
@@ -91,8 +91,8 @@ class BaseSprite(arcade.Sprite):
 
 class Ninja(BaseSprite):
 
-    def __init__(self, filename, x, y, scale):
-        super().__init__(filename, x, y, scale=scale)
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)
 
         # Animation
         self.load_animation("front", "images/ninja/front_{:02d}.png", 5)
@@ -102,8 +102,8 @@ class Ninja(BaseSprite):
 
 class Coin(BaseSprite):
 
-    def __init__(self, filename, x, y, scale):
-        super().__init__(filename, x, y, scale=scale)
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)
 
         # Animation
         self.load_animation("coin", "images/coin/coin_{:02d}.png", 5)

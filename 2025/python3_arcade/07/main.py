@@ -10,16 +10,10 @@ import random
 import sprite
 import utility
 
-# キャンバスの幅と高さ
-W, H = 480, 320
-
-# タイトル
-TITLE = "Hello, Arcade!!"
-
-# Font
-FONT_SIZE = 10
-
-SPRITE_SCALE = 1
+W, H = 480, 320 # ゲーム画面の幅と高さ
+TITLE = "Hello, Arcade!!" # タイトル
+FONT_SIZE = 10 # フォントサイズ
+SPRITE_SCALE = 1 # スプライトの倍率
 
 class GameView(arcade.View):
 
@@ -33,8 +27,7 @@ class GameView(arcade.View):
         # Player
         self.players = arcade.SpriteList()
         self.player = sprite.Ninja("images/ninja/front_01.png",
-                                   x=W/2, y=H/2,
-                                   scale=SPRITE_SCALE)
+                                   x=W/2, y=H/2)
         self.players.append(self.player)
 
         # Coins
@@ -43,8 +36,7 @@ class GameView(arcade.View):
             x = random.random() * W
             y = random.random() * H
             coin = sprite.Coin("images/coin/coin_01.png",
-                               x=x, y=y,
-                               scale=SPRITE_SCALE)
+                               x=x, y=y)
             self.coins.append(coin)
 
     def on_key_press(self, key, key_modifiers):
