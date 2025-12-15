@@ -68,7 +68,8 @@ class BaseSprite(arcade.Sprite):
 
     def stop(self):
         """ Stop Sprite """
-        self.move(0, 0)
+        self.vx = 0
+        self.vy = 0
         self.stop_animation() # Animation
 
 class Ninja(BaseSprite):
