@@ -49,6 +49,7 @@ class BaseSprite(arcade.Sprite):
         self.anim_counter = 0
         self.anim_index = 0
         self.anim_key = key
+        self.texture = self.anims[key][0]
         self.start_animation()
 
     def start_animation(self):
