@@ -42,31 +42,41 @@ class Ninja(arcade.Sprite):
         self.anim_interval = 4
         self.anim_counter = 0
         self.anim_index = 0
-        self.anim = self.load_animation("images/ninja_{:02d}.png", 5)
+        self.anim_key = ""
+        self.anims = {}
 
     def set_position(self, x, y):
         self.center_x = x
         self.center_y = y
-        self.update_animation() # Animation
 
     def update(self, delta_time):
         """ Update """
-        self.center_x += self.vx
-        self.center_y += self.vy
+        self.center_x += self.vx * delta_time
+        self.center_y += self.vy * delta_time
+        self.update_animation() # Animation
 
     def update_animation(self):
         """ Animation """
+        if not self.anim_key in self.anims: return
         self.anim_counter += 1
         if(self.anim_interval < self.anim_counter):
             self.anim_counter = 0
             self.anim_index += 1
-            if len(self.anim) <= self.anim_index: self.anim_index = 0
-            self.texture = self.anim[self.anim_index]
+            anim = self.anims[self.anim_key]
+            if len(anim) <= self.anim_index: self.anim_index = 0
+            self.texture = anim[self.anim_index]
 
-    def load_animation(self, filename, num):
-        """ Load Texture """
-        textures = []
+    def load_animation(self, key, filename, num):
+        """ Load Animation """
+        anim = []
         for i in range(num):
             path = filename.format(i+1)
-            textures.append(arcade.load_texture(path))
-        return textures
+            anim.append(arcade.load_texture(path))
+        self.anims[key] = anim
+
+    def change_animation(self, key):
+        """ Change Animation """
+        if not key in self.anims: return
+        self.anim_counter = 0
+        self.anim_index = 0
+        self.anim_key = key

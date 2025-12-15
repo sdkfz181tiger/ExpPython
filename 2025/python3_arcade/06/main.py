@@ -34,6 +34,8 @@ class GameView(arcade.View):
         self.player = sprite.Ninja("images/ninja_01.png",
                                    x=W/2, y=H/2,
                                    scale=SPRITE_SCALE)
+        self.player.load_animation("front", "images/ninja_{:02d}.png", 5)
+        self.player.change_animation("front")
 
         # Sprites
         self.sprites = arcade.SpriteList()
