@@ -81,6 +81,9 @@ class Ninja(BaseSprite):
 
         # Animation
         self.load_animation("front", "images/ninja/front_{:02d}.png", 5)
+        self.load_animation("left", "images/ninja/left_{:02d}.png", 5)
+        self.load_animation("right", "images/ninja/right_{:02d}.png", 5)
+        self.load_animation("back", "images/ninja/back_{:02d}.png", 5)
 
     def set_x(self, x):
         self.center_x = x
