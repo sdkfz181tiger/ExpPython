@@ -8,8 +8,8 @@ import arcade
 import math
 import random
 
-# ユーティリティクラス
-class Utility:
+# Statsクラス
+class Stats:
 
     def __init__(self, w, h):
         self.w = w
@@ -21,21 +21,27 @@ class Utility:
         self.font_size = 12
         self.text_objects = []
 
+        # Info
+        self.text_info = arcade.Text(
+            "GET COINS!!", w/2, h-20, arcade.color.WHITE,
+            self.font_size, anchor_x="center", anchor_y="top")
+        self.text_objects.append(self.text_info)
+
         # Key
         self.text_key = arcade.Text(
-            "", 20, 20, arcade.color.WHITE,
+            "***", 20, 20, arcade.color.WHITE,
             self.font_size, anchor_x="left")
         self.text_objects.append(self.text_key)
 
         # Elapsed
         self.text_elapsed = arcade.Text(
-            "", w/2, 20, arcade.color.WHITE,
+            "***", w/2, 20, arcade.color.WHITE,
             self.font_size, anchor_x="center")
         self.text_objects.append(self.text_elapsed)
 
         # FPS
         self.text_fps = arcade.Text(
-            "", w-20, 20, arcade.color.WHITE,
+            "***", w-20, 20, arcade.color.WHITE,
             self.font_size, anchor_x="right")
         self.text_objects.append(self.text_fps)
 

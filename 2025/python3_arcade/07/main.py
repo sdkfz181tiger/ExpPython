@@ -23,12 +23,12 @@ class GameView(arcade.View):
 
         # 背景色
         self.background_color = arcade.color.PAYNE_GREY
-        self.utility = utility.Utility(W, H) # Utility
+        self.stats = utility.Stats(W, H) # Stats
 
         # Player
         self.players = arcade.SpriteList()
-        self.player = sprite.Ninja("images/ninja/front_01.png",
-                                   x=W/2, y=H/2)
+        self.player = sprite.Player("images/ninja/front_01.png",
+                                    x=W/2, y=H/2)
         self.players.append(self.player)
 
         # Coins
@@ -41,7 +41,7 @@ class GameView(arcade.View):
             self.coins.append(coin)
 
     def on_key_press(self, key, key_modifiers):
-        self.utility.key_press(key) # Utility
+        self.stats.key_press(key) # Stats
 
         # Move(WASD)
         if key == arcade.key.W: self.player.move(PLAYER_SPEED, 90, "back")
@@ -53,7 +53,7 @@ class GameView(arcade.View):
         self.player.stop() # Stop
 
     def on_update(self, delta_time):
-        self.utility.update(delta_time) # Utility
+        self.stats.update(delta_time) # Stats
 
         # Update
         self.players.update()
@@ -67,7 +67,7 @@ class GameView(arcade.View):
 
     def on_draw(self):
         self.clear() # Clear
-        self.utility.draw_stats() # Utility
+        self.stats.draw_stats() # Stats
         self.players.draw() # Draw
         self.coins.draw()
 

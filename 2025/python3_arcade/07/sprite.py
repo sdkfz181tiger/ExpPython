@@ -89,7 +89,7 @@ class BaseSprite(arcade.Sprite):
             if len(anim) <= self.anim_index: self.anim_index = 0
             self.texture = anim[self.anim_index]
 
-class Ninja(BaseSprite):
+class Player(BaseSprite):
 
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y)
