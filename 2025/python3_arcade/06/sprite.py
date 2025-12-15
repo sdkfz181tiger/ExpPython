@@ -56,6 +56,16 @@ class AnimSprite(arcade.Sprite):
         """ Stop Animation """
         self.anim_pause = True
 
+    def move(self, spd, deg, tag=""):
+        rad = deg * math.pi / 180
+        self.vx = spd * math.cos(rad)
+        self.vy = spd * math.sin(rad)
+        if 0 < len(tag): self.change_animation(tag) # Animation
+
+    def stop(self):
+        self.move(0, 0)
+        self.stop_animation() # Animation
+
 class Ninja(AnimSprite):
 
     def __init__(self, filename, x, y, scale):
@@ -73,16 +83,6 @@ class Ninja(AnimSprite):
 
     def set_y(self, y):
         self.center_y = y
-
-    def move(self, spd, deg):
-        rad = deg * math.pi / 180
-        self.vx = spd * math.cos(rad)
-        self.vy = spd * math.sin(rad)
-        self.change_animation("front") # Animation
-
-    def stop(self):
-        self.move(0, 0)
-        self.stop_animation() # Animation
 
     def update(self, delta_time):
         """ Update """

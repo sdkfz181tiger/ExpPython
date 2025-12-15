@@ -43,10 +43,10 @@ class GameView(arcade.View):
         self.utility.key_press(key) # Utility
 
         # Move(WASD)
-        if key == arcade.key.W: self.player.move(60, 90)
-        if key == arcade.key.A: self.player.move(60, 180)
-        if key == arcade.key.S: self.player.move(60, 270)
-        if key == arcade.key.D: self.player.move(60, 0)
+        if key == arcade.key.W: self.player.move(60, 90, "front")
+        if key == arcade.key.A: self.player.move(60, 180, "front")
+        if key == arcade.key.S: self.player.move(60, 270, "front")
+        if key == arcade.key.D: self.player.move(60, 0, "front")
 
     def on_key_release(self, key, key_modifiers):
         self.player.stop() # Stop
