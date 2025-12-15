@@ -31,7 +31,7 @@ class GameView(arcade.View):
         self.utility = utility.Utility(W, H) # Utility
 
         # Player
-        self.player = sprite.Ninja("images/ninja_01.png",
+        self.player = sprite.Ninja("images/ninja/front_01.png",
                                    x=W/2, y=H/2,
                                    scale=SPRITE_SCALE)
 
@@ -41,6 +41,15 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, key_modifiers):
         self.utility.key_press(key) # Utility
+
+        # Move(WASD)
+        if key == arcade.key.W: self.player.move(60, 90)
+        if key == arcade.key.A: self.player.move(60, 180)
+        if key == arcade.key.S: self.player.move(60, 270)
+        if key == arcade.key.D: self.player.move(60, 0)
+
+    def on_key_release(self, key, key_modifiers):
+        self.player.stop() # Stop
 
     def on_update(self, delta_time):
         self.utility.update(delta_time) # Utility

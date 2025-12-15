@@ -17,11 +17,13 @@ class AnimSprite(arcade.Sprite):
         self.anim_counter = 0
         self.anim_index = 0
         self.anim_key = ""
+        self.anim_pause = False
         self.anims = {}
 
     def update_animation(self):
         """ Animation """
         if not self.anim_key in self.anims: return
+        if self.anim_pause: return
         self.anim_counter += 1
         if(self.anim_interval < self.anim_counter):
             self.anim_counter = 0
@@ -44,6 +46,15 @@ class AnimSprite(arcade.Sprite):
         self.anim_counter = 0
         self.anim_index = 0
         self.anim_key = key
+        self.start_animation()
+
+    def start_animation(self):
+        """ Start Animation """
+        self.anim_pause = False
+
+    def stop_animation(self):
+        """ Stop Animation """
+        self.anim_pause = True
 
 class Ninja(AnimSprite):
 
@@ -55,12 +66,23 @@ class Ninja(AnimSprite):
         self.vy = 0
 
         # Animation
-        self.load_animation("front", "images/ninja_{:02d}.png", 5)
-        self.change_animation("front")
+        self.load_animation("front", "images/ninja/front_{:02d}.png", 5)
 
-    def set_position(self, x, y):
+    def set_x(self, x):
         self.center_x = x
+
+    def set_y(self, y):
         self.center_y = y
+
+    def move(self, spd, deg):
+        rad = deg * math.pi / 180
+        self.vx = spd * math.cos(rad)
+        self.vy = spd * math.sin(rad)
+        self.change_animation("front") # Animation
+
+    def stop(self):
+        self.move(0, 0)
+        self.stop_animation() # Animation
 
     def update(self, delta_time):
         """ Update """
