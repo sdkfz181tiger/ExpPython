@@ -28,6 +28,7 @@ class BaseSprite(arcade.Sprite):
 
     def update(self, delta_time):
         """ Update """
+        super().update(delta_time)
         self.center_x += self.vx * delta_time
         self.center_y += self.vy * delta_time
         self.update_animation() # Animation

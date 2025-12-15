@@ -30,23 +30,22 @@ class GameView(arcade.View):
         self.background_color = arcade.color.PAYNE_GREY
         self.utility = utility.Utility(W, H) # Utility
 
-        # Sprites
-        self.sprites = arcade.SpriteList()
-
         # Player
+        self.players = arcade.SpriteList()
         self.player = sprite.Ninja("images/ninja/front_01.png",
                                    x=W/2, y=H/2,
                                    scale=SPRITE_SCALE)
-        self.sprites.append(self.player)
+        self.players.append(self.player)
 
         # Coins
+        self.coins = arcade.SpriteList()
         for i in range(10):
             x = random.random() * W
             y = random.random() * H
-            self.coin = sprite.Coin("images/coin/coin_01.png",
-                                    x=x, y=y,
-                                    scale=SPRITE_SCALE)
-            self.sprites.append(self.coin)
+            coin = sprite.Coin("images/coin/coin_01.png",
+                               x=x, y=y,
+                               scale=SPRITE_SCALE)
+            self.coins.append(coin)
 
     def on_key_press(self, key, key_modifiers):
         self.utility.key_press(key) # Utility
@@ -64,13 +63,20 @@ class GameView(arcade.View):
         self.utility.update(delta_time) # Utility
 
         # Update
-        for sprite in self.sprites:
-            sprite.update(delta_time)
+        self.players.update()
+        self.coins.update()
+
+        # Player x Coins
+        hit_coins = arcade.check_for_collision_with_list(self.player,
+                                                         self.coins)
+        for coin in hit_coins:
+            coin.remove_from_sprite_lists()
 
     def on_draw(self):
         self.clear() # Clear
         self.utility.draw_stats() # Utility
-        self.sprites.draw() # Draw
+        self.players.draw() # Draw
+        self.coins.draw()
 
 def main():
     """ メイン処理 """
