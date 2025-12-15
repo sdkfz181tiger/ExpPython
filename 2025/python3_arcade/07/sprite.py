@@ -52,18 +52,6 @@ class BaseSprite(arcade.Sprite):
         self.vy = 0
         self.stop_animation() # Animation
 
-    def update_animation(self):
-        """ Update Animation """
-        if not self.anim_key in self.anims: return
-        if self.anim_pause: return
-        self.anim_counter += 1
-        if(self.anim_interval < self.anim_counter):
-            self.anim_counter = 0
-            self.anim_index += 1
-            anim = self.anims[self.anim_key]
-            if len(anim) <= self.anim_index: self.anim_index = 0
-            self.texture = anim[self.anim_index]
-
     def load_animation(self, key, filename, num):
         """ Load Animation """
         anim = []
@@ -88,6 +76,18 @@ class BaseSprite(arcade.Sprite):
     def stop_animation(self):
         """ Stop Animation """
         self.anim_pause = True
+
+    def update_animation(self):
+        """ Update Animation """
+        if not self.anim_key in self.anims: return
+        if self.anim_pause: return
+        self.anim_counter += 1
+        if(self.anim_interval < self.anim_counter):
+            self.anim_counter = 0
+            self.anim_index += 1
+            anim = self.anims[self.anim_key]
+            if len(anim) <= self.anim_index: self.anim_index = 0
+            self.texture = anim[self.anim_index]
 
 class Ninja(BaseSprite):
 

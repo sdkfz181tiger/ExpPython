@@ -14,6 +14,7 @@ W, H = 480, 320 # ゲーム画面の幅と高さ
 TITLE = "Hello, Arcade!!" # タイトル
 FONT_SIZE = 10 # フォントサイズ
 SPRITE_SCALE = 1 # スプライトの倍率
+PLAYER_SPEED = 90 # プレイヤーの速度
 
 class GameView(arcade.View):
 
@@ -43,10 +44,10 @@ class GameView(arcade.View):
         self.utility.key_press(key) # Utility
 
         # Move(WASD)
-        if key == arcade.key.W: self.player.move(60, 90, "back")
-        if key == arcade.key.A: self.player.move(60, 180, "left")
-        if key == arcade.key.S: self.player.move(60, 270, "front")
-        if key == arcade.key.D: self.player.move(60, 0, "right")
+        if key == arcade.key.W: self.player.move(PLAYER_SPEED, 90, "back")
+        if key == arcade.key.A: self.player.move(PLAYER_SPEED, 180, "left")
+        if key == arcade.key.S: self.player.move(PLAYER_SPEED, 270, "front")
+        if key == arcade.key.D: self.player.move(PLAYER_SPEED, 0, "right")
 
     def on_key_release(self, key, key_modifiers):
         self.player.stop() # Stop
