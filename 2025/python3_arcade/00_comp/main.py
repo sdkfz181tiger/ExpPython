@@ -76,7 +76,7 @@ class GameView(arcade.View):
 
     def on_draw(self):
         self.clear() # Clear
-        self.backgrounds.draw()
+        self.backgrounds.draw() # Draw
         self.players.draw()
         self.coins.draw()
         self.stats.draw() # Stats

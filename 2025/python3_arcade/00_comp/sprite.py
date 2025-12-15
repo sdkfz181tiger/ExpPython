@@ -44,7 +44,7 @@ class BaseSprite(arcade.Sprite):
         rad = deg * math.pi / 180 # Radian
         self.vx = spd * math.cos(rad)
         self.vy = spd * math.sin(rad)
-        if 0 < len(tag): self.change_animation(tag) # Animation
+        if tag: self.change_animation(tag) # Animation
 
     def stop(self):
         """ Stop Sprite """
