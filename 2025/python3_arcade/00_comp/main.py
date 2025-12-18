@@ -5,7 +5,6 @@
 """
 
 import arcade
-import math
 import random
 import sprite
 import utility

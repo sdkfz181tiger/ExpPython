@@ -14,26 +14,33 @@ TITLE = "Hello, Arcade!!" # タイトル
 class GameView(arcade.View):
 
     def __init__(self):
-        """ 初期化 """
         super().__init__()
+
         # 背景色
         self.background_color = arcade.color.PAYNE_GREY
 
+        # 背景リストを用意する
+        self.backgrounds = arcade.SpriteList()
+
+        # 背景スプライトを作る
+        bkg = arcade.Sprite("images/bg_temple.png")
+        bkg.center_x = W/2
+        bkg.center_y = H/2
+
+        self.backgrounds.append(bkg)# 背景リストに追加する
+
     def on_key_press(self, key, key_modifiers):
-        """ キーを押した時 """
         pass
 
     def on_key_release(self, key, key_modifiers):
-        """ キーを離した時 """
         pass
 
     def on_update(self, delta_time):
-        """ 更新処理 """
         pass
 
     def on_draw(self):
-        """ 描画処理 """
         self.clear() # Clear
+        self.backgrounds.draw() # 背景リストを描画
 
 def main():
     """ メイン処理 """
