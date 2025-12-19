@@ -35,8 +35,8 @@ class GameView(arcade.View):
         # 小判スプライト
         self.coins = arcade.SpriteList()
         for i in range(10):
-            x = random.random() * W # x座標ランダム
-            y = random.random() * H # y座標ランダム
+            x = random.random() * W
+            y = random.random() * H
             coin = sprite.Coin("images/coin/coin_01.png",
                                x=x, y=y)
             self.coins.append(coin)
@@ -49,11 +49,11 @@ class GameView(arcade.View):
         if key == arcade.key.D: self.player.move(90, 0)
 
     def on_key_release(self, key, key_modifiers):
-        self.player.stop() # 停止
+        self.player.stop()
 
     def on_update(self, delta_time):
         self.players.update(delta_time)
-        self.coins.update(delta_time) # 小判リストを更新
+        self.coins.update(delta_time)
 
         # プレイヤー x コインリストの衝突判定
         hit_coins = arcade.check_for_collision_with_list(self.player,
@@ -66,7 +66,7 @@ class GameView(arcade.View):
         self.clear() # Clear
         self.backgrounds.draw()
         self.players.draw()
-        self.coins.draw() # 小判リストを描画
+        self.coins.draw()
 
 def main():
     """ メイン処理 """
