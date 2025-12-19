@@ -44,17 +44,9 @@ class GameView(arcade.View):
 
 def main():
     """ メイン処理 """
-
-    # Window
     window = arcade.Window(W, H, TITLE)
-
-    # GameView
     game = GameView()
-
-    # Show
     window.show_view(game)
-
-    # Run
     arcade.run()
 
 if __name__ == "__main__":

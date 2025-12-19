@@ -7,8 +7,8 @@
 import arcade
 import sprite
 
-W, H = 480, 320 # ゲーム画面の幅と高さ
-TITLE = "Hello, Arcade!!" # タイトル
+W, H = 480, 320
+TITLE = "Hello, Arcade!!"
 
 class GameView(arcade.View):
 
@@ -25,14 +25,13 @@ class GameView(arcade.View):
         bkg.center_y = H/2
         self.backgrounds.append(bkg)
 
-        # プレイヤーリストを用意する
+        # プレイヤースプライト
         self.players = arcade.SpriteList()
-
-        # プレイヤースプライトを作る
         self.player = sprite.Player("images/ninja/front_01.png",
                                     x=W/2, y=H/2)
+        self.players.append(self.player)
 
-        self.players.append(self.player) # プレイヤーリストに追加する
+        self.player.move(90, 30) # プレイヤーを移動させてみる
 
     def on_key_press(self, key, key_modifiers):
         pass
@@ -41,12 +40,12 @@ class GameView(arcade.View):
         pass
 
     def on_update(self, delta_time):
-        self.players.update() # プレイヤーリストを更新
+        self.players.update()
 
     def on_draw(self):
         self.clear() # Clear
         self.backgrounds.draw()
-        self.players.draw() # プレイヤーリストを描画
+        self.players.draw()
 
 def main():
     """ メイン処理 """

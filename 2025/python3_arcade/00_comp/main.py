@@ -11,8 +11,6 @@ import utility
 
 W, H = 480, 320 # ゲーム画面の幅と高さ
 TITLE = "Hello, Arcade!!" # タイトル
-FONT_SIZE = 10 # フォントサイズ
-SPRITE_SCALE = 1 # スプライトの倍率
 PLAYER_SPEED = 90 # プレイヤーの速度
 
 class GameView(arcade.View):
