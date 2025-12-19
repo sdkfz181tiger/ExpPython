@@ -55,10 +55,9 @@ class GameView(arcade.View):
         self.players.update(delta_time)
         self.coins.update(delta_time)
 
-        # プレイヤー x コインリストの衝突判定
+        # プレイヤー x コインリスト
         hit_coins = arcade.check_for_collision_with_list(self.player,
                                                          self.coins)
-        # 衝突したコインをコインリストから削除
         for coin in hit_coins:
             coin.remove_from_sprite_lists()
 

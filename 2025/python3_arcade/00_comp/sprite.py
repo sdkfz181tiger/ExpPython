@@ -19,8 +19,8 @@ class BaseSprite(arcade.Sprite):
         self.vx = 0
         self.vy = 0
         # Animation
-        self.anim_interval = 4
         self.anim_counter = 0
+        self.anim_interval = 4
         self.anim_index = 0
         self.anim_key = ""
         self.anim_pause = False
@@ -81,12 +81,12 @@ class BaseSprite(arcade.Sprite):
         if not self.anim_key in self.anims: return
         if self.anim_pause: return
         self.anim_counter += 1
-        if(self.anim_interval < self.anim_counter):
-            self.anim_counter = 0
-            self.anim_index += 1
-            anim = self.anims[self.anim_key]
-            if len(anim) <= self.anim_index: self.anim_index = 0
-            self.texture = anim[self.anim_index]
+        if(self.anim_counter < self.anim_interval): return
+        self.anim_counter = 0
+        self.anim_index += 1
+        anim = self.anims[self.anim_key]
+        if len(anim) <= self.anim_index: self.anim_index = 0
+        self.texture = anim[self.anim_index]
 
 class Player(BaseSprite):
 
@@ -98,6 +98,7 @@ class Player(BaseSprite):
         self.load_animation("left", "images/ninja/left_{:02d}.png", 5)
         self.load_animation("right", "images/ninja/right_{:02d}.png", 5)
         self.load_animation("back", "images/ninja/back_{:02d}.png", 5)
+        self.change_animation("front")
 
 class Coin(BaseSprite):
 
