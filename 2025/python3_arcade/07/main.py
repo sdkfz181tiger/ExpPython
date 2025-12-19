@@ -6,9 +6,10 @@
 
 import arcade
 import sprite
+import random
 
-W, H = 480, 320 # ゲーム画面の幅と高さ
-TITLE = "Hello, Arcade!!" # タイトル
+W, H = 480, 320
+TITLE = "Hello, Arcade!!"
 
 class GameView(arcade.View):
 
@@ -25,28 +26,40 @@ class GameView(arcade.View):
         bkg.center_y = H/2
         self.backgrounds.append(bkg)
 
-        # プレイヤーリストを用意する
+        # プレイヤースプライト
         self.players = arcade.SpriteList()
-
-        # プレイヤースプライトを作る
         self.player = sprite.Player("images/ninja/front_01.png",
                                     x=W/2, y=H/2)
+        self.players.append(self.player)
 
-        self.players.append(self.player) # プレイヤーリストに追加する
+        # 小判スプライト
+        self.coins = arcade.SpriteList()
+        for i in range(10):
+            x = random.random() * W # x座標ランダム
+            y = random.random() * H # y座標ランダム
+            coin = sprite.Coin("images/coin/coin_01.png",
+                               x=x, y=y)
+            self.coins.append(coin)
 
     def on_key_press(self, key, key_modifiers):
-        pass
+        # Move(WASD)
+        if key == arcade.key.W: self.player.move(90, 90) # 上へ
+        if key == arcade.key.A: self.player.move(90, 180) # 左へ
+        if key == arcade.key.S: self.player.move(90, 270) # 下へ
+        if key == arcade.key.D: self.player.move(90, 0) # 右へ
 
     def on_key_release(self, key, key_modifiers):
-        pass
+        self.player.stop() # 停止
 
     def on_update(self, delta_time):
-        self.players.update(delta_time) # プレイヤーリストを更新
+        self.players.update(delta_time)
+        self.coins.update(delta_time) # 小判リストを更新
 
     def on_draw(self):
         self.clear() # Clear
         self.backgrounds.draw()
-        self.players.draw() # プレイヤーリストを描画
+        self.players.draw()
+        self.coins.draw() # 小判リストを描画
 
 def main():
     """ メイン処理 """

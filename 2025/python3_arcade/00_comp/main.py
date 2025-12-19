@@ -39,7 +39,7 @@ class GameView(arcade.View):
         for i in range(10):
             x = random.random() * W
             y = random.random() * H
-            coin = sprite.Coin("images/coin/coin_01.png",
+            coin = sprite.Coin("images/koban/koban_01.png",
                                x=x, y=y)
             self.coins.append(coin)
 

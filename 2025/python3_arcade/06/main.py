@@ -42,7 +42,7 @@ class GameView(arcade.View):
         self.player.stop() # 停止
 
     def on_update(self, delta_time):
-        self.players.update()
+        self.players.update(delta_time)
 
     def on_draw(self):
         self.clear() # Clear
