@@ -60,8 +60,8 @@ class GameView(arcade.View):
     def on_update(self, delta_time):
 
         # Update
-        self.players.update()
-        self.coins.update()
+        self.players.update(delta_time)
+        self.coins.update(delta_time)
 
         # Player x Coins
         hit_coins = arcade.check_for_collision_with_list(self.player,
