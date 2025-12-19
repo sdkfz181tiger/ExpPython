@@ -67,3 +67,10 @@ class Coin(BaseSprite):
 
     def __init__(self, filename, x, y):
         super().__init__(filename, x, y)
+
+        # アニメーション用のテクスチャを5枚読み込む
+        self.anim.append(arcade.load_texture("images/coin/coin_01.png"))
+        self.anim.append(arcade.load_texture("images/coin/coin_02.png"))
+        self.anim.append(arcade.load_texture("images/coin/coin_03.png"))
+        self.anim.append(arcade.load_texture("images/coin/coin_04.png"))
+        self.anim.append(arcade.load_texture("images/coin/coin_05.png"))
