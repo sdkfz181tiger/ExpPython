@@ -63,7 +63,7 @@ class GameView(arcade.View):
 
         # 小判スプライト
         self.coins = arcade.SpriteList()
-        for i in range(4):
+        for i in range(3):
             x = random.random() * W
             y = random.random() * H
             coin = sprite.Coin("images/coin/coin_01.png",
@@ -120,14 +120,15 @@ class GameView(arcade.View):
         self.score_text.draw()
 
     def check_finish(self):
-        # Finish or not
+        # Finish or Not
         if not self.finish_flg:
             if not self.coins:
                 self.wait_time = 2.0
                 self.finish_flg = True
-                self.player.stop("front")
+                self.player.stop()
+                self.player.change_animation("front")
             return
-        # Result
+        # Finish to Result
         if 0.0 < self.wait_time: return
         window.show_view(ResultView()) # ResultView
 

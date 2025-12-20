@@ -39,14 +39,11 @@ class BaseSprite(arcade.Sprite):
         self.vy = spd * math.sin(rad)
         if tag: self.change_animation(tag) # アニメーション変更
 
-    def stop(self, tag=""):
+    def stop(self):
         """ Stop Sprite """
         self.vx = 0
         self.vy = 0
-        if tag: 
-            self.change_animation(tag)
-        else:
-            self.stop_animation()
+        self.stop_animation()
 
     def update_animation(self):
         """ Update Animation """
