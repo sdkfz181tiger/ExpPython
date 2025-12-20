@@ -43,11 +43,13 @@ class GameView(arcade.View):
 
         # スコア
         self.score = 0
-        # テキストオブジェクト
         self.score_text = arcade.Text(
             "SCORE: {}".format(self.score), 
-            W/2, H-20, arcade.color.BLACK,
-            16, anchor_x="center", anchor_y="top")
+            W/2, H-20, arcade.color.BLACK, 16,
+            anchor_x="center", anchor_y="top")
+
+        # サウンドオブジェクト
+        self.se_coin = arcade.Sound("sounds/se_coin.ogg")
 
     def on_key_press(self, key, key_modifiers):
         # Move(WASD)
@@ -70,8 +72,9 @@ class GameView(arcade.View):
             coin.remove_from_sprite_lists()
             # スコア
             self.score += 1
-            # テキストオブジェクトのテキストを変更
             self.score_text.text = "SCORE: {}".format(self.score)
+            # サウンドを再生
+            arcade.play_sound(self.se_coin)
 
     def on_draw(self):
         self.clear() # Clear

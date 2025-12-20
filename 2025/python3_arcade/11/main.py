@@ -5,13 +5,11 @@
 """
 
 import arcade
-import random
 import sprite
-import utility
+import random
 
-W, H = 480, 320 # ゲーム画面の幅と高さ
-TITLE = "Hello, Arcade!!" # タイトル
-PLAYER_SPEED = 90 # プレイヤーの速度
+W, H = 480, 320
+TITLE = "Hello, Arcade!!"
 
 class GameView(arcade.View):
 
@@ -21,76 +19,75 @@ class GameView(arcade.View):
         # 背景色
         self.background_color = arcade.color.PAYNE_GREY
 
-        # 背景
+        # 背景スプライト
         self.backgrounds = arcade.SpriteList()
         bkg = arcade.Sprite("images/bg_temple.png")
         bkg.center_x = W/2
         bkg.center_y = H/2
         self.backgrounds.append(bkg)
 
-        # Player
+        # プレイヤースプライト
         self.players = arcade.SpriteList()
         self.player = sprite.Player("images/ninja/front_01.png",
                                     x=W/2, y=H/2)
         self.players.append(self.player)
 
-        # Coins
+        # 小判スプライト
         self.coins = arcade.SpriteList()
         for i in range(10):
             x = random.random() * W
             y = random.random() * H
-            coin = sprite.Coin("images/koban/koban_01.png",
+            coin = sprite.Coin("images/coin/coin_01.png",
                                x=x, y=y)
             self.coins.append(coin)
 
-        self.stats = utility.Stats(W, H) # Stats
+        # スコア
+        self.score = 0
+        self.score_text = arcade.Text(
+            "SCORE: {}".format(self.score), 
+            W/2, H-20, arcade.color.BLACK, 16,
+            anchor_x="center", anchor_y="top")
+
+        # サウンドオブジェクト
+        self.se_coin = arcade.Sound("sounds/se_coin.ogg")
 
     def on_key_press(self, key, key_modifiers):
-        self.stats.key_press(key) # Stats
-
         # Move(WASD)
-        if key == arcade.key.W: self.player.move(PLAYER_SPEED, 90, "back")
-        if key == arcade.key.A: self.player.move(PLAYER_SPEED, 180, "left")
-        if key == arcade.key.S: self.player.move(PLAYER_SPEED, 270, "front")
-        if key == arcade.key.D: self.player.move(PLAYER_SPEED, 0, "right")
+        if key == arcade.key.W: self.player.move(90, 90, "back") # 上へ
+        if key == arcade.key.A: self.player.move(90, 180, "left") # 左へ
+        if key == arcade.key.S: self.player.move(90, 270, "front") # 下へ
+        if key == arcade.key.D: self.player.move(90, 0, "right") # 右へ
 
     def on_key_release(self, key, key_modifiers):
-        self.player.stop() # Stop
+        self.player.stop()
 
     def on_update(self, delta_time):
-
-        # Update
         self.players.update(delta_time)
         self.coins.update(delta_time)
 
-        # Player x Coins
+        # プレイヤー x コインリスト
         hit_coins = arcade.check_for_collision_with_list(self.player,
                                                          self.coins)
         for coin in hit_coins:
             coin.remove_from_sprite_lists()
-
-        self.stats.update(delta_time) # Stats
+            # スコア
+            self.score += 1
+            self.score_text.text = "SCORE: {}".format(self.score)
+            # サウンドを再生
+            arcade.play_sound(self.se_coin)
 
     def on_draw(self):
         self.clear() # Clear
-        self.backgrounds.draw() # Draw
+        self.backgrounds.draw()
         self.players.draw()
         self.coins.draw()
-        self.stats.draw() # Stats
+        self.score_text.draw()
 
 def main():
     """ メイン処理 """
-
-    # Window
     window = arcade.Window(W, H, TITLE)
-
-    # GameView
     game = GameView()
-
-    # Show
     window.show_view(game)
-
-    # Run
     arcade.run()
 
 if __name__ == "__main__":
