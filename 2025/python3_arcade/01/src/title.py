@@ -5,10 +5,10 @@
 """
 
 import arcade
-import sprite
 import random
-
-import game
+import src.sprite as sprite
+import src.game as game
+import src.utility as utility
 
 # Title
 class TitleView(arcade.View):
@@ -18,9 +18,9 @@ class TitleView(arcade.View):
         self.window = window
         self.background_color = arcade.color.PAYNE_GREY
 
-        # Message
+        # Info
         self.msg_info = arcade.Text(
-            "SPACE TO GAME", 
+            "TITLE: SPACE TO NEXT", 
             window.width/2, window.height-20, 
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="top")

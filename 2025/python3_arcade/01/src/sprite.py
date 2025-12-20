@@ -5,6 +5,7 @@
 """
 
 import arcade
+import random
 import math
 
 class BaseSprite(arcade.Sprite):

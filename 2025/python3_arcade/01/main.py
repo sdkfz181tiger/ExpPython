@@ -5,9 +5,10 @@
 """
 
 import arcade
-import sprite
 import random
-import title
+import src.sprite as sprite
+import src.title as title
+import src.utility as utility
 
 def main():
     """ メイン処理 """

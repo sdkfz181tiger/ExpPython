@@ -5,9 +5,10 @@
 """
 
 import arcade
-import sprite
 import random
-import result
+import src.sprite as sprite
+import src.result as result
+import src.utility as utility
 
 # Game
 class GameView(arcade.View):
@@ -18,8 +19,8 @@ class GameView(arcade.View):
         self.background_color = arcade.color.PAYNE_GREY
 
         # Wait
-        self.wait_time = 0.5
-        self.finish_flg = False
+        self.view_wait_time = 0.5
+        self.view_finish_flg = False
 
         # 背景スプライト
         self.backgrounds = arcade.SpriteList()
@@ -56,7 +57,7 @@ class GameView(arcade.View):
         self.se_coin = arcade.Sound("sounds/se_coin.ogg")
 
     def on_key_press(self, key, key_modifiers):
-        if 0.0 < self.wait_time: return # Wait
+        if 0.0 < self.view_wait_time: return # Wait
 
         # Move(WASD)
         if key == arcade.key.W: self.player.move(90, 90, "back")
@@ -65,11 +66,11 @@ class GameView(arcade.View):
         if key == arcade.key.D: self.player.move(90, 0, "right")
 
     def on_key_release(self, key, key_modifiers):
-        if 0.0 < self.wait_time: return # Wait
+        if 0.0 < self.view_wait_time: return # Wait
         self.player.stop()
 
     def on_update(self, delta_time):
-        if 0.0 < self.wait_time: self.wait_time -= delta_time # Wait
+        if 0.0 < self.view_wait_time: self.view_wait_time -= delta_time # Wait
 
         self.players.update(delta_time)
         self.coins.update(delta_time)
@@ -96,13 +97,13 @@ class GameView(arcade.View):
 
     def check_finish(self):
         # Finish or Not
-        if not self.finish_flg:
+        if not self.view_finish_flg:
             if not self.coins:
-                self.wait_time = 2.0
-                self.finish_flg = True
+                self.view_wait_time = 2.0
+                self.view_finish_flg = True
                 self.player.stop()
                 self.player.change_animation("front")
             return
         # Finish to Result
-        if 0.0 < self.wait_time: return
+        if 0.0 < self.view_wait_time: return
         self.window.show_view(result.ResultView(self.window)) # ResultView
