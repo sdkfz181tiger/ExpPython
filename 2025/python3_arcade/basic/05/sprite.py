@@ -20,7 +20,6 @@ class BaseSprite(arcade.Sprite):
 
     def update(self, delta_time):
         """ Update """
-        super().update(delta_time)
         self.center_x += self.vx * delta_time # x座標を更新
         self.center_y += self.vy * delta_time # y座標を更新
 

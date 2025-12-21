@@ -26,7 +26,7 @@ class ResultView(arcade.View):
             anchor_x="center", anchor_y="top")
 
     def on_key_press(self, key, key_modifiers):
-        # Space to Game
+        # Space to Title
         if key == arcade.key.SPACE:
             view = title.TitleView(self.window) # TitleView
             self.window.show_view(view)
