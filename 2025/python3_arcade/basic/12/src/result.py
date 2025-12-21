@@ -7,8 +7,8 @@
 import arcade
 import random
 import src.sprite as sprite
-import src.title as title
 import src.utility as utility
+import src.title as title
 
 # Result
 class ResultView(arcade.View):
@@ -16,7 +16,7 @@ class ResultView(arcade.View):
     def __init__(self, window):
         super().__init__()
         self.window = window
-        self.background_color = arcade.color.PAYNE_GREY
+        self.background_color = arcade.color.CERULEAN
 
         # Info
         self.msg_info = arcade.Text(
@@ -27,8 +27,9 @@ class ResultView(arcade.View):
 
     def on_key_press(self, key, key_modifiers):
         # Space to Game
-        if key == arcade.key.SPACE: 
-            self.window.show_view(title.TitleView(self.window)) # TitleView
+        if key == arcade.key.SPACE:
+            view = title.TitleView(self.window) # TitleView
+            self.window.show_view(view)
 
     def on_update(self, delta_time):
         pass

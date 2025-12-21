@@ -8,13 +8,13 @@ import arcade
 import sprite
 import random
 
-W, H = 480, 320
-TITLE = "Hello, Arcade!!"
-
 class GameView(arcade.View):
 
-    def __init__(self):
+    def __init__(self, window):
         super().__init__()
+        self.window = window
+        self.w = self.window.width
+        self.h = self.window.height
 
         # 背景色
         self.background_color = arcade.color.PAYNE_GREY
@@ -22,21 +22,21 @@ class GameView(arcade.View):
         # 背景スプライト
         self.backgrounds = arcade.SpriteList()
         bkg = arcade.Sprite("images/bg_temple.png")
-        bkg.center_x = W/2
-        bkg.center_y = H/2
+        bkg.center_x = self.w / 2
+        bkg.center_y = self.h / 2
         self.backgrounds.append(bkg)
 
         # プレイヤースプライト
         self.players = arcade.SpriteList()
         self.player = sprite.Player("images/ninja/front_01.png",
-                                    x=W/2, y=H/2)
+                                    x=self.w/2, y=self.h/2)
         self.players.append(self.player)
 
         # 小判スプライト
         self.coins = arcade.SpriteList()
         for i in range(10):
-            x = random.random() * W
-            y = random.random() * H
+            x = random.random() * self.w
+            y = random.random() * self.h
             coin = sprite.Coin("images/coin/coin_01.png",
                                x=x, y=y)
             self.coins.append(coin)
@@ -45,7 +45,8 @@ class GameView(arcade.View):
         self.score = 0
         self.score_text = arcade.Text(
             "SCORE: {}".format(self.score), 
-            W/2, H-20, arcade.color.BLACK, 16,
+            self.w/2, self.h-20,
+            arcade.color.BLACK, 16,
             anchor_x="center", anchor_y="top")
 
         # サウンドオブジェクト
@@ -85,8 +86,8 @@ class GameView(arcade.View):
 
 def main():
     """ メイン処理 """
-    window = arcade.Window(W, H, TITLE)
-    game = GameView()
+    window = arcade.Window(480, 320, "Hello, Arcade!!")
+    game = GameView(window)
     window.show_view(game)
     arcade.run()
 
