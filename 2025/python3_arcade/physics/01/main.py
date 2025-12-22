@@ -8,7 +8,8 @@ import arcade
 import random
 import sprite
 
-PLAYER_SPEED = 90
+PLAYER_JUMP_X = 60
+PLAYER_JUMP_Y = 300
 
 # Game
 class GameView(arcade.View):
@@ -76,17 +77,21 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, key_modifiers):
         # Move(WASD)
-        if key == arcade.key.W: self.player.move(PLAYER_SPEED, 90, "back")
-        if key == arcade.key.A: self.player.move(PLAYER_SPEED, 180, "left")
-        if key == arcade.key.S: self.player.move(PLAYER_SPEED, 270, "front")
-        if key == arcade.key.D: self.player.move(PLAYER_SPEED, 0, "right")
-
+        if key == arcade.key.W: 
+            self.physics.set_velocity(self.player, (0, PLAYER_JUMP_Y))
+        if key == arcade.key.A:
+            self.physics.set_velocity(self.player, (-PLAYER_JUMP_X, PLAYER_JUMP_Y))
+        if key == arcade.key.S:
+            pass
+        if key == arcade.key.D:
+            self.physics.set_velocity(self.player, (PLAYER_JUMP_X, PLAYER_JUMP_Y))
+        
     def on_key_release(self, key, key_modifiers):
         self.player.stop() # Stop
 
     def on_update(self, delta_time):
 
-        self.physics.step() # 物理エンジンを進める
+        self.physics.step(delta_time) # 物理エンジンを進める
 
         # Camera
         self.camera.position = arcade.math.lerp_2d(
