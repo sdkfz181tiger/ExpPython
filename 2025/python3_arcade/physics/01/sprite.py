@@ -103,3 +103,8 @@ class Coin(BaseSprite):
         # Animation
         self.load_animation("coin", "images/coin/coin_{:02d}.png", 5)
         self.change_animation("coin")
+
+class Block(BaseSprite):
+
+    def __init__(self, filename, x, y):
+        super().__init__(filename, x, y)
