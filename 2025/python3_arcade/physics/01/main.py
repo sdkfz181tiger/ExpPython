@@ -51,7 +51,7 @@ class GameView(arcade.View):
             block = sprite.Block("images/block/block_01.png", x, y)
             self.blocks.append(block)
 
-         # Info
+        # Info
         self.msg_info = arcade.Text(
             "GAME", 
             self.w/2, self.h-20, 
