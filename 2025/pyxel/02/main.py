@@ -30,8 +30,11 @@ class App:
             "Hello, Pyxel!!", 
             pyxel.frame_count % 16)
 
-        pyxel.blt(W/2-32, H/2, 0, 0, 0, 20, 10)
-        pyxel.blt(W/2+32, H/2, 1, 0, 0, 20, 24)
+        #pyxel.blt(W/2-32, H/2, 0, 0, 0, 20, 10)
+        #pyxel.blt(W/2+32, H/2, 1, 0, 0, 20, 24)
+
+        pyxel.pset(80, 80, 7)
+        pyxel.line(0, 0, 120, 100, 8)
 
 def main():
     """ メイン処理 """
