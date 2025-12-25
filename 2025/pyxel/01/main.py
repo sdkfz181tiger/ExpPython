@@ -8,11 +8,15 @@ import pyxel
 import random
 import sprite
 
+W, H = 240, 160
+
 # App
 class App:
     def __init__(self):
-        pyxel.init(240, 160, title="Hello, Pyxel!!")
-        pyxel.images[0].load(0, 0, "images/ninja/front_01.png")
+        pyxel.init(W, H, title="Hello, Pyxel!!")
+
+        pyxel.images[0].load(0, 0, "images/leaf_01.png")
+        pyxel.images[1].load(0, 0, "images/frog/frog_01.png")
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -21,10 +25,13 @@ class App:
 
     def draw(self):
         pyxel.cls(0)
-        pyxel.text(55, 41, 
+        
+        pyxel.text(10, 10, 
             "Hello, Pyxel!!", 
             pyxel.frame_count % 16)
-        pyxel.blt(61, 66, 0, 0, 0, 48, 48)
+
+        pyxel.blt(W/2-32, H/2, 0, 0, 0, 20, 10)
+        pyxel.blt(W/2+32, H/2, 1, 0, 0, 20, 24)
 
 def main():
     """ メイン処理 """
