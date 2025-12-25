@@ -4,7 +4,7 @@
 かじるプログラミング_pyxel
 """
 
-import pyxel
+import pyxel as px
 import random
 import sprite
 
@@ -13,28 +13,46 @@ W, H = 160, 120
 # App
 class App:
     def __init__(self):
-        pyxel.init(W, H, title="Hello, Pyxel!!")
+        px.init(W, H, title="Hello, Pyxel!!")
 
-        pyxel.images[0].load(0, 0, "images/leaf_01.png")
-        pyxel.images[1].load(0, 0, "images/frog/frog_01.png")
-        pyxel.run(self.update, self.draw)
+        px.images[0].load(0, 0, "images/leaf_01.png")
+        px.images[1].load(0, 0, "images/frog/frog_01.png")
+        px.run(self.update, self.draw)
 
     def update(self):
-        if pyxel.btnp(pyxel.KEY_Q):
-            pyxel.quit()
+        if px.btnp(px.KEY_Q):
+            px.quit()
 
     def draw(self):
-        pyxel.cls(0)
+        px.cls(0)
         
-        pyxel.text(10, 10, 
+        px.text(10, 10, 
             "Hello, Pyxel!!", 
-            pyxel.frame_count % 16)
+            px.frame_count % 16)
 
-        #pyxel.blt(W/2-32, H/2, 0, 0, 0, 20, 10)
-        #pyxel.blt(W/2+32, H/2, 1, 0, 0, 20, 24)
+        # Draw something
+        px.pset(30, 20, 7)
+        px.line(30, 30, 120, 30, 8)
 
-        pyxel.pset(80, 80, 7)
-        pyxel.line(0, 0, 120, 100, 8)
+        # Circle
+        px.circ(30, 50, 10, 11)
+        px.circb(60, 50, 10, 11)
+
+        # Rect
+        px.rect(30, 70, 20, 10, 12)
+        px.rectb(60, 70, 10, 20, 12)
+
+        # Smile
+        self.draw_smile(90, 90, 10)
+
+    def draw_smile(self, x, y, r):
+        fill = px.rndi(0, 10)
+        border = px.rndi(0, 10)
+        hr = r / 2
+        px.circ(x, y, r, fill)
+        px.line(x-hr, y-hr, x-r/2, y, border)
+        px.line(x+hr, y-hr, x+r/2, y, border)
+        px.line(x-hr, y+hr, x+r/2, y+hr, border)
 
 def main():
     """ メイン処理 """
