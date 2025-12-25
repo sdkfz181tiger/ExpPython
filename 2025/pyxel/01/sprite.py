@@ -1,17 +1,17 @@
 # coding: utf-8
 
 """
-かじるプログラミング_arcade
+かじるプログラミング_pyxel
 """
 
-import arcade
 import random
 import math
 
-class BaseSprite(arcade.Sprite):
+class BaseSprite():
 
     def __init__(self, filename, x, y):
-        super().__init__(filename)
+        #super().__init__(filename)
+        self.filename = filename
         # Position
         self.center_x = x
         self.center_y = y
