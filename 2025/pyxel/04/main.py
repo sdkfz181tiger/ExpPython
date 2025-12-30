@@ -12,10 +12,12 @@ import sprite
 W, H = 160, 120
 
 SHIP_SPD = 1.4
+
 ASTEROID_SPD_MIN = 1.0
 ASTEROID_SPD_MAX = 2.0
-ASTEROID_DEG_MIN = 60
-ASTEROID_DEG_MAX = 120
+ASTEROID_DEG_MIN = 30
+ASTEROID_DEG_MAX = 150
+
 BULLET_SPD = 3
 
 SPAWN_INTERVAL = 20
@@ -26,7 +28,7 @@ class Game:
     def __init__(self):
 
         # プレイヤー
-        self.ship = sprite.ShipSprite(W/2, H - 24)
+        self.ship = sprite.ShipSprite(W/2, H - 40)
         deg = 0 if random.random()<0.5 else 180
         self.ship.move(SHIP_SPD, deg)
 
@@ -50,16 +52,13 @@ class Game:
 
         # プレイヤー
         self.ship.update()
-        self.check_border(self.ship)
-
-        # コントロール
-        if px.btnp(px.KEY_SPACE):
-            self.action() # Action
+        self.control_ship()
+        self.check_overlap(self.ship)
 
         # 隕石
         for asteroid in self.asteroids:
             asteroid.update()
-            self.check_border(asteroid)
+            self.check_overlap(asteroid)
             
         # 弾丸
         for bullet in self.bullets:
@@ -91,7 +90,16 @@ class Game:
         for bullet in self.bullets:
             bullet.draw()
 
-    def check_border(self, spr):
+    def control_ship(self):
+        """ アクション """
+        if px.btnp(px.KEY_SPACE):
+            self.ship.flip_x() # 移動反転
+            # 弾丸発射
+            bullet = sprite.BulletSprite(self.ship.x, self.ship.y)
+            bullet.move(BULLET_SPD, 270)
+            self.bullets.append(bullet)
+
+    def check_overlap(self, spr):
         """ 画面外に出たら反対側へ """
         if spr.x < -spr.w: 
             spr.x = W
@@ -121,14 +129,6 @@ class Game:
         asteroid = sprite.AsteroidSprite(x, y)
         asteroid.move(spd, deg)
         self.asteroids.append(asteroid)
-
-    def action(self):
-        """ アクション """
-        self.ship.flip_x() # 移動反転
-        # 弾丸発射
-        bullet = sprite.BulletSprite(self.ship.x, self.ship.y)
-        bullet.move(BULLET_SPD, 270)
-        self.bullets.append(bullet)
 
 def main():
     """ メイン処理 """

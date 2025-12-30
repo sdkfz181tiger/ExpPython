@@ -24,7 +24,7 @@ class BaseSprite:
         self.y += self.vy
 
     def draw(self):
-        """ 描画処理 """
+        """ 描画処理(派生クラスで実装) """
         pass
 
     def move(self, spd, deg):
