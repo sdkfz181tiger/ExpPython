@@ -61,10 +61,12 @@ class AsteroidSprite(BaseSprite):
 
     def __init__(self, x, y):
         super().__init__(x, y)
+        self.index = random.randint(2, 7) # 隕石画像
 
     def draw(self):
         """ 描画処理 """
-        px.rect(self.x, self.y, self.w, self.h, 3)
+        px.blt(self.x, self.y, 0, self.w*self.index, 0, 
+                self.w, self.h, 0) # Ship
 
 class BulletSprite(BaseSprite):
 

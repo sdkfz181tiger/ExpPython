@@ -25,19 +25,16 @@ SPAWN_LIMIT = 30
 class Game:
     def __init__(self):
 
-        # Sprites
-        self.sprites = []
-
-        # Ship
+        # プレイヤー
         self.ship = sprite.ShipSprite(W/2, H - 24)
         deg = 0 if random.random()<0.5 else 180
         self.ship.move(SHIP_SPD, deg)
 
-        # Asteroids
+        # 隕石
         self.spawn_time = 0
         self.asteroids = []
 
-        # Bullets
+        # 弾丸
         self.bullets = []
 
         # Pyxel
@@ -51,49 +48,46 @@ class Game:
         if px.btnp(px.KEY_Q):
             px.quit()
 
-        # Ship
+        # プレイヤー
         self.ship.update()
         self.check_border(self.ship)
 
-        # Control
+        # コントロール
         if px.btnp(px.KEY_SPACE):
             self.action() # Action
 
-        # Asteroids
+        # 隕石
         for asteroid in self.asteroids:
             asteroid.update()
             self.check_border(asteroid)
-            # Remove
-            if H < asteroid.y:
-                self.asteroids.remove(asteroid)
             
-        # Bullets
+        # 弾丸
         for bullet in self.bullets:
             bullet.update()
-            # Remove
+            # 画面外削除
             if bullet.y < 0:
                 self.bullets.remove(bullet)
                 continue
-            # x Asteroids
+            # 衝突判定
             for asteroid in self.asteroids:
                 if asteroid.intersects(bullet):
                     self.bullets.remove(bullet)
                     self.asteroids.remove(asteroid)
                     return
 
-        self.check_spawn() # Spawn
+        self.check_spawn() # 隕石の追加
 
     def draw(self):
         px.cls(0)
 
-        # Ship
+        # プレイヤー
         self.ship.draw()
 
-        # Asteroids
+        # 隕石
         for asteroid in self.asteroids:
             asteroid.draw()
 
-        # Bullets
+        # 弾丸
         for bullet in self.bullets:
             bullet.draw()
 
@@ -113,12 +107,12 @@ class Game:
             return
 
     def check_spawn(self):
-        # Interval
+        # インターバル
         self.spawn_time += 1
         if SPAWN_INTERVAL < self.spawn_time:
             self.spawn_time = 0
             if SPAWN_LIMIT < len(self.asteroids): return # Limit
-            # Spawn
+            # 隕石の追加
             x = random.random() * W
             y = 0
             spd = random.uniform(ASTEROID_SPD_MIN, ASTEROID_SPD_MAX)
