@@ -44,7 +44,7 @@ class Game:
 
     def update(self):
 
-        # Quit
+        # ゲーム終了
         if px.btnp(px.KEY_Q):
             px.quit()
 
@@ -92,7 +92,7 @@ class Game:
             bullet.draw()
 
     def check_border(self, spr):
-        """ 画面端処理 """
+        """ 画面外に出たら反対側へ """
         if spr.x < -spr.w: 
             spr.x = W
             return
@@ -107,24 +107,25 @@ class Game:
             return
 
     def check_spawn(self):
-        # インターバル
+        # 隕石の出現間隔
         self.spawn_time += 1
-        if SPAWN_INTERVAL < self.spawn_time:
-            self.spawn_time = 0
-            if SPAWN_LIMIT < len(self.asteroids): return # Limit
-            # 隕石の追加
-            x = random.random() * W
-            y = 0
-            spd = random.uniform(ASTEROID_SPD_MIN, ASTEROID_SPD_MAX)
-            deg = random.uniform(ASTEROID_DEG_MIN, ASTEROID_DEG_MAX)
-            asteroid = sprite.AsteroidSprite(x, y)
-            asteroid.move(spd, deg)
-            self.asteroids.append(asteroid)
+        if self.spawn_time < SPAWN_INTERVAL: return
+        self.spawn_time = 0
+        # 隕石の最大数を超えない範囲で
+        if SPAWN_LIMIT < len(self.asteroids): return
+        # 隕石の追加
+        x = random.random() * W
+        y = 0
+        spd = random.uniform(ASTEROID_SPD_MIN, ASTEROID_SPD_MAX)
+        deg = random.uniform(ASTEROID_DEG_MIN, ASTEROID_DEG_MAX)
+        asteroid = sprite.AsteroidSprite(x, y)
+        asteroid.move(spd, deg)
+        self.asteroids.append(asteroid)
 
     def action(self):
-        """ 左右反転 """
-        self.ship.flip_x()
-        """ 弾丸発射 """
+        """ アクション """
+        self.ship.flip_x() # 移動反転
+        # 弾丸発射
         bullet = sprite.BulletSprite(self.ship.x, self.ship.y)
         bullet.move(BULLET_SPD, 270)
         self.bullets.append(bullet)

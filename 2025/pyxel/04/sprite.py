@@ -34,6 +34,7 @@ class BaseSprite:
         self.vy = spd * math.sin(rad)
 
     def intersects(self, other):
+        """ 矩形同士の当たり判定(AABB) """
         if other.x + other.w < self.x: return False
         if self.x + self.w < other.x: return False
         if other.y + other.h < self.y: return False
@@ -48,14 +49,17 @@ class ShipSprite(BaseSprite):
 
     def __init__(self, x, y):
         super().__init__(x, y)
+        self.index = random.randint(0, 1) # プレイヤー画像
 
     def draw(self):
         """ 描画処理 """
-        off_y = px.frame_count % 3
-        px.blt(self.x, self.y, 0, 0, 0, 
-                self.w, self.h, 0) # Ship
-        px.blt(self.x, self.y+self.h, 0, 0, self.h+off_y, 
-                self.w, self.h, 0) # Fire
+        off_y = px.frame_count % 3 # 炎をパタパタさせる
+        px.blt(self.x, self.y, 0, 
+            self.w*self.index, 0, 
+            self.w, self.h, 0) # Ship
+        px.blt(self.x, self.y+self.h, 0, 
+            self.w*self.index, self.h+off_y, 
+            self.w, self.h, 0) # Fire
 
 class AsteroidSprite(BaseSprite):
 
@@ -72,7 +76,7 @@ class BulletSprite(BaseSprite):
 
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.x += self.w / 2 - 1 # Offset
+        self.x += self.w / 2 - 1 # 中央に調整
 
     def draw(self):
         """ 描画処理 """
