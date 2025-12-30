@@ -12,8 +12,10 @@ import sprite
 W, H = 160, 120
 
 SHIP_SPD = 1.4
-INVADER_SPD_MIN = 1.0
-INVADER_SPD_MAX = 2.0
+ASTEROID_SPD_MIN = 1.0
+ASTEROID_SPD_MAX = 2.0
+ASTEROID_DEG_MIN = 60
+ASTEROID_DEG_MAX = 120
 BULLET_SPD = 3
 
 SPAWN_INTERVAL = 20
@@ -31,9 +33,9 @@ class Game:
         deg = 0 if random.random()<0.5 else 180
         self.ship.move(SHIP_SPD, deg)
 
-        # Invaders
+        # Asteroids
         self.spawn_time = 0
-        self.invaders = []
+        self.asteroids = []
 
         # Bullets
         self.bullets = []
@@ -57,13 +59,13 @@ class Game:
         if px.btnp(px.KEY_SPACE):
             self.action() # Action
 
-        # Invaders
-        for invader in self.invaders:
-            invader.update()
-            self.check_border(invader)
+        # Asteroids
+        for asteroid in self.asteroids:
+            asteroid.update()
+            self.check_border(asteroid)
             # Remove
-            if H < invader.y:
-                self.invaders.remove(invader)
+            if H < asteroid.y:
+                self.asteroids.remove(asteroid)
             
         # Bullets
         for bullet in self.bullets:
@@ -72,11 +74,11 @@ class Game:
             if bullet.y < 0:
                 self.bullets.remove(bullet)
                 continue
-            # x Invaders
-            for invader in self.invaders:
-                if invader.intersects(bullet):
+            # x Asteroids
+            for asteroid in self.asteroids:
+                if asteroid.intersects(bullet):
                     self.bullets.remove(bullet)
-                    self.invaders.remove(invader)
+                    self.asteroids.remove(asteroid)
                     return
 
         self.check_spawn() # Spawn
@@ -87,9 +89,9 @@ class Game:
         # Ship
         self.ship.draw()
 
-        # Invaders
-        for invader in self.invaders:
-            invader.draw()
+        # Asteroids
+        for asteroid in self.asteroids:
+            asteroid.draw()
 
         # Bullets
         for bullet in self.bullets:
@@ -115,15 +117,15 @@ class Game:
         self.spawn_time += 1
         if SPAWN_INTERVAL < self.spawn_time:
             self.spawn_time = 0
-            if SPAWN_LIMIT < len(self.invaders): return # Limit
+            if SPAWN_LIMIT < len(self.asteroids): return # Limit
             # Spawn
             x = random.random() * W
             y = 0
-            spd = random.uniform(INVADER_SPD_MIN, INVADER_SPD_MAX)
-            deg = random.randint(70, 110)
-            invader = sprite.InvaderSprite(x, y)
-            invader.move(spd, deg)
-            self.invaders.append(invader)
+            spd = random.uniform(ASTEROID_SPD_MIN, ASTEROID_SPD_MAX)
+            deg = random.uniform(ASTEROID_DEG_MIN, ASTEROID_DEG_MAX)
+            asteroid = sprite.AsteroidSprite(x, y)
+            asteroid.move(spd, deg)
+            self.asteroids.append(asteroid)
 
     def action(self):
         """ 左右反転 """

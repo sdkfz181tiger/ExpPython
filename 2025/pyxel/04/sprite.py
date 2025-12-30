@@ -57,7 +57,7 @@ class ShipSprite(BaseSprite):
         px.blt(self.x, self.y+self.h, 0, 0, self.h+off_y, 
                 self.w, self.h, 0) # Fire
 
-class InvaderSprite(BaseSprite):
+class AsteroidSprite(BaseSprite):
 
     def __init__(self, x, y):
         super().__init__(x, y)
