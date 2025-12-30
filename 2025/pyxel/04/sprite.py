@@ -33,10 +33,12 @@ class BaseSprite:
         self.vx = spd * math.cos(rad)
         self.vy = spd * math.sin(rad)
 
-    def stop(self):
-        """ 停止 """
-        self.vx = 0
-        self.vy = 0
+    def intersects(self, other):
+        if other.x + other.w < self.x: return False
+        if self.x + self.w < other.x: return False
+        if other.y + other.h < self.y: return False
+        if self.y + self.h < other.y: return False
+        return True
 
     def flip_x(self):
         """ x方向反転 """
@@ -54,6 +56,15 @@ class ShipSprite(BaseSprite):
                 self.w, self.h, 0) # Ship
         px.blt(self.x, self.y+self.h, 0, 0, self.h+off_y, 
                 self.w, self.h, 0) # Fire
+
+class InvaderSprite(BaseSprite):
+
+    def __init__(self, x, y):
+        super().__init__(x, y)
+
+    def draw(self):
+        """ 描画処理 """
+        px.rect(self.x, self.y, self.w, self.h, 3)
 
 class BulletSprite(BaseSprite):
 

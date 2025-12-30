@@ -12,7 +12,12 @@ import sprite
 W, H = 160, 120
 
 SHIP_SPD = 1.4
+INVADER_SPD_MIN = 1.0
+INVADER_SPD_MAX = 2.0
 BULLET_SPD = 3
+
+SPAWN_INTERVAL = 20
+SPAWN_LIMIT = 30
 
 # Game
 class Game:
@@ -25,6 +30,10 @@ class Game:
         self.ship = sprite.ShipSprite(W/2, H - 24)
         deg = 0 if random.random()<0.5 else 180
         self.ship.move(SHIP_SPD, deg)
+
+        # Invaders
+        self.spawn_time = 0
+        self.invaders = []
 
         # Bullets
         self.bullets = []
@@ -47,10 +56,30 @@ class Game:
         # Control
         if px.btnp(px.KEY_SPACE):
             self.action() # Action
+
+        # Invaders
+        for invader in self.invaders:
+            invader.update()
+            self.check_border(invader)
+            # Remove
+            if H < invader.y:
+                self.invaders.remove(invader)
             
         # Bullets
         for bullet in self.bullets:
             bullet.update()
+            # Remove
+            if bullet.y < 0:
+                self.bullets.remove(bullet)
+                continue
+            # x Invaders
+            for invader in self.invaders:
+                if invader.intersects(bullet):
+                    self.bullets.remove(bullet)
+                    self.invaders.remove(invader)
+                    return
+
+        self.check_spawn() # Spawn
 
     def draw(self):
         px.cls(0)
@@ -58,28 +87,43 @@ class Game:
         # Ship
         self.ship.draw()
 
+        # Invaders
+        for invader in self.invaders:
+            invader.draw()
+
         # Bullets
         for bullet in self.bullets:
             bullet.draw()
 
     def check_border(self, spr):
         """ 画面端処理 """
-        if spr.x < 0: 
-            spr.x = 0
-            spr.vx *= -1
+        if spr.x < -spr.w: 
+            spr.x = W
             return
-        if W < spr.x + spr.w:
-            spr.x = W - spr.w
-            spr.vx *= -1
+        if W < spr.x:
+            spr.x = -spr.w
             return
-        if spr.y < 0:
-            spr.y = 0
-            spr.vy *= -1
+        if spr.y < -spr.h:
+            spr.y = H
             return
-        if H < spr.y + spr.h:
-            spr.y = H - spr.h
-            spr.vy *= -1
+        if H < spr.y:
+            spr.y = -spr.h
             return
+
+    def check_spawn(self):
+        # Interval
+        self.spawn_time += 1
+        if SPAWN_INTERVAL < self.spawn_time:
+            self.spawn_time = 0
+            if SPAWN_LIMIT < len(self.invaders): return # Limit
+            # Spawn
+            x = random.random() * W
+            y = 0
+            spd = random.uniform(INVADER_SPD_MIN, INVADER_SPD_MAX)
+            deg = random.randint(70, 110)
+            invader = sprite.InvaderSprite(x, y)
+            invader.move(spd, deg)
+            self.invaders.append(invader)
 
     def action(self):
         """ 左右反転 """
