@@ -13,15 +13,15 @@ W, H = 160, 120
 
 SHIP_SPD = 1.4
 
+ASTEROID_INTERVAL = 20
+ASTEROID_LIMIT = 30
+
 ASTEROID_SPD_MIN = 1.0
 ASTEROID_SPD_MAX = 2.0
 ASTEROID_DEG_MIN = 30
 ASTEROID_DEG_MAX = 150
 
 BULLET_SPD = 3
-
-SPAWN_INTERVAL = 20
-SPAWN_LIMIT = 30
 
 # Game
 class Game:
@@ -40,7 +40,7 @@ class Game:
         self.ship.move(SHIP_SPD, deg)
 
         # 隕石
-        self.spawn_time = 0
+        self.asteroid_time = 0
         self.asteroids = []
 
         # 弾丸
@@ -142,11 +142,11 @@ class Game:
 
     def check_spawn(self):
         # 隕石の出現間隔
-        self.spawn_time += 1
-        if self.spawn_time < SPAWN_INTERVAL: return
-        self.spawn_time = 0
+        self.asteroid_time += 1
+        if self.asteroid_time < ASTEROID_INTERVAL: return
+        self.asteroid_time = 0
         # 隕石の最大数を超えない範囲で
-        if SPAWN_LIMIT < len(self.asteroids): return
+        if ASTEROID_LIMIT < len(self.asteroids): return
         # 隕石の追加
         x = random.random() * W
         y = 0
