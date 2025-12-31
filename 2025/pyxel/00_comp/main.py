@@ -65,12 +65,12 @@ class Game:
         # プレイヤーを更新
         self.ship.update()
         self.control_ship()
-        self.check_overlap(self.ship)
+        self.overlap_spr(self.ship)
 
         # 隕石
         for asteroid in self.asteroids:
             asteroid.update()
-            self.check_overlap(asteroid)
+            self.overlap_spr(asteroid)
             # 衝突判定(隕石 x プレイヤー)
             if asteroid.intersects(self.ship):
                 self.game_over_flg = True # ゲームオーバー
@@ -125,7 +125,7 @@ class Game:
             bullet.move(BULLET_SPD, 270)
             self.bullets.append(bullet)
 
-    def check_overlap(self, spr):
+    def overlap_spr(self, spr):
         """ 画面外に出たら反対側へ """
         if spr.x < -spr.w: 
             spr.x = W

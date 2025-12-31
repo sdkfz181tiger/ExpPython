@@ -12,10 +12,10 @@ class BaseSprite:
 
     def __init__(self, x, y, w=8, h=8):
         """ コンストラクタ """
-        self.x = x # x座標
-        self.y = y # y座標
-        self.w = w # 画像の幅
-        self.h = h # 画像の高さ
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
         self.vx = 0 # 移動速度(x方向)
         self.vy = 0 # 移動速度(y方向)
 
@@ -27,6 +27,12 @@ class BaseSprite:
     def draw(self):
         """ 描画処理(派生クラスで実装) """
         pass
+
+    def move(self, spd, deg):
+        """ 移動 """
+        rad = deg * math.pi / 180
+        self.vx = spd * math.cos(rad) # x方向の速度
+        self.vy = spd * math.sin(rad) # y方向の速度
 
 class ShipSprite(BaseSprite):
 

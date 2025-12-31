@@ -12,21 +12,31 @@ class BaseSprite:
 
     def __init__(self, x, y, w=8, h=8):
         """ コンストラクタ """
-        self.x = x # x座標
-        self.y = y # y座標
-        self.w = w # 画像の幅
-        self.h = h # 画像の高さ
-        self.vx = 0 # 移動速度(x方向)
-        self.vy = 0 # 移動速度(y方向)
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.vx = 0
+        self.vy = 0
 
     def update(self):
         """ 更新処理 """
-        self.x += self.vx # x方向に移動
-        self.y += self.vy # y方向に移動
+        self.x += self.vx
+        self.y += self.vy
 
     def draw(self):
         """ 描画処理(派生クラスで実装) """
         pass
+
+    def move(self, spd, deg):
+        """ 移動 """
+        rad = deg * math.pi / 180
+        self.vx = spd * math.cos(rad) # x方向の速度
+        self.vy = spd * math.sin(rad) # y方向の速度
+
+    def flip_x(self):
+        """ x方向反転 """
+        self.vx *= -1
 
 class ShipSprite(BaseSprite):
 

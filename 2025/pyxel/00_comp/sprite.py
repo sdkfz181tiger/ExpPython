@@ -34,6 +34,10 @@ class BaseSprite:
         self.vx = spd * math.cos(rad)
         self.vy = spd * math.sin(rad)
 
+    def flip_x(self):
+        """ x方向反転 """
+        self.vx *= -1
+
     def intersects(self, other):
         """ 矩形同士の当たり判定(AABB) """
         if other.x + other.w < self.x: return False
@@ -41,10 +45,6 @@ class BaseSprite:
         if other.y + other.h < self.y: return False
         if self.y + self.h < other.y: return False
         return True
-
-    def flip_x(self):
-        """ x方向反転 """
-        self.vx *= -1
 
 class ShipSprite(BaseSprite):
 
