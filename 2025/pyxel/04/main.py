@@ -27,6 +27,9 @@ SPAWN_LIMIT = 30
 class Game:
     def __init__(self):
 
+        # スコア
+        self.score = 0
+
         # プレイヤー
         self.ship = sprite.ShipSprite(W/2, H - 40)
         deg = 0 if random.random()<0.5 else 180
@@ -70,6 +73,7 @@ class Game:
             # 衝突判定
             for asteroid in self.asteroids:
                 if asteroid.intersects(bullet):
+                    self.score += 1 # スコア
                     self.bullets.remove(bullet)
                     self.asteroids.remove(asteroid)
                     return
@@ -78,6 +82,10 @@ class Game:
 
     def draw(self):
         px.cls(0)
+
+        # スコア
+        px.text(10, 10, 
+            "SCORE:{:04}".format(self.score), 12)
 
         # プレイヤー
         self.ship.draw()
