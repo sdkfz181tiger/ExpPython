@@ -67,7 +67,9 @@ class Game:
         self.control_ship()
         self.overlap_spr(self.ship)
 
-        # 隕石
+        self.check_interval() # 隕石の追加
+
+        # 隕石の更新
         for asteroid in self.asteroids:
             asteroid.update()
             self.overlap_spr(asteroid)
@@ -75,7 +77,7 @@ class Game:
             if asteroid.intersects(self.ship):
                 self.game_over_flg = True # ゲームオーバー
             
-        # 弾丸
+        # 弾丸の更新
         for bullet in self.bullets:
             bullet.update()
             # 画面外削除
@@ -89,8 +91,6 @@ class Game:
                     self.bullets.remove(bullet)
                     self.asteroids.remove(asteroid)
                     return
-
-        self.check_spawn() # 隕石の追加
 
     def draw(self):
         """ 描画処理 """
@@ -108,11 +108,11 @@ class Game:
         # プレイヤーを描画
         self.ship.draw()
 
-        # 隕石
+        # 隕石の描画
         for asteroid in self.asteroids:
             asteroid.draw()
 
-        # 弾丸
+        # 弾丸の描画
         for bullet in self.bullets:
             bullet.draw()
 
@@ -140,7 +140,7 @@ class Game:
             spr.y = -spr.h
             return
 
-    def check_spawn(self):
+    def check_interval(self):
         # 隕石の出現間隔
         self.asteroid_time += 1
         if self.asteroid_time < ASTEROID_INTERVAL: return
