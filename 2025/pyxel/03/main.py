@@ -4,11 +4,11 @@
 かじるプログラミング_pyxel
 """
 
-import pyxel # Pyxelゲームエンジン
-import math # 数学用モジュール
-import random # 乱数用モジュール
+import pyxel
+import math
+import random
 
-W, H = 160, 120 # ゲーム画面の幅、高さ
+W, H = 160, 120
 
 # Game
 class Game:
