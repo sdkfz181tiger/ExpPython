@@ -31,10 +31,10 @@ class Game:
         # ゲームオーバーフラグ
         self.game_over_flg = False
 
-        # スコア
+        # スコアを初期化
         self.score = 0
 
-        # プレイヤー
+        # プレイヤーを初期化
         self.ship = sprite.ShipSprite(W/2, H - 40)
         deg = 0 if random.random()<0.5 else 180
         self.ship.move(SHIP_SPD, deg)
@@ -62,7 +62,7 @@ class Game:
         if self.game_over_flg:
             return
 
-        # プレイヤー
+        # プレイヤーを更新
         self.ship.update()
         self.control_ship()
         self.check_overlap(self.ship)
@@ -96,16 +96,16 @@ class Game:
         """ 描画処理 """
         pyxel.cls(0)
 
-        # スコア
-        pyxel.text(10, 10, 
-            "SCORE:{:04}".format(self.score), 12)
-
         # ゲームオーバー
         if self.game_over_flg:
             msg = "GAME OVER"
             pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
 
-        # プレイヤー
+        # スコアを描画
+        pyxel.text(10, 10, 
+            "SCORE:{:04}".format(self.score), 12)
+
+        # プレイヤーを描画
         self.ship.draw()
 
         # 隕石
