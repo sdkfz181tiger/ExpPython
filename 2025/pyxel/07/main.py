@@ -10,7 +10,7 @@ import random
 import sprite
 
 W, H = 160, 120
-SHIP_SPD = 1.4 # プレイヤーの速度
+SHIP_SPD = 1.4
 
 # Game
 class Game:

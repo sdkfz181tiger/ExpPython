@@ -49,3 +49,15 @@ class ShipSprite(BaseSprite):
         pyxel.blt(self.x, self.y, 0, 
             0, 0, 
             self.w, self.h, 0) # Ship
+
+class AsteroidSprite(BaseSprite):
+
+    def __init__(self, x, y):
+        """ コンストラクタ """
+        super().__init__(x, y)
+        self.index = random.randint(2, 7) # 隕石画像
+
+    def draw(self):
+        """ 描画処理 """
+        pyxel.blt(self.x, self.y, 0, self.w*self.index, 0, 
+                self.w, self.h, 0) # Ship
