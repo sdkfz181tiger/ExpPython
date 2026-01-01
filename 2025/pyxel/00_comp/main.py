@@ -53,10 +53,6 @@ class Game:
     def update(self):
         """ 更新処理 """
 
-        # ゲーム終了
-        if pyxel.btnp(pyxel.KEY_Q):
-            pyxel.quit()
-
         # ゲームオーバー
         if self.game_over_flg:
             return
@@ -68,8 +64,8 @@ class Game:
 
         self.check_interval() # 隕石の追加
 
-        # 隕石の更新(逆順)
-        for asteroid in self.asteroids[::-1]:
+        # 隕石の更新
+        for asteroid in self.asteroids:
             asteroid.update()
             self.overlap_spr(asteroid)
             # 衝突判定(隕石 x プレイヤー)

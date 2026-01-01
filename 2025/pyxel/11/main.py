@@ -27,6 +27,9 @@ class Game:
     def __init__(self):
         """ コンストラクタ """
 
+        # ゲームオーバーフラグ
+        self.game_over_flg = False
+
         # スコアを初期化
         self.score = 0
 
@@ -50,6 +53,10 @@ class Game:
     def update(self):
         """ 更新処理 """
 
+        # ゲームオーバー
+        if self.game_over_flg:
+            return
+
         # プレイヤーを更新
         self.ship.update()
         self.control_ship()
@@ -61,6 +68,9 @@ class Game:
         for asteroid in self.asteroids:
             asteroid.update()
             self.overlap_spr(asteroid)
+            # 衝突判定(隕石 x プレイヤー)
+            if asteroid.intersects(self.ship):
+                self.game_over_flg = True # ゲームオーバー
 
         # 弾丸の更新(逆順)
         for bullet in self.bullets[::-1]:
@@ -80,6 +90,11 @@ class Game:
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
+
+        # ゲームオーバー
+        if self.game_over_flg:
+            msg = "GAME OVER"
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
 
         # スコアを描画
         pyxel.text(10, 10, 
