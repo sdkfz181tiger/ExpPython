@@ -9,16 +9,16 @@ import math
 import random
 import sprite
 
-W, H = 160, 120 # ゲーム画面の幅、高さ
-SHIP_SPD = 1.4 # プレイヤーの速度
+W, H = 160, 120
+SHIP_SPD = 1.4
 
-ASTEROID_INTERVAL = 20 # 隕石の発生間隔
-ASTEROID_LIMIT = 30 # 隕石の最大数
+ASTEROID_INTERVAL = 20
+ASTEROID_LIMIT = 30
 
-ASTEROID_SPD_MIN = 1.0 # 隕石の最低速度
-ASTEROID_SPD_MAX = 2.0 # 隕石の最高速度
-ASTEROID_DEG_MIN = 30 # 隕石の最低角度
-ASTEROID_DEG_MAX = 150 # 隕石の最高角度
+ASTEROID_SPD_MIN = 1.0
+ASTEROID_SPD_MAX = 2.0
+ASTEROID_DEG_MIN = 30
+ASTEROID_DEG_MAX = 150
 
 BULLET_SPD = 3 # 弾丸の速度
 
@@ -26,9 +26,6 @@ BULLET_SPD = 3 # 弾丸の速度
 class Game:
     def __init__(self):
         """ コンストラクタ """
-
-        # ゲームオーバーフラグ
-        self.game_over_flg = False
 
         # スコアを初期化
         self.score = 0
@@ -45,21 +42,13 @@ class Game:
         # 弾丸
         self.bullets = []
 
-        # Pyxel
+        # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
         pyxel.load("shooter.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
         """ 更新処理 """
-
-        # ゲーム終了
-        if pyxel.btnp(pyxel.KEY_Q):
-            pyxel.quit()
-
-        # ゲームオーバー
-        if self.game_over_flg:
-            return
 
         # プレイヤーを更新
         self.ship.update()
@@ -72,10 +61,7 @@ class Game:
         for asteroid in self.asteroids:
             asteroid.update()
             self.overlap_spr(asteroid)
-            # 衝突判定(隕石 x プレイヤー)
-            if asteroid.intersects(self.ship):
-                self.game_over_flg = True # ゲームオーバー
-            
+
         # 弾丸の更新
         for bullet in self.bullets:
             bullet.update()
@@ -83,22 +69,10 @@ class Game:
             if bullet.y < 0:
                 self.bullets.remove(bullet)
                 continue
-            # 衝突判定(弾丸 x 隕石)
-            for asteroid in self.asteroids:
-                if asteroid.intersects(bullet):
-                    self.score += 1 # スコア
-                    self.bullets.remove(bullet)
-                    self.asteroids.remove(asteroid)
-                    return
 
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
-
-        # ゲームオーバー
-        if self.game_over_flg:
-            msg = "GAME OVER"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
 
         # スコアを描画
         pyxel.text(10, 10, 
