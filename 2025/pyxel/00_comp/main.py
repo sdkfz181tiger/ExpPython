@@ -68,23 +68,23 @@ class Game:
 
         self.check_interval() # 隕石の追加
 
-        # 隕石の更新
-        for asteroid in self.asteroids:
+        # 隕石の更新(逆順)
+        for asteroid in self.asteroids[::-1]:
             asteroid.update()
             self.overlap_spr(asteroid)
             # 衝突判定(隕石 x プレイヤー)
             if asteroid.intersects(self.ship):
                 self.game_over_flg = True # ゲームオーバー
             
-        # 弾丸の更新
-        for bullet in self.bullets:
+        # 弾丸の更新(逆順)
+        for bullet in self.bullets[::-1]:
             bullet.update()
             # 画面外削除
             if bullet.y < 0:
                 self.bullets.remove(bullet)
                 continue
             # 衝突判定(弾丸 x 隕石)
-            for asteroid in self.asteroids:
+            for asteroid in self.asteroids[::-1]:
                 if asteroid.intersects(bullet):
                     self.score += 1 # スコア
                     self.bullets.remove(bullet)
