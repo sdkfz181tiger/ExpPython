@@ -49,10 +49,15 @@ class Game:
         pyxel.init(W, H, title="Hello, Pyxel!!")
         pyxel.load("shooter.pyxres")
 
-        # サウンド
+        # サウンド(ショット)
         pyxel.sound(0).set("c4g3", 
-            tones="p", volumes="7",
+            tones="p", volumes="76",
             effects="f", speed=20)
+
+        # サウンド(ヒット)
+        pyxel.sound(1).set("e4d4c4", 
+            tones="p", volumes="76",
+            effects="n", speed=20)
 
         pyxel.run(self.update, self.draw)
 
@@ -91,6 +96,9 @@ class Game:
                     self.score += 1 # スコア
                     self.bullets.remove(bullet)
                     self.asteroids.remove(asteroid)
+
+                    # サウンド(channel, sound)
+                    pyxel.play(1, 1)
                     return
 
     def draw(self):
@@ -125,7 +133,8 @@ class Game:
             bullet = sprite.BulletSprite(self.ship.x, self.ship.y)
             bullet.move(BULLET_SPD, 270)
             self.bullets.append(bullet)
-            # サウンド
+
+            # サウンド(channel, sound)
             pyxel.play(0, 0)
 
     def overlap_spr(self, spr):
