@@ -6,21 +6,20 @@
 """
 
 import datetime
-import hashlib
 import os
 import sqlite3
 
 class MyDB():
 
     def __init__(self, path, table):
-        # MySQLite
+        """ コンストラクタ """
         self.dir_base = os.path.dirname(__file__)
         self.db_path = os.path.join(self.dir_base, path)
         self.db_table = table
 
     # CRUD(Create)
     def create_table(self):
-        print("create_table:", self.db_table)
+        """ テーブルを作る """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -38,7 +37,7 @@ class MyDB():
 
     # CRUD(Insert)
     def insert_record(self, name, comment, score):
-        print("insert_record:", name, comment, score)
+        """ データを追加する """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -51,7 +50,7 @@ class MyDB():
 
     # CRUD(Read)
     def read_records(self, limit=10):
-        print("read_records!!")
+        """ データを読み込む(limit件数まで) """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -64,7 +63,7 @@ class MyDB():
         return records
 
     def read_record(self, uid):
-        print("read_record:", uid)
+        """ データを読み込む(1件) """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -78,7 +77,7 @@ class MyDB():
 
     # CRUD(Update)
     def update_record(self, uid, name, comment, score):
-        print("update_record:", uid)
+        """ データを更新する(1件) """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -92,7 +91,7 @@ class MyDB():
 
     # CRUD(Delete)
     def delete_record(self, uid):
-        print("delete_record:", uid)
+        """ データを削除する(1件) """
         # SQLite
         con = sqlite3.connect(self.db_path)
         cur = con.cursor()
@@ -105,8 +104,5 @@ class MyDB():
 
     # Time
     def get_time(self):
+        """ 現在日時を取得する """
         return datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-
-    # Hash
-    def get_hash(self, text):
-        return hashlib.md5(text.encode()).hexdigest()
