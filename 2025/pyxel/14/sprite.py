@@ -49,7 +49,7 @@ class PlayerSprite(BaseSprite):
         super().__init__(x, y)
         self.start_flg = False
         self.gravity = 0.4 # 重力
-        self.jump_x = 0.4 # ジャンプx
+        self.jump_x = 0.6 # ジャンプx
         self.jump_y = -3.4 # ジャンプy
 
     def update(self):
@@ -63,7 +63,7 @@ class PlayerSprite(BaseSprite):
         pyxel.blt(self.x, self.y, 0, 
             0, 16, self.w, self.h, 0)
         # Debug
-        pyxel.rectb(self.x, self.y, self.w, self.h, 3)
+        #pyxel.rectb(self.x, self.y, self.w, self.h, 3)
 
     def jump(self):
         """ ジャンプ """
@@ -73,10 +73,11 @@ class PlayerSprite(BaseSprite):
 
 class TunnelSprite(BaseSprite):
 
-    def __init__(self, x, y, length):
+    def __init__(self, x, y, length, top_flg=False):
         """ コンストラクタ """
-        super().__init__(x, y, 16, 8*length)
+        super().__init__(x, y, 16, length*8)
         self.length = length # トンネルの長さ
+        if(top_flg): self.y -= self.h # トンネル上
 
     def draw(self):
         """ 描画処理 """
@@ -85,13 +86,13 @@ class TunnelSprite(BaseSprite):
             16, 16, self.w, 8, 0)
         # Mid
         for i in range(self.length-2):
-            y = self.y + 8*(i+1)
+            y = self.y + (i+1)*8
             pyxel.blt(self.x, y, 0, 
                 16, 24, self.w, 8, 0)
         # Bottom
-        y = self.y + 8*(self.length-1)
+        y = self.y + (self.length-1)*8
         pyxel.blt(self.x, y, 0, 
             16, 32, self.w, 8, 0)
         # Debug
-        pyxel.rectb(self.x, self.y, self.w, self.h, 3)
+        #pyxel.rectb(self.x, self.y, self.w, self.h, 3)
 
