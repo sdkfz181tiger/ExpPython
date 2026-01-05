@@ -47,14 +47,12 @@ class PlayerSprite(BaseSprite):
     def __init__(self, x, y):
         """ コンストラクタ """
         super().__init__(x, y)
-        self.start_flg = False
         self.gravity = 0.4 # 重力
         self.jump_x = 1.0 # ジャンプx
         self.jump_y = -3.4 # ジャンプy
 
     def update(self):
         """ 更新処理 """
-        if(not self.start_flg): return
         super().update()
         self.vy += self.gravity # Gravity
 
@@ -67,7 +65,6 @@ class PlayerSprite(BaseSprite):
 
     def jump(self):
         """ ジャンプ """
-        if(not self.start_flg): self.start_flg = True
         self.vx = self.jump_x # ジャンプx
         self.vy = self.jump_y # ジャンプy
 
