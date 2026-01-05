@@ -11,19 +11,28 @@ import sprite
 
 W, H = 160, 120
 
+MODE_TITLE = "title"
+MODE_PLAY = "play"
+MODE_GAME_OVER = "game_over"
+
 # Game
 class Game:
     def __init__(self):
         """ コンストラクタ """
 
-        # ゲームオーバーフラグ
-        self.game_over_flg = False
+        # ゲームモード
+        self.game_mode = MODE_TITLE
 
         # スコアを初期化
         self.score = 0
 
         # プレイヤーを初期化
-        self.player = sprite.PlayerSprite(W/2, H/2)
+        self.player = sprite.PlayerSprite(W/4, H/2)
+
+        # トンネルを初期化
+        self.tunnels = []
+        tunnel = sprite.TunnelSprite(W/2 + 50, H/2, 10)
+        self.tunnels.append(tunnel)
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
@@ -33,20 +42,35 @@ class Game:
     def update(self):
         """ 更新処理 """
 
-        # ゲームオーバー
-        if self.game_over_flg:
-            return
+        # コントロール
+        self.control()
+
+        # プレイ中判定
+        if self.game_mode != MODE_PLAY: return
 
         # プレイヤーを更新
         self.player.update()
-        self.control()
+
+        # トンネルを更新
+        for tunnel in self.tunnels:
+            tunnel.update()
+            if(tunnel.intersects(self.player)):
+                self.game_mode = MODE_GAME_OVER
+                break
+
+        # 落下判定
+        if H < self.player.y: 
+            self.game_mode = MODE_GAME_OVER
 
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
 
-        # ゲームオーバー
-        if self.game_over_flg:
+        # メッセージ
+        if self.game_mode == MODE_TITLE:
+            msg = "TAP TO PLAY"
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
+        elif self.game_mode == MODE_GAME_OVER:
             msg = "GAME OVER"
             pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
 
@@ -57,9 +81,27 @@ class Game:
         # プレイヤーを描画
         self.player.draw()
 
+        # トンネルを描画
+        for tunnel in self.tunnels:
+            tunnel.draw()
+
     def control(self):
         """ コントロール """
-        if pyxel.btnp(pyxel.KEY_SPACE):
+        if not pyxel.btnp(pyxel.KEY_SPACE): return
+
+        # Title -> Play
+        if self.game_mode == MODE_TITLE:
+            self.game_mode = MODE_PLAY
+
+        # Game Over -> Title
+        if self.game_mode == MODE_GAME_OVER:
+            self.game_mode = MODE_TITLE
+            # Reset
+            self.player.x = W/4
+            self.player.y = H/2
+
+        # Jump
+        if self.game_mode == MODE_PLAY:
             self.player.jump()
 
 def main():
