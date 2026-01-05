@@ -49,7 +49,7 @@ class PlayerSprite(BaseSprite):
         super().__init__(x, y)
         self.start_flg = False
         self.gravity = 0.4 # 重力
-        self.jump_x = 0.6 # ジャンプx
+        self.jump_x = 1.0 # ジャンプx
         self.jump_y = -3.4 # ジャンプy
 
     def update(self):

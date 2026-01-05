@@ -9,7 +9,7 @@ import math
 import random
 import sprite
 
-W, H = 120, 120
+W, H = 160, 120
 
 START_X = W / 3
 START_Y = H / 2 - 12
