@@ -22,6 +22,18 @@ def draw_n_star(ttl, line_len, n):
         ttl.forward(line_len)
         ttl.right(deg)
 
+def draw_circle(ttl, radius, fill=False, color=None):
+    """ 円を描く """
+    # color が指定されていれば色を設定
+    if color:
+        ttl.color(color)
+    if fill:
+        ttl.begin_fill()
+        ttl.circle(radius)
+        ttl.end_fill()
+    else:
+        ttl.circle(radius)
+
 def main():
     """ メイン処理 """
     
@@ -30,7 +42,8 @@ def main():
     screen = turtle.Screen()
     ttl = turtle.Turtle()
     #draw_5_star(ttl, 50)
-    draw_n_star(ttl, 100, 5)
+    draw_circle(ttl, 40, fill=True, color="lightblue")  # 例: 塗りつぶしの円
+    #draw_n_star(ttl, 100, 5)
     screen.exitonclick()
 
 if __name__ == "__main__":
