@@ -11,7 +11,7 @@ import sprite
 
 W, H = 160, 120
 
-START_X = W / 3
+START_X = W / 2 - 48
 START_Y = H / 2 - 12
 
 MODE_TITLE = "title"
@@ -37,7 +37,7 @@ class Game:
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
-        pyxel.load("shooter.pyxres")
+        pyxel.load("flappy.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
