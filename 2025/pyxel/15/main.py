@@ -11,12 +11,14 @@ import sprite
 
 W, H = 160, 120
 
-START_X = W / 3
+START_X = W / 2 - 48
 START_Y = H / 2 - 12
 
 MODE_TITLE = "title"
 MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
+
+TUNNEL_TOTAL = 48
 
 # Game
 class Game:
@@ -70,11 +72,11 @@ class Game:
         """ 描画処理 """
         pyxel.cls(6)
 
+        # タイルマップ
+        pyxel.bltm(0, 0, 0, 0, 0, 192, 128, 0)
+
         # カメラ(セット)
         pyxel.camera(self.player.x - START_X, 0)
-
-        # タイルマップ
-        pyxel.bltm(0, 0, 0, 0, 0, 128, 128, 0)
 
         # プレイヤーを描画
         self.player.draw()
@@ -88,14 +90,14 @@ class Game:
         # メッセージ
         if self.game_mode == MODE_TITLE:
             msg = "TAP TO PLAY"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
         elif self.game_mode == MODE_GAME_OVER:
             msg = "GAME OVER"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 13)
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
 
         # スコアを描画
         pyxel.text(10, 10, 
-            "SCORE:{:04}".format(self.score), 12)
+            "SCORE:{:04}".format(self.score), 1)
 
     def reset(self):
         """ ステージを初期化 """
@@ -106,7 +108,7 @@ class Game:
 
         # トンネル
         self.tunnels = []
-        for i in range(24):
+        for i in range(TUNNEL_TOTAL):
             pad_x = 42
             pad_y = random.randint(2, 3) * 8
             x = START_X + pad_x * i + 32
