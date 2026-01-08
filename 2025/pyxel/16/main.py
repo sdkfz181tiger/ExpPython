@@ -12,13 +12,18 @@ import sprite
 W, H = 160, 120
 
 START_X = W / 2
-START_Y = H / 2
+START_Y = H / 2 - 10
 
 MODE_TITLE = "title"
 MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
 
-TUNNEL_TOTAL = 48
+PLAYER_SPD = 1.4
+KEYS = {
+    pyxel.KEY_W: 270, 
+    pyxel.KEY_A: 180,
+    pyxel.KEY_S: 90,
+    pyxel.KEY_D: 0}
 
 # Game
 class Game:
@@ -45,9 +50,6 @@ class Game:
     def update(self):
         """ 更新処理 """
 
-        # スコアを更新
-        self.score = int(self.player.x - START_X)
-
         # コントロール
         self.control()
 
@@ -68,18 +70,15 @@ class Game:
         # タイルマップ
         pyxel.bltm(0, 0, 0, 0, 128, 192, 128, 0)
 
-        # カメラ(セット)
-        pyxel.camera(self.player.x - START_X, 0)
-
         # プレイヤーを描画
         self.player.draw()
 
-        pyxel.camera() # カメラ(リセット)
-
         # メッセージ
         if self.game_mode == MODE_TITLE:
-            msg = "TAP TO PLAY"
+            msg = "SPACE TO PLAY"
             pyxel.text(W/2-len(msg)*2, H/2, msg, 7)
+            msg = "CONTROL: WASD"
+            pyxel.text(W/2-len(msg)*2, H/2+10, msg, 7)
         elif self.game_mode == MODE_GAME_OVER:
             msg = "GAME OVER"
             pyxel.text(W/2-len(msg)*2, H/2, msg, 7)
@@ -97,21 +96,45 @@ class Game:
 
     def control(self):
         """ コントロール """
-        if not pyxel.btnp(pyxel.KEY_SPACE): return
 
-        # Title -> Play
-        if self.game_mode == MODE_TITLE:
-            self.game_mode = MODE_PLAY
+        # ゲームループ
+        if pyxel.btnp(pyxel.KEY_SPACE):
 
-        # Game Over -> Title
-        if self.game_mode == MODE_GAME_OVER:
-            self.game_mode = MODE_TITLE
-            # Reset
-            self.reset()
+            # Title -> Play
+            if self.game_mode == MODE_TITLE:
+                self.game_mode = MODE_PLAY
 
-        # ジャンプ
+            # Game Over -> Title
+            if self.game_mode == MODE_GAME_OVER:
+                self.game_mode = MODE_TITLE
+                # Reset
+                self.reset()
+
+            return
+
+        # プレイヤー
         if self.game_mode == MODE_PLAY:
-            self.player.jump()
+
+            # W
+            if pyxel.btnp(pyxel.KEY_W):
+                self.player.move(PLAYER_SPD, 270)
+            elif pyxel.btnr(pyxel.KEY_W):
+                self.player.stop()
+            # A
+            if pyxel.btnp(pyxel.KEY_A):
+                self.player.move(PLAYER_SPD, 180)
+            elif pyxel.btnr(pyxel.KEY_A):
+                self.player.stop()
+            # S
+            if pyxel.btnp(pyxel.KEY_S):
+                self.player.move(PLAYER_SPD, 90)
+            elif pyxel.btnr(pyxel.KEY_S):
+                self.player.stop()
+            # D
+            if pyxel.btnp(pyxel.KEY_D):
+                self.player.move(PLAYER_SPD, 0)
+            elif pyxel.btnr(pyxel.KEY_D):
+                self.player.stop()
 
 def main():
     """ メイン処理 """

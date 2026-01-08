@@ -30,9 +30,13 @@ class BaseSprite:
 
     def move(self, spd, deg):
         """ 移動 """
-        rad = deg * math.pi / 180
+        rad = (deg * math.pi) / 180
         self.vx = spd * math.cos(rad) # x方向の速度
         self.vy = spd * math.sin(rad) # y方向の速度
+
+    def stop(self):
+        """ 停止 """
+        self.move(0, 0) # 停止
 
     def intersects(self, other):
         """ 矩形同士の当たり判定(AABB) """
@@ -58,6 +62,6 @@ class PlayerSprite(BaseSprite):
     def draw(self):
         """ 描画処理 """
         pyxel.blt(self.x, self.y, 0, 
-            0, 16, self.w, self.h, 0)
+            0, 72, self.w, self.h, 0)
         # Debug
         #pyxel.rectb(self.x, self.y, self.w, self.h, 3)
