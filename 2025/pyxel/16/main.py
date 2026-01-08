@@ -20,6 +20,15 @@ MODE_GAME_OVER = "game_over"
 
 PLAYER_SPD = 1.4
 
+MONSTER_MAX = 10
+MONSTERS = [
+    {"u": 32, "v": 72, "spd": 1.0},
+    {"u": 64, "v": 72, "spd": 1.0},
+    {"u":  0, "v": 80, "spd": 1.0},
+    {"u": 16, "v": 80, "spd": 1.0},
+    {"u": 32, "v": 80, "spd": 1.0}
+]
+
 # Game
 class Game:
     def __init__(self):
@@ -32,7 +41,7 @@ class Game:
         self.game_mode = MODE_TITLE
 
         # プレイヤーを初期化
-        self.player = sprite.PlayerSprite(START_X, START_Y, 0, 72)
+        self.player = sprite.PlayerSprite(START_X, START_Y, 0, 72, PLAYER_SPD)
 
         # ステージを初期化
         self.reset()
@@ -54,9 +63,12 @@ class Game:
         # プレイヤーを更新
         self.player.update()
 
-        # 落下判定
-        #if H < self.player.y: 
-        #   self.game_mode = MODE_GAME_OVER
+        # モンスター
+        for monster in self.monsters:
+            monster.update()
+            # x プレイヤー
+            if monster.intersects(self.player):
+                self.game_mode = MODE_GAME_OVER
 
     def draw(self):
         """ 描画処理 """
@@ -67,6 +79,10 @@ class Game:
 
         # プレイヤーを描画
         self.player.draw()
+
+        # モンスターを描画
+        for monster in self.monsters:
+            monster.draw()
 
         # メッセージ
         if self.game_mode == MODE_TITLE:
@@ -88,6 +104,18 @@ class Game:
         # プレイヤー
         self.player.x = START_X
         self.player.y = START_Y
+
+        # モンスター
+        self.monsters = []
+        for i in range(3):
+            item = random.choice(MONSTERS)
+            x = random.randint(0, W)
+            y = random.randint(0, H)
+            u = item["u"]
+            v = item["v"]
+            spd = item["spd"]
+            monster = sprite.Monster(x, y, u, v, spd)
+            self.monsters.append(monster)
 
     def control(self):
         """ コントロール """
@@ -112,22 +140,22 @@ class Game:
 
             # W
             if pyxel.btnp(pyxel.KEY_W):
-                self.player.go_up(PLAYER_SPD)
+                self.player.move(270)
             elif pyxel.btnr(pyxel.KEY_W):
                 self.player.stop()
             # A
             if pyxel.btnp(pyxel.KEY_A):
-                self.player.go_left(PLAYER_SPD)
+                self.player.move(180)
             elif pyxel.btnr(pyxel.KEY_A):
                 self.player.stop()
             # S
             if pyxel.btnp(pyxel.KEY_S):
-                self.player.go_down(PLAYER_SPD)
+                self.player.move(90)
             elif pyxel.btnr(pyxel.KEY_S):
                 self.player.stop()
             # D
             if pyxel.btnp(pyxel.KEY_D):
-                self.player.go_right(PLAYER_SPD)
+                self.player.move(0)
             elif pyxel.btnr(pyxel.KEY_D):
                 self.player.stop()
 

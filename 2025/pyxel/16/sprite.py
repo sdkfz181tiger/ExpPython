@@ -10,12 +10,13 @@ import random
 
 class BaseSprite:
 
-    def __init__(self, x, y, u, v, w=8, h=8):
+    def __init__(self, x, y, u, v, spd, w=8, h=8):
         """ コンストラクタ """
         self.x = x
         self.y = y
         self.u = u
         self.v = v
+        self.spd = spd
         self.w = w
         self.h = h
         self.vx = 0
@@ -33,15 +34,18 @@ class BaseSprite:
         pyxel.blt(self.x, self.y, 0, 
             self.u + u, self.v, self.w, self.h, 0)
 
-    def move(self, spd, deg):
+    def move(self, deg):
         """ 移動 """
         rad = (deg * math.pi) / 180
-        self.vx = spd * math.cos(rad) # x方向の速度
-        self.vy = spd * math.sin(rad) # y方向の速度
+        self.vx = self.spd * math.cos(rad) # x方向の速度
+        self.vy = self.spd * math.sin(rad) # y方向の速度
+        if deg == 180: self.right_flg = False
+        if deg == 0: self.right_flg = True
 
     def stop(self):
         """ 停止 """
-        self.move(0, 0) # 停止
+        self.vx = 0
+        self.vy = 0
 
     def intersects(self, other):
         """ 矩形同士の当たり判定(AABB) """
@@ -53,24 +57,16 @@ class BaseSprite:
 
 class PlayerSprite(BaseSprite):
 
-    def __init__(self, x, y, u, v):
+    def __init__(self, x, y, u, v, spd):
         """ コンストラクタ """
-        super().__init__(x, y, u, v)
+        super().__init__(x, y, u, v, spd)
 
     def update(self):
         """ 更新処理 """
         super().update()
 
-    def go_up(self, spd):
-        self.move(spd, 270)
+class Monster(BaseSprite):
 
-    def go_left(self, spd):
-        self.move(spd, 180)
-        self.right_flg = False # 右向きフラグ
-
-    def go_down(self, spd):
-        self.move(spd, 90)
-
-    def go_right(self, spd):
-        self.move(spd, 0)
-        self.right_flg = True # 右向きフラグ
+    def __init__(self, x, y, u, v, spd):
+        """ コンストラクタ """
+        super().__init__(x, y, u, v, spd)
