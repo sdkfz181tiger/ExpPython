@@ -54,6 +54,7 @@ class PlayerSprite(BaseSprite):
         self.gravity = 0.4 # 重力
         self.jump_x = 1.0 # ジャンプx
         self.jump_y = -3.4 # ジャンプy
+        self.right_flg = True # 右向きフラグ
 
     def update(self):
         """ 更新処理 """
@@ -61,7 +62,22 @@ class PlayerSprite(BaseSprite):
 
     def draw(self):
         """ 描画処理 """
+        off_x = 0 if self.right_flg else 8
         pyxel.blt(self.x, self.y, 0, 
-            0, 72, self.w, self.h, 0)
+            off_x, 72, self.w, self.h, 0)
         # Debug
         #pyxel.rectb(self.x, self.y, self.w, self.h, 3)
+
+    def go_up(self, spd):
+        self.move(spd, 270)
+
+    def go_left(self, spd):
+        self.move(spd, 180)
+        self.right_flg = False
+
+    def go_down(self, spd):
+        self.move(spd, 90)
+
+    def go_right(self, spd):
+        self.move(spd, 0)
+        self.right_flg = True

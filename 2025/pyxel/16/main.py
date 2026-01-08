@@ -19,11 +19,6 @@ MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
 
 PLAYER_SPD = 1.4
-KEYS = {
-    pyxel.KEY_W: 270, 
-    pyxel.KEY_A: 180,
-    pyxel.KEY_S: 90,
-    pyxel.KEY_D: 0}
 
 # Game
 class Game:
@@ -117,22 +112,22 @@ class Game:
 
             # W
             if pyxel.btnp(pyxel.KEY_W):
-                self.player.move(PLAYER_SPD, 270)
+                self.player.go_up(PLAYER_SPD)
             elif pyxel.btnr(pyxel.KEY_W):
                 self.player.stop()
             # A
             if pyxel.btnp(pyxel.KEY_A):
-                self.player.move(PLAYER_SPD, 180)
+                self.player.go_left(PLAYER_SPD)
             elif pyxel.btnr(pyxel.KEY_A):
                 self.player.stop()
             # S
             if pyxel.btnp(pyxel.KEY_S):
-                self.player.move(PLAYER_SPD, 90)
+                self.player.go_down(PLAYER_SPD)
             elif pyxel.btnr(pyxel.KEY_S):
                 self.player.stop()
             # D
             if pyxel.btnp(pyxel.KEY_D):
-                self.player.move(PLAYER_SPD, 0)
+                self.player.go_right(PLAYER_SPD)
             elif pyxel.btnr(pyxel.KEY_D):
                 self.player.stop()
 
