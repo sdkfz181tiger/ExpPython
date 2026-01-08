@@ -11,8 +11,8 @@ import sprite
 
 W, H = 160, 120
 
-START_X = W / 2 - 48
-START_Y = H / 2 - 12
+START_X = W / 2
+START_Y = H / 2
 
 MODE_TITLE = "title"
 MODE_PLAY = "play"
@@ -39,7 +39,7 @@ class Game:
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
-        pyxel.load("flappy.pyxres")
+        pyxel.load("vampire.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -57,23 +57,16 @@ class Game:
         # プレイヤーを更新
         self.player.update()
 
-        # トンネルを更新
-        for tunnel in self.tunnels:
-            tunnel.update()
-            if(tunnel.intersects(self.player)):
-                self.game_mode = MODE_GAME_OVER
-                break
-
         # 落下判定
-        if H < self.player.y: 
-            self.game_mode = MODE_GAME_OVER
+        #if H < self.player.y: 
+        #   self.game_mode = MODE_GAME_OVER
 
     def draw(self):
         """ 描画処理 """
-        pyxel.cls(6)
+        pyxel.cls(0)
 
         # タイルマップ
-        pyxel.bltm(0, 0, 0, 0, 0, 192, 128, 0)
+        pyxel.bltm(0, 0, 0, 0, 128, 192, 128, 0)
 
         # カメラ(セット)
         pyxel.camera(self.player.x - START_X, 0)
@@ -81,23 +74,19 @@ class Game:
         # プレイヤーを描画
         self.player.draw()
 
-        # トンネルを描画
-        for tunnel in self.tunnels:
-            tunnel.draw()
-
         pyxel.camera() # カメラ(リセット)
 
         # メッセージ
         if self.game_mode == MODE_TITLE:
             msg = "TAP TO PLAY"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 7)
         elif self.game_mode == MODE_GAME_OVER:
             msg = "GAME OVER"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
+            pyxel.text(W/2-len(msg)*2, H/2, msg, 7)
 
         # スコアを描画
         pyxel.text(10, 10, 
-            "SCORE:{:04}".format(self.score), 1)
+            "SCORE:{:04}".format(self.score), 7)
 
     def reset(self):
         """ ステージを初期化 """
@@ -105,18 +94,6 @@ class Game:
         # プレイヤー
         self.player.x = START_X
         self.player.y = START_Y
-
-        # トンネル
-        self.tunnels = []
-        for i in range(TUNNEL_TOTAL):
-            pad_x = 42
-            pad_y = random.randint(2, 3) * 8
-            x = START_X + pad_x * i + 32
-            y = H / 2 + random.randint(-2, 2) * 8
-            t_top = sprite.TunnelSprite(x, y-pad_y, 10, True)
-            self.tunnels.append(t_top)
-            t_bottom = sprite.TunnelSprite(x, y+pad_y, 10)
-            self.tunnels.append(t_bottom)
 
     def control(self):
         """ コントロール """
