@@ -32,7 +32,7 @@ class Game:
         self.game_mode = MODE_TITLE
 
         # プレイヤーを初期化
-        self.player = sprite.PlayerSprite(START_X, START_Y)
+        self.player = sprite.PlayerSprite(START_X, START_Y, 0, 72)
 
         # ステージを初期化
         self.reset()

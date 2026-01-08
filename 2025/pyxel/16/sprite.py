@@ -10,14 +10,17 @@ import random
 
 class BaseSprite:
 
-    def __init__(self, x, y, w=8, h=8):
+    def __init__(self, x, y, u, v, w=8, h=8):
         """ コンストラクタ """
         self.x = x
         self.y = y
+        self.u = u
+        self.v = v
         self.w = w
         self.h = h
         self.vx = 0
         self.vy = 0
+        self.right_flg = True # 右向きフラグ
 
     def update(self):
         """ 更新処理 """
@@ -25,8 +28,10 @@ class BaseSprite:
         self.y += self.vy
 
     def draw(self):
-        """ 描画処理(派生クラスで実装) """
-        pass
+        """ 描画処理 """
+        u = 0 if self.right_flg else 8
+        pyxel.blt(self.x, self.y, 0, 
+            self.u + u, self.v, self.w, self.h, 0)
 
     def move(self, spd, deg):
         """ 移動 """
@@ -48,36 +53,24 @@ class BaseSprite:
 
 class PlayerSprite(BaseSprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, u, v):
         """ コンストラクタ """
-        super().__init__(x, y)
-        self.gravity = 0.4 # 重力
-        self.jump_x = 1.0 # ジャンプx
-        self.jump_y = -3.4 # ジャンプy
-        self.right_flg = True # 右向きフラグ
+        super().__init__(x, y, u, v)
 
     def update(self):
         """ 更新処理 """
         super().update()
-
-    def draw(self):
-        """ 描画処理 """
-        off_x = 0 if self.right_flg else 8
-        pyxel.blt(self.x, self.y, 0, 
-            off_x, 72, self.w, self.h, 0)
-        # Debug
-        #pyxel.rectb(self.x, self.y, self.w, self.h, 3)
 
     def go_up(self, spd):
         self.move(spd, 270)
 
     def go_left(self, spd):
         self.move(spd, 180)
-        self.right_flg = False
+        self.right_flg = False # 右向きフラグ
 
     def go_down(self, spd):
         self.move(spd, 90)
 
     def go_right(self, spd):
         self.move(spd, 0)
-        self.right_flg = True
+        self.right_flg = True # 右向きフラグ
