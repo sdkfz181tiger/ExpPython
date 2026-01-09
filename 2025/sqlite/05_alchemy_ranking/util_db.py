@@ -48,7 +48,7 @@ class MyDB():
     def read_records(self, limit=10):
         """ データを読み込む(limit件数まで) """
         print("read_records:", limit)
-        stmt = select(Record).order_by(Record.score.desc())
+        stmt = select(Record).order_by(Record.score.desc()).limit(limit)
         return self.db.scalars(stmt)
 
     def read_record(self, uid):
@@ -111,5 +111,5 @@ class Record(Base):
         self.time_stamp = time_stamp
 
     def __str__(self):
-        return "uid:{0}, name:{1}, comment:{2}, score:{3}, time_stamp:{3}".format(
+        return "uid:{0}, name:{1}, comment:{2}, score:{3}, time_stamp:{4}".format(
             self.uid, self.name, self.comment, self.score, self.time_stamp)
