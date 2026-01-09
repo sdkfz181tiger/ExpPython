@@ -41,6 +41,9 @@ def main():
     print("= Ranking =")
     for record in records:
         print("Record:", record)
+
+    # Close
+    my_db.close()
     
 
 if __name__ == "__main__":

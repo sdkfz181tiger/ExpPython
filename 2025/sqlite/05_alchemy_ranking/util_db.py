@@ -11,9 +11,6 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
 
-# SQLAlchemy
-Base = declarative_base()
-
 class MyDB():
 
     def __init__(self, path):
@@ -24,11 +21,6 @@ class MyDB():
         self.db_engine = create_engine(self.db_path, echo=True)
         self.db_session = sessionmaker(bind=self.db_engine)
         self.db = self.db_session()
-
-    def __del__(self):
-        """ デストラクタ """
-        print("Destructor")
-        self.db.close()
 
     # CRUD(Create)
     def create_table(self):
@@ -49,16 +41,13 @@ class MyDB():
         """ データを読み込む(limit件数まで) """
         print("read_records:", limit)
         stmt = select(Record).order_by(Record.score.desc()).limit(limit)
-        return self.db.scalars(stmt)
+        return self.db.scalars(stmt).all()
 
     def read_record(self, uid):
         """ データを読み込む(1件) """
         print("read_record:", uid)
-        try:
-            stmt = select(Record).where(Record.uid == uid)
-            return self.db.scalars(stmt).one()
-        except NoResultFound:
-            return None
+        stmt = select(Record).where(Record.uid == uid)
+        return self.db.scalars(stmt).one_or_none()
 
     # CRUD(Update)
     def update_record(self, uid, name, comment, score):
@@ -83,12 +72,18 @@ class MyDB():
         self.db.commit()
         return record.uid
 
+    # Close
+    def close(self):
+        """ データベースを閉じる """
+        self.db.close
+
     # Time
     def get_time(self):
         """ 現在日時を取得する """
         return datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S")
 
 # Model
+Base = declarative_base()
 class Record(Base):
 
     # Table
@@ -102,7 +97,7 @@ class Record(Base):
     # Score
     score = Column(Integer, server_default="0")
     # Timestamp
-    time_stamp = Column(String(24), server_default="1970/01/01 00:00:00")
+    time_stamp = Column(String(24), default="1970/01/01 00:00:00")
 
     def __init__(self, name, comment, score, time_stamp):
         self.name = name
