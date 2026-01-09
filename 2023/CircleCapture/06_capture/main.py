@@ -27,7 +27,7 @@ def main():
 	dir_input  = "../assets/movies/"
 	dir_output = "test_output"
 
-	team_no = "02" # Team No
+	team_no = "13" # Team No
 	original_input = team_no + "_original_fps30.mp4"
 
 	# Clean
@@ -36,7 +36,15 @@ def main():
 
 	# Capture
 	capture_list = [
-		{"path_movie": "captured/" + team_no + "/door_01_"  + team_no + ".mp4",  "file_png": "door_01_01.png",  "file_json": "01.json"}
+		{"path_movie": "captured/" + team_no + "/door_01_"  + team_no + ".mp4",  "file_png": "door_01_01.png",  "file_json": "01.json"},
+		{"path_movie": "captured/" + team_no + "/door_02_"  + team_no + ".mp4",  "file_png": "door_02_01.png",  "file_json": "02.json"},
+		{"path_movie": "captured/" + team_no + "/door_03_"  + team_no + ".mp4",  "file_png": "door_03_01.png",  "file_json": "03.json"},
+		{"path_movie": "captured/" + team_no + "/left_01_"  + team_no + ".mp4",  "file_png": "left_01_01.png",  "file_json": "04.json"},
+		{"path_movie": "captured/" + team_no + "/left_02_"  + team_no + ".mp4",  "file_png": "left_02_01.png",  "file_json": "05.json"},
+		{"path_movie": "captured/" + team_no + "/left_03_"  + team_no + ".mp4",  "file_png": "left_03_01.png",  "file_json": "06.json"},
+		{"path_movie": "captured/" + team_no + "/right_01_"  + team_no + ".mp4",  "file_png": "right_01_01.png",  "file_json": "07.json"},
+		{"path_movie": "captured/" + team_no + "/right_02_"  + team_no + ".mp4",  "file_png": "right_02_01.png",  "file_json": "08.json"},
+		{"path_movie": "captured/" + team_no + "/right_03_"  + team_no + ".mp4",  "file_png": "right_03_01.png",  "file_json": "09.json"}
 	]
 	
 	for capture in capture_list:
@@ -47,7 +55,15 @@ def main():
 	
 	# Render
 	render_list = [
-		{"file_json": "01.json", "color": (  0,   0,   0)}
+		{"file_json": "01.json", "color": (  0,   0,   0)},
+		{"file_json": "02.json", "color": (255, 255, 255)},
+		{"file_json": "03.json", "color": (255,   0,   0)},
+		{"file_json": "04.json", "color": (  0, 255,   0)},
+		{"file_json": "05.json", "color": (  0,   0, 255)},
+		{"file_json": "06.json", "color": (255, 255,   0)},
+		{"file_json": "07.json", "color": (  0, 255, 255)},
+		{"file_json": "08.json", "color": (255,   0, 255)},
+		{"file_json": "09.json", "color": (100, 100, 100)}
 	]
 
 	# CircleRenderer

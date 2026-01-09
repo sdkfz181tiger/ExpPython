@@ -23,7 +23,7 @@ PLAYER_SPD = 1.4
 MONSTER_MAX = 10
 MONSTERS = [
     {"u": 32, "v": 72, "spd": 1.0},
-    {"u": 64, "v": 72, "spd": 1.0},
+    {"u": 48, "v": 72, "spd": 1.0},
     {"u":  0, "v": 80, "spd": 1.0},
     {"u": 16, "v": 80, "spd": 1.0},
     {"u": 32, "v": 80, "spd": 1.0}
@@ -62,10 +62,12 @@ class Game:
 
         # プレイヤーを更新
         self.player.update()
+        self.overlap_area(self.player)
 
         # モンスター
         for monster in self.monsters:
             monster.update()
+            self.overlap_area(monster)
             # x プレイヤー
             if monster.intersects(self.player):
                 self.game_mode = MODE_GAME_OVER
@@ -107,7 +109,7 @@ class Game:
 
         # モンスター
         self.monsters = []
-        for i in range(3):
+        for i in range(30):
             item = random.choice(MONSTERS)
             x = random.randint(0, W)
             y = random.randint(0, H)
@@ -158,6 +160,13 @@ class Game:
                 self.player.move(0)
             elif pyxel.btnr(pyxel.KEY_D):
                 self.player.stop()
+
+    def overlap_area(self, spr):
+        """ オーバーラップ """
+        if W < spr.x: spr.x = 0
+        if spr.x < 0: spr.x = W
+        if H < spr.y: spr.y = 0
+        if spr.y < 0: spr.y = H
 
 def main():
     """ メイン処理 """

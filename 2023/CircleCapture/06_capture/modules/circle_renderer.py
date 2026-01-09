@@ -50,7 +50,7 @@ class CircleRenderer:
 				l_color = render["color"]
 				l_width = 2
 				f_style = cv2.FONT_HERSHEY_DUPLEX
-				f_scale = 0.5
+				f_scale = 0.2
 				f_color = (255, 255, 255)
 				# Draw
 				center = (int(self.W * (int(data["x"]) / 100)), int(self.H * (int(data["y"]) / 100)))
