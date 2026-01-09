@@ -22,11 +22,11 @@ PLAYER_SPD = 1.4
 
 MONSTER_MAX = 10
 MONSTERS = [
-    {"u": 32, "v": 72, "spd": 1.0},
-    {"u": 48, "v": 72, "spd": 1.0},
-    {"u":  0, "v": 80, "spd": 1.0},
-    {"u": 16, "v": 80, "spd": 1.0},
-    {"u": 32, "v": 80, "spd": 1.0}
+    {"u": 32, "v": 72, "spd": 0.1,  "think_interval": 60},
+    {"u": 48, "v": 72, "spd": 0.12, "think_interval": 90},
+    {"u":  0, "v": 80, "spd": 0.14, "think_interval": 120},
+    {"u": 16, "v": 80, "spd": 0.16, "think_interval": 150},
+    {"u": 32, "v": 80, "spd": 0.18, "think_interval": 180}
 ]
 
 # Game
@@ -110,13 +110,20 @@ class Game:
         # モンスター
         self.monsters = []
         for i in range(30):
-            item = random.choice(MONSTERS)
             x = random.randint(0, W)
             y = random.randint(0, H)
+            item = random.choice(MONSTERS)
             u = item["u"]
             v = item["v"]
             spd = item["spd"]
-            monster = sprite.Monster(x, y, u, v, spd)
+            think_interval = item["think_interval"]
+            monster = sprite.Monster(x, y, u, v, spd, think_interval, self.player)
+            # 距離を計算する
+            distance = monster.get_distance(self.player)
+            if distance < 24: continue
+            # プレイヤーへの方向を計算する
+            direction = monster.get_direction(self.player)
+            monster.move(direction)
             self.monsters.append(monster)
 
     def control(self):

@@ -39,8 +39,8 @@ class BaseSprite:
         rad = (deg * math.pi) / 180
         self.vx = self.spd * math.cos(rad) # x方向の速度
         self.vy = self.spd * math.sin(rad) # y方向の速度
-        if deg == 180: self.right_flg = False
-        if deg == 0: self.right_flg = True
+        if deg == 90 or deg == 270: return
+        self.right_flg = not (90 < deg and deg < 270) # 右向きフラグ
 
     def stop(self):
         """ 停止 """
@@ -55,6 +55,19 @@ class BaseSprite:
         if self.y + self.h < other.y: return False
         return True
 
+    def get_distance(self, other):
+        """ 距離を計算する """
+        d_x = self.x - other.x
+        d_y = self.y - other.y
+        return math.sqrt(d_x*d_x + d_y*d_y)
+
+    def get_direction(self, other):
+        """ 方向を計算する """
+        d_x = other.x - self.x
+        d_y = other.y - self.y
+        rad = math.atan2(d_y, d_x)
+        return (rad * (180 / math.pi) + 360) % 360
+
 class PlayerSprite(BaseSprite):
 
     def __init__(self, x, y, u, v, spd):
@@ -67,6 +80,19 @@ class PlayerSprite(BaseSprite):
 
 class Monster(BaseSprite):
 
-    def __init__(self, x, y, u, v, spd):
+    def __init__(self, x, y, u, v, spd, think_interval, target):
         """ コンストラクタ """
         super().__init__(x, y, u, v, spd)
+        self.think_interval = think_interval
+        self.think_counter = 0
+        self.target = target
+
+    def update(self):
+        """ 更新処理 """
+        super().update()
+        # Think
+        self.think_counter += 1
+        if self.think_interval < self.think_counter:
+            self.think_counter = 0
+            direction = self.get_direction(self.target)
+            self.move(direction)
