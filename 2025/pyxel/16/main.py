@@ -78,8 +78,14 @@ class Game:
         # 弾丸
         for bullet in self.bullets[::-1]:
             bullet.update()
-            if not bullet.is_dead(): continue
-            self.bullets.remove(bullet) # Remove
+            if bullet.is_dead():
+                self.bullets.remove(bullet) # Remove
+            else:
+                for monster in self.monsters[::-1]:
+                    if monster.intersects(bullet):
+                        self.monsters.remove(monster) # Remove
+                        self.bullets.remove(bullet) # Remove
+                        break
 
     def draw(self):
         """ 描画処理 """
@@ -122,7 +128,7 @@ class Game:
 
         # モンスター
         self.monsters = []
-        for i in range(30):
+        for i in range(8):
             x = random.randint(0, W)
             y = random.randint(0, H)
             item = random.choice(MONSTERS)
@@ -205,6 +211,7 @@ class Game:
     def on_shot_event(self, spr):
         """ 弾丸発射 """
         # 弾丸
+        if not self.monsters: return
         x, y = spr.get_center()
         bullet = sprite.Bullet(x, y, BULLET_SPD)
         monster = self.get_nearest_monster()
