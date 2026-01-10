@@ -19,6 +19,7 @@ MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
 
 PLAYER_SPD = 1.4
+BULLET_SPD = 4
 
 MONSTER_MAX = 10
 MONSTERS = [
@@ -41,7 +42,8 @@ class Game:
         self.game_mode = MODE_TITLE
 
         # プレイヤーを初期化
-        self.player = sprite.PlayerSprite(START_X, START_Y, 0, 72, PLAYER_SPD)
+        self.player = sprite.PlayerSprite(
+            START_X, START_Y, 0, 72, PLAYER_SPD, self)
 
         # ステージを初期化
         self.reset()
@@ -65,12 +67,19 @@ class Game:
         self.overlap_area(self.player)
 
         # モンスター
-        for monster in self.monsters:
+        for monster in self.monsters[::-1]:
             monster.update()
             self.overlap_area(monster)
             # x プレイヤー
             if monster.intersects(self.player):
+                self.player.stop() # Stop
                 self.game_mode = MODE_GAME_OVER
+
+        # 弾丸
+        for bullet in self.bullets[::-1]:
+            bullet.update()
+            if not bullet.is_dead(): continue
+            self.bullets.remove(bullet) # Remove
 
     def draw(self):
         """ 描画処理 """
@@ -85,6 +94,10 @@ class Game:
         # モンスターを描画
         for monster in self.monsters:
             monster.draw()
+
+        # 弾丸
+        for bullet in self.bullets:
+            bullet.draw()
 
         # メッセージ
         if self.game_mode == MODE_TITLE:
@@ -125,6 +138,9 @@ class Game:
             direction = monster.get_direction(self.player)
             monster.move(direction)
             self.monsters.append(monster)
+
+        # 弾丸
+        self.bullets = []
 
     def control(self):
         """ コントロール """
@@ -174,6 +190,27 @@ class Game:
         if spr.x < 0: spr.x = W
         if H < spr.y: spr.y = 0
         if spr.y < 0: spr.y = H
+
+    def get_nearest_monster(self):
+        """ 最も近いモンスターの座標 """
+        distance_min = 999
+        nearest = None
+        for monster in self.monsters:
+            distance = monster.get_distance(self.player)
+            if distance_min < distance: continue
+            distance_min = distance # Nearest
+            nearest = monster
+        return nearest
+
+    def on_shot_event(self, spr):
+        """ 弾丸発射 """
+        # 弾丸
+        x, y = spr.get_center()
+        bullet = sprite.Bullet(x, y, BULLET_SPD)
+        monster = self.get_nearest_monster()
+        direction = self.player.get_direction(monster)
+        bullet.move(direction)
+        self.bullets.append(bullet)
 
 def main():
     """ メイン処理 """

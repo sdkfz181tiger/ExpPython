@@ -34,6 +34,10 @@ class BaseSprite:
         pyxel.blt(self.x, self.y, 0, 
             self.u + u, self.v, self.w, self.h, 0)
 
+    def get_center(self):
+        """ 中心座標 """
+        return (self.x + self.w/2, self.y + self.h/2)
+
     def move(self, deg):
         """ 移動 """
         rad = (deg * math.pi) / 180
@@ -70,13 +74,21 @@ class BaseSprite:
 
 class PlayerSprite(BaseSprite):
 
-    def __init__(self, x, y, u, v, spd):
+    def __init__(self, x, y, u, v, spd, game):
         """ コンストラクタ """
         super().__init__(x, y, u, v, spd)
+        self.shot_interval = 8
+        self.shot_counter = 0
+        self.game = game
 
     def update(self):
         """ 更新処理 """
         super().update()
+        # Shot
+        self.shot_counter += 1
+        if self.shot_interval < self.shot_counter:
+            self.shot_counter = 0
+            self.game.on_shot_event(self) # Shot
 
 class Monster(BaseSprite):
 
@@ -96,3 +108,25 @@ class Monster(BaseSprite):
             self.think_counter = 0
             direction = self.get_direction(self.target)
             self.move(direction)
+
+class Bullet(BaseSprite):
+
+    def __init__(self, x, y, spd, life=10):
+        """ コンストラクタ """
+        super().__init__(x, y, 0, 0, spd)
+        self.life = life
+
+    def update(self):
+        """ 更新処理 """
+        super().update()
+        self.life -= 1
+        if self.life < 0: 
+            self.stop()
+
+    def draw(self):
+        """ 描画処理 """
+        pyxel.rect(self.x, self.y, 2, 2, 12)
+
+    def is_dead(self):
+        """ 死亡フラグ """
+        return self.life < 0
