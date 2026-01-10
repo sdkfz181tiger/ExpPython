@@ -38,6 +38,11 @@ class BaseSprite:
         """ 中心座標 """
         return (self.x + self.w/2, self.y + self.h/2)
 
+    def set_center(self, x, y):
+        """ 中心座標 """
+        self.x = x - self.w / 2
+        self.y = y - self.h / 2
+
     def move(self, deg):
         """ 移動 """
         rad = (deg * math.pi) / 180

@@ -83,8 +83,8 @@ class Game:
             else:
                 for monster in self.monsters[::-1]:
                     if monster.intersects(bullet):
-                        self.monsters.remove(monster) # Remove
                         self.bullets.remove(bullet) # Remove
+                        self.kick_area(monster) # Kick
                         break
 
     def draw(self):
@@ -128,7 +128,7 @@ class Game:
 
         # モンスター
         self.monsters = []
-        for i in range(8):
+        for i in range(64):
             x = random.randint(0, W)
             y = random.randint(0, H)
             item = random.choice(MONSTERS)
@@ -196,6 +196,10 @@ class Game:
         if spr.x < 0: spr.x = W
         if H < spr.y: spr.y = 0
         if spr.y < 0: spr.y = H
+
+    def kick_area(self, spr):
+        """ 画面端に強制移動 """
+        spr.set_center(0, 0) # TODO: test
 
     def get_nearest_monster(self):
         """ 最も近いモンスターの座標 """
