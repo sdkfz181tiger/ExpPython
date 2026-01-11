@@ -18,8 +18,8 @@ MODE_TITLE = "title"
 MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
 
-PLAYER_SPD = 1.4
-BULLET_SPD = 4
+PLAYER_SPD = 1.2
+BULLET_SPD = 2.4
 
 MONSTER_MAX = 10
 MONSTERS = [
@@ -27,7 +27,7 @@ MONSTERS = [
     {"u": 48, "v": 72, "spd": 0.12, "think_interval": 90},
     {"u":  0, "v": 80, "spd": 0.14, "think_interval": 120},
     {"u": 16, "v": 80, "spd": 0.16, "think_interval": 150},
-    {"u": 32, "v": 80, "spd": 0.18, "think_interval": 180}
+    {"u": 32, "v": 80, "spd": 0.25, "think_interval": 180}
 ]
 
 # Game
@@ -51,7 +51,7 @@ class Game:
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
         pyxel.load("vampire.pyxres")
-        pyxel.run(self.update, self.draw)
+        pyxel.run(self.update, self.draw) # Pyxel実行
 
     def update(self):
         """ 更新処理 """
@@ -71,9 +71,10 @@ class Game:
             monster.update()
             self.overlap_area(monster)
             # x プレイヤー
-            if monster.intersects(self.player):
+            if self.player.contains_center(monster):
                 self.player.stop() # Stop
                 self.game_mode = MODE_GAME_OVER
+                pyxel.play(0, 16, loop=False) # サウンド
 
         # 弾丸
         for bullet in self.bullets[::-1]:
@@ -84,8 +85,16 @@ class Game:
                 for monster in self.monsters[::-1]:
                     if monster.intersects(bullet):
                         self.bullets.remove(bullet) # Remove
+                        self.append_particle(monster) # Particle
                         self.kick_area(monster) # Kick
+                        self.score += 10 # Score
                         break
+
+        # パーティクル
+        for particle in self.particles[::-1]:
+            particle.update()
+            if particle.is_dead():
+                self.particles.remove(particle) # Remove
 
     def draw(self):
         """ 描画処理 """
@@ -104,6 +113,10 @@ class Game:
         # 弾丸
         for bullet in self.bullets:
             bullet.draw()
+
+        # パーティクル
+        for particle in self.particles:
+            particle.draw()
 
         # メッセージ
         if self.game_mode == MODE_TITLE:
@@ -147,6 +160,8 @@ class Game:
 
         # 弾丸
         self.bullets = []
+        # パーティクル
+        self.particles = []
 
     def control(self):
         """ コントロール """
@@ -199,7 +214,14 @@ class Game:
 
     def kick_area(self, spr):
         """ 画面端に強制移動 """
-        spr.set_center(0, 0) # TODO: test
+        num = random.randint(0, 2)
+        if num == 0:
+            y = random.randint(0, H)
+            spr.set_center(0, y) # Horizontal
+        else:
+            x = random.randint(0, W)
+            spr.set_center(x, 0) # Vertical
+        pyxel.play(1, 1, loop=False) # サウンド
 
     def get_nearest_monster(self):
         """ 最も近いモンスターの座標 """
@@ -222,6 +244,13 @@ class Game:
         direction = self.player.get_direction(monster)
         bullet.move(direction)
         self.bullets.append(bullet)
+        #pyxel.play(1, 0, loop=False) # サウンド
+
+    def append_particle(self, spr):
+        """ パーティクル発生 """
+        x, y = spr.get_center()
+        particle = sprite.Particle(x, y)
+        self.particles.append(particle)
 
 def main():
     """ メイン処理 """

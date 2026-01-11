@@ -64,6 +64,15 @@ class BaseSprite:
         if self.y + self.h < other.y: return False
         return True
 
+    def contains_center(self, other):
+        """ 矩形の中に中心座標が含まれるか """
+        x, y = self.get_center()
+        if other.x + other.w < x: return False
+        if x < other.x: return False
+        if other.y + other.h < y: return False
+        if y < other.y: return False
+        return True
+
     def get_distance(self, other):
         """ 距離を計算する """
         d_x = self.x - other.x
@@ -82,7 +91,7 @@ class PlayerSprite(BaseSprite):
     def __init__(self, x, y, u, v, spd, game):
         """ コンストラクタ """
         super().__init__(x, y, u, v, spd)
-        self.shot_interval = 8
+        self.shot_interval = 12
         self.shot_counter = 0
         self.game = game
 
@@ -130,7 +139,38 @@ class Bullet(BaseSprite):
 
     def draw(self):
         """ 描画処理 """
-        pyxel.rect(self.x, self.y, 2, 2, 12)
+        pyxel.rect(self.x, self.y, 2, 2, 7)
+
+    def is_dead(self):
+        """ 死亡フラグ """
+        return self.life < 0
+
+class Particle(BaseSprite):
+
+    def __init__(self, x, y, life=10):
+        """ コンストラクタ """
+        super().__init__(x, y, 0, 0, 0)
+        self.life = life
+
+        self.area_r = 8
+        self.circ_r = 0
+        self.off_x = 0
+        self.off_y = 0
+
+    def update(self):
+        """ 更新処理 """
+        super().update()
+        self.life -= 1
+        if self.life < 0: 
+            self.stop()
+
+        self.circ_r = random.randint(2, 4)
+        self.off_x = random.randint(0, self.area_r) - self.area_r / 2
+        self.off_y = random.randint(0, self.area_r) - self.area_r / 2
+
+    def draw(self):
+        """ 描画処理 """
+        pyxel.circ(self.x + self.off_x, self.y + self.off_y, self.circ_r, 7)
 
     def is_dead(self):
         """ 死亡フラグ """
