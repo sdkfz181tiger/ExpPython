@@ -138,12 +138,7 @@ class Game:
         pyxel.text(10, 10, 
             "SCORE:{:04}".format(self.score), 7)
 
-        # ランキングを表示
-        for i, rank in enumerate(self.ranking):
-            x, y = 10, H/2 + i*10
-            _, _, _, score, _ = rank
-            msg = "RANK" + str(i) + ":" + str(score)
-            pyxel.text(x, y, msg, 7)
+        self.draw_ranking() # ランキングを描画
 
     def reset(self):
         """ ステージを初期化 """
@@ -182,6 +177,10 @@ class Game:
 
     def control(self):
         """ コントロール """
+
+        # ゲーム修了
+        if pyxel.btnp(pyxel.KEY_Q):
+            pyxel.quit()
 
         # ゲームループ
         if pyxel.btnp(pyxel.KEY_SPACE):
@@ -271,7 +270,7 @@ class Game:
 
     def get_ranking(self):
         """ ランキングを取得 """
-        return self.my_db.read_records(5)
+        return self.my_db.read_records(3)
 
     def set_ranking(self):
         """ ランキングに登録 """
@@ -279,7 +278,12 @@ class Game:
 
     def draw_ranking(self):
         """ ランキングを表示 """
-        pass
+        ranks = ["1st", "2nd", "3rd"]
+        for i, rank in enumerate(self.ranking):
+            x, y = 10, H/2 + i*10 + 24
+            _, _, _, score, _ = rank
+            msg = ranks[i] + ": " + str(score)
+            pyxel.text(x, y, msg, 7)
 
 def main():
     """ メイン処理 """

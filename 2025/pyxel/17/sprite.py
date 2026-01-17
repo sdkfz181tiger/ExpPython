@@ -91,7 +91,7 @@ class PlayerSprite(BaseSprite):
     def __init__(self, x, y, u, v, spd, game):
         """ コンストラクタ """
         super().__init__(x, y, u, v, spd)
-        self.shot_interval = 12
+        self.shot_interval = 24
         self.shot_counter = 0
         self.game = game
 
