@@ -113,7 +113,19 @@ class DotSprite(BaseSprite):
     def __init__(self, x, y, u, v, special_flg=False):
         """ コンストラクタ """
         super().__init__(x, y, u, v, 0)
+
+        self.sleep_flg = False # Sleep or Awake
         self.special_flg = special_flg # Special or Normal
 
     def is_special(self):
         return self.special_flg
+
+    def is_sleep(self):
+        return self.sleep_flg
+
+    def sleep(self):
+        self.sleep_flg = True
+
+    def draw(self):
+        if self.sleep_flg == True: return
+        super().draw()

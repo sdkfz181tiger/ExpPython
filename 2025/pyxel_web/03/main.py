@@ -51,7 +51,10 @@ class Game:
 
         # Dots
         for dot in self.dots:
-        	dot.update()
+            dot.update()
+            # Contains and Sleep
+            if self.player.contains_center(dot):
+                dot.sleep()
 
     def draw(self):
         """ 描画処理 """
