@@ -17,6 +17,7 @@ MODE_GAME_OVER = "mode_game_over"
 
 TOTAL_DOTS = 12
 SCORE_DOT = 10
+SCORE_IJIKE = 40
 
 # Game
 class Game:
@@ -34,19 +35,23 @@ class Game:
 
         # Player
         self.player = sprite.PlayerSprite(
-            0, 0, 0, 8, 2.2)
+            0, 0, 0, 8, 1.8)
         self.player.set_center(W/2, H/2)
+
+        # Enemy
+        self.enemy = sprite.EnemySprite(
+            0, 0, 0, 40, 1.2, self.player)
+        self.enemy.set_center(0, H/2)
 
         # Dots
         self.dots = []
         pad_x = W / TOTAL_DOTS
         power_index = random.randint(0, TOTAL_DOTS)
         for i in range(TOTAL_DOTS):
-            power_flg = i == power_index # Power or Normal
             x = i * pad_x + pad_x / 2
             y = H / 2
-            v = 24 if power_flg else 16
-            dot = sprite.DotSprite(0, 0, 0, v, power_flg)
+            power_flg = i == power_index # Power or Normal
+            dot = sprite.DotSprite(0, 0, 0, 16, power_flg)
             dot.set_center(x, y)
             self.dots.append(dot)
 
@@ -59,10 +64,15 @@ class Game:
         """ 更新処理 """
 
         self.control() # Control
+        if self.mode != MODE_GAME_PLAY: return
 
         # Player
         self.player.update()
         self.overlap_horizontal(self.player) # Overlap
+
+        # Enemy
+        self.enemy.update()
+        self.overlap_horizontal(self.enemy) # Overlap
 
         # Dots
         for dot in self.dots:
@@ -70,19 +80,35 @@ class Game:
             # Contains and Sleep
             if dot.is_sleep(): continue
             if self.player.contains_center(dot):
-                dot.sleep()
                 self.score += SCORE_DOT # Score
+                dot.sleep()
+                if dot.is_power():
+                    self.enemy.ijike_on() # Ijike(On)
 
+        # Awake all dots
+        if self.is_sleep_dots():
+            self.awake_dots()
+
+        # GameOver
+        if self.player.contains_center(self.enemy):
+            if self.enemy.is_ijike():
+                self.score += SCORE_IJIKE # Score
+                self.enemy.set_center(0, H/2) # Reset
+                self.enemy.ijike_off() # Ijike(Off)
+            else:
+                self.game_over() # Game Over
+            
     def draw(self):
         """ 描画処理 """
         pyxel.cls(2)
 
-        # Player
-        self.player.draw()
-
         # Dots
         for dot in self.dots:
             dot.draw()
+        # Player
+        self.player.draw()
+        # Enemy
+        self.enemy.draw()
 
         # Score
         pyxel.text(10, 10, 
@@ -100,24 +126,45 @@ class Game:
         if self.mode == MODE_GAME_READY:
             self.mode = MODE_GAME_PLAY
             self.msg = "GAME PLAY!!"
+            self.player.go_random() # Go
+            self.enemy.go_random()
             return
 
-        # Play to Over
+        # Play
         if self.mode == MODE_GAME_PLAY:
-            self.mode = MODE_GAME_OVER
-            self.msg = "GAME OVER!?"
-            #self.player.turn() # Turn
+            self.player.turn() # Turn
             return
 
         # Over to Ready
         if self.mode == MODE_GAME_OVER:
             self.mode = MODE_GAME_READY
             self.msg = "GAME READY!?"
+            self.player.set_center(W/2, H/2) # Reset
+            self.enemy.set_center(0, H/2)
+            self.awake_dots() # Awake
             return
 
     def overlap_horizontal(self, spr):
         if spr.x < 0: spr.x = W
         if W < spr.x: spr.x = 0
+
+    def game_over(self):
+        self.mode = MODE_GAME_OVER
+        self.msg = "GAME OVER!!"
+        self.player.stop() # Stop
+        self.enemy.stop()
+
+    def is_sleep_dots(self):
+        for dot in self.dots:
+            if not dot.is_sleep(): return False
+        return True
+
+    def awake_dots(self):
+        for dot in self.dots:
+            dot.awake()
+            if dot.is_power():
+                rnd = random.randint(0, TOTAL_DOTS)
+                dot.swap_position(self.dots[rnd])
 
 def main():
     """ メイン処理 """
