@@ -110,15 +110,15 @@ class PlayerSprite(BaseSprite):
 # Dot
 class DotSprite(BaseSprite):
 
-    def __init__(self, x, y, u, v, special_flg=False):
+    def __init__(self, x, y, u, v, power_flg=False):
         """ コンストラクタ """
         super().__init__(x, y, u, v, 0)
 
         self.sleep_flg = False # Sleep or Awake
-        self.special_flg = special_flg # Special or Normal
+        self.power_flg = power_flg # Power or Normal
 
-    def is_special(self):
-        return self.special_flg
+    def is_Power(self):
+        return self.power_flg
 
     def is_sleep(self):
         return self.sleep_flg

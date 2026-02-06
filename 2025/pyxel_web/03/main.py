@@ -22,18 +22,21 @@ class Game:
 
         # Player
         self.player = sprite.PlayerSprite(
-        	0, 0, 0, 8, 2.2)
+            0, 0, 0, 8, 2.2)
         self.player.set_center(W/2, H/2)
 
         # Dots
         self.dots = []
         pad_x = W / TOTAL_DOTS
+        power_index = random.randint(0, TOTAL_DOTS)
         for i in range(TOTAL_DOTS):
-        	x = i * pad_x + pad_x / 2
-        	y = H / 2
-        	dot = sprite.DotSprite(0, 0, 0, 16)
-        	dot.set_center(x, y)
-        	self.dots.append(dot)
+            power_flg = i == power_index # Power or Normal
+            x = i * pad_x + pad_x / 2
+            y = H / 2
+            v = 24 if power_flg else 16
+            dot = sprite.DotSprite(0, 0, 0, v, power_flg)
+            dot.set_center(x, y)
+            self.dots.append(dot)
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
@@ -53,8 +56,10 @@ class Game:
         for dot in self.dots:
             dot.update()
             # Contains and Sleep
+            if dot.is_sleep(): continue
             if self.player.contains_center(dot):
                 dot.sleep()
+                self.score += 10 # Score
 
     def draw(self):
         """ 描画処理 """
@@ -65,7 +70,11 @@ class Game:
 
         # Dots
         for dot in self.dots:
-        	dot.draw()
+            dot.draw()
+
+        # Score
+        pyxel.text(10, 10, 
+            "SCORE:{:03}".format(self.score), 7)
 
     def control(self):
         """ コントロール """
@@ -74,8 +83,8 @@ class Game:
         self.player.turn() # Turn
 
     def overlap_horizontal(self, spr):
-    	if spr.x < 0: spr.x = W
-    	if W < spr.x: spr.x = 0
+        if spr.x < 0: spr.x = W
+        if W < spr.x: spr.x = 0
 
 def main():
     """ メイン処理 """
