@@ -22,8 +22,8 @@ class BaseSprite:
         self.vx = 0
         self.vy = 0
         self.right_flg = False # 右向きフラグ
-        self.u_anim_cnt = 0 # アニメーション
-        self.u_anim_max = 6 # アニメーション
+        self.u_anim_cnt = 0 # Animation
+        self.u_anim_max = 6 # Animation
 
     def update(self):
         """ 更新処理 """
@@ -32,7 +32,7 @@ class BaseSprite:
 
     def draw(self):
         """ 描画処理 """
-        # アニメーション
+        # Animation
         self.u_anim_cnt += 1
         if self.u_anim_max < self.u_anim_cnt: self.u_anim_cnt = 0
         u = self.u_anim_cnt * 8

@@ -10,6 +10,11 @@ import random
 import sprite
 
 W, H = 160, 120
+
+MODE_GAME_READY = "mode_game_ready"
+MODE_GAME_PLAY = "mode_game_play"
+MODE_GAME_OVER = "mode_game_over"
+
 TOTAL_DOTS = 12
 SCORE_DOT = 10
 
@@ -20,6 +25,12 @@ class Game:
 
         # スコアを初期化
         self.score = 0
+
+        # Mode
+        self.mode = MODE_GAME_READY
+
+        # Message
+        self.msg = "READY!?"
 
         # Player
         self.player = sprite.PlayerSprite(
@@ -77,11 +88,32 @@ class Game:
         pyxel.text(10, 10, 
             "SCORE:{:03}".format(self.score), 7)
 
+        # Message
+        pyxel.text(W/2, 10, 
+            "MODE:{}".format(self.msg), 7)
+
     def control(self):
         """ コントロール """
         if not pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT): return
-        print("Click!!")
-        self.player.turn() # Turn
+
+        # Ready to Play
+        if self.mode == MODE_GAME_READY:
+            self.mode = MODE_GAME_PLAY
+            self.msg = "GAME PLAY!!"
+            return
+
+        # Play to Over
+        if self.mode == MODE_GAME_PLAY:
+            self.mode = MODE_GAME_OVER
+            self.msg = "GAME OVER!?"
+            #self.player.turn() # Turn
+            return
+
+        # Over to Ready
+        if self.mode == MODE_GAME_OVER:
+            self.mode = MODE_GAME_READY
+            self.msg = "GAME READY!?"
+            return
 
     def overlap_horizontal(self, spr):
         if spr.x < 0: spr.x = W
