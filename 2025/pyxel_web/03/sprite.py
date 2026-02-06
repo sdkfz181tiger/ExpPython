@@ -62,6 +62,14 @@ class BaseSprite:
         self.vx = 0
         self.vy = 0
 
+    def go_right(self):
+        self.right_flg = True
+        self.move(0)
+
+    def go_left(self):
+        self.right_flg = False
+        self.move(180)
+
     def intersects(self, other):
         """ 矩形同士の当たり判定(AABB) """
         if other.x + other.w < self.x: return False
@@ -103,9 +111,9 @@ class PlayerSprite(BaseSprite):
         # Turn
         self.right_flg = not self.right_flg
         if self.right_flg:
-            self.move(0)
+            self.go_right()
         else:
-            self.move(180)
+            self.go_left()
 
 # Dot
 class DotSprite(BaseSprite):

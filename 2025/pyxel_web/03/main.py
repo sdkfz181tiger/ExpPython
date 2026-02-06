@@ -11,6 +11,7 @@ import sprite
 
 W, H = 160, 120
 TOTAL_DOTS = 12
+SCORE_DOT = 10
 
 # Game
 class Game:
@@ -59,7 +60,7 @@ class Game:
             if dot.is_sleep(): continue
             if self.player.contains_center(dot):
                 dot.sleep()
-                self.score += 10 # Score
+                self.score += SCORE_DOT # Score
 
     def draw(self):
         """ 描画処理 """
