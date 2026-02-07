@@ -24,14 +24,17 @@ class Game:
     def __init__(self):
         """ コンストラクタ """
 
-        # スコアを初期化
+        # Level
+        self.level = 1
+
+        # Score
         self.score = 0
 
         # Mode
         self.mode = MODE_GAME_READY
 
         # Message
-        self.msg = "READY!?"
+        self.msg = "GAME READY!?"
 
         # Player
         self.player = sprite.PlayerSprite(
@@ -86,6 +89,7 @@ class Game:
 
         # Awake all dots
         if self.is_sleep_dots():
+            self.level += 1 # Level UP!!
             self.awake_dots()
 
         # GameOver
@@ -99,10 +103,12 @@ class Game:
             
     def draw(self):
         """ 描画処理 """
-        pyxel.cls(4)
+        pyxel.cls(1)
 
         # Road
         pyxel.rect(0, H/2-8, W, 16, 0)
+        pyxel.rect(0, H/2-9, W, 1, 5)
+        pyxel.rect(0, H/2+8, W, 1, 5)
 
         # Dots
         for dot in self.dots:
@@ -112,13 +118,20 @@ class Game:
         # Enemy
         self.enemy.draw()
 
+        # Level
+        str_level = "LV:{}".format(self.level)
+        x = W - (len(str_level) * 4) - 10
+        pyxel.text(x, 10, str_level, 7)
+
         # Score
-        pyxel.text(10, 10, 
-            "SCORE:{:03}".format(self.score), 7)
+        str_score = "SCORE:{:03}".format(self.score)
+        x = 10
+        pyxel.text(x, 10, str_score, 7)
 
         # Message
-        pyxel.text(W/2, 10, 
-            "MODE:{}".format(self.msg), 7)
+        str_msg = "{}".format(self.msg)
+        x = W / 2 - (len(str_msg) * 4) / 2
+        pyxel.text(x, H/2 - 24, str_msg, 7)
 
     def control(self):
         """ コントロール """
