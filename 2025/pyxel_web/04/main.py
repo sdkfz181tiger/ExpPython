@@ -34,14 +34,11 @@ class Game:
 
         # Dots
         self.dots = []
+        # ステップ2: ドットを配置
         pad_x = W / TOTAL_DOTS
         for i in range(TOTAL_DOTS):
             x = i * pad_x + pad_x / 2
-            y = H / 2
-            power_flg = i == 0 # Power or Normal
-            dot = sprite.DotSprite(0, 0, 0, 16, power_flg)
-            dot.set_center(x, y)
-            self.dots.append(dot)
+            self.create_dot(x, H/2, i==0)
 
         # Ready
         self.game_ready()
@@ -88,6 +85,7 @@ class Game:
                 self.enemy.set_center(0, H/2) # Reset
                 self.enemy.ijike_off() # Ijike(Off)
             else:
+                # ステップ4: ゲームオーバー判定
                 self.game_over() # Game Over
             
     def draw(self):
@@ -104,12 +102,19 @@ class Game:
             dot.draw()
         # Player
         self.player.draw()
+        # ステップ3: 敵を描画
         # Enemy
         self.enemy.draw()
         # Stats
         self.draw_stats()
 
+    def create_dot(self, x, y, power_flg):
+        dot = sprite.DotSprite(0, 0, 0, 16, power_flg)
+        dot.set_center(x, y)
+        self.dots.append(dot)
+
     def overlap_area(self, spr):
+        # ステップ1: オーバーラップ処理
         if spr.x < 0: spr.x = W
         if W < spr.x: spr.x = 0
 
@@ -168,16 +173,19 @@ class Game:
         self.enemy.stop() # Enemy
 
     def is_sleep_dots(self):
+        if not self.dots: return False
         for dot in self.dots:
             if not dot.is_sleep(): return False
         return True
 
     def awake_dots(self):
+        # Awake
         for dot in self.dots:
             dot.awake()
         # Swap
-        other = random.choice(self.dots)
-        self.dots[0].swap_position(other)
+        if 0 < len(self.dots):
+            other = random.choice(self.dots)
+            self.dots[0].swap_position(other)
 
     def level_up(self):
         self.level += 1 # Level Up!!
