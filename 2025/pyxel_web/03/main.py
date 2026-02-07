@@ -31,7 +31,7 @@ class Game:
 
         # Enemy
         self.enemy = sprite.EnemySprite(
-            0, 0, 0, 40, 1.2, self.player)
+            0, 0, 0, 40, 0.8, self.player)
         self.enemy.set_center(0, H/2)
 
         # Dots
@@ -61,11 +61,11 @@ class Game:
 
         # Player
         self.player.update()
-        self.overlap_horizontal(self.player) # Overlap
+        self.overlap_area(self.player) # Overlap
 
         # Enemy
         self.enemy.update()
-        self.overlap_horizontal(self.enemy) # Overlap
+        self.overlap_area(self.enemy) # Overlap
 
         # Dots
         for dot in self.dots:
@@ -83,7 +83,7 @@ class Game:
             self.awake_dots()
             self.level_up() # Level Up!!
 
-        # GameOver
+        # Collision
         if self.player.contains_center(self.enemy):
             if self.enemy.is_ijike():
                 self.score += SCORE_IJIKE # Score
@@ -110,6 +110,10 @@ class Game:
         self.enemy.draw()
         # Stats
         self.draw_stats()
+
+    def overlap_area(self, spr):
+        if spr.x < 0: spr.x = W
+        if W < spr.x: spr.x = 0
 
     def draw_stats(self):
         # Level
@@ -144,30 +148,26 @@ class Game:
             self.game_ready() # Ready
             return
 
-    def overlap_horizontal(self, spr):
-        if spr.x < 0: spr.x = W
-        if W < spr.x: spr.x = 0
-
     def game_ready(self):
         self.mode = MODE_GAME_READY
         self.msg = "GAME READY!?"
         self.level = 1 # Level
         self.score = 0 # Score
-        self.player.set_center(W/2, H/2) # Reset
-        self.enemy.set_center(0, H/2)
+        self.player.set_center(W/2, H/2) # Player
+        self.enemy.set_center(0, H/2) # Enemy
         self.awake_dots() # Awake
 
     def game_play(self):
         self.mode = MODE_GAME_PLAY
         self.msg = "GAME PLAY!!"
-        self.player.go_random() # Go
-        self.enemy.go_random()
+        self.player.go_random() # Player
+        self.enemy.go_random() # Enemy
 
     def game_over(self):
         self.mode = MODE_GAME_OVER
         self.msg = "GAME OVER!!"
-        self.player.stop() # Stop
-        self.enemy.stop()
+        self.player.stop() # Player
+        self.enemy.stop() # Enemy
 
     def is_sleep_dots(self):
         for dot in self.dots:
@@ -183,7 +183,7 @@ class Game:
 
     def level_up(self):
         self.level += 1 # Level Up!!
-        self.enemy.speed_up(0.1) # Speed Up!!
+        self.enemy.speed_up(0.14) # Speed Up!!
 
 def main():
     """ メイン処理 """
