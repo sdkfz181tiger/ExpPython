@@ -139,7 +139,7 @@ class EnemySprite(BaseSprite):
         self.player = player # Player
         self.ijike_flg = False # Ijike
         self.ijike_cnt = 0
-        self.ijike_limit = 64
+        self.ijike_limit = 72
         self.think_cnt = 0
         self.think_limit = 4
 
@@ -155,6 +155,9 @@ class EnemySprite(BaseSprite):
 
     def is_ijike(self):
         return self.ijike_flg
+
+    def speed_up(self, accel):
+        self.spd += accel
 
     def update(self):
         super().update()
@@ -190,6 +193,13 @@ class EnemySprite(BaseSprite):
         v += 16 if self.ijike_flg else 0 # Ijike
         pyxel.blt(self.x, self.y, 0, 
             self.u + u, self.v + v, self.w, self.h, 0)
+        # Ijike
+        if self.ijike_flg:
+            ijike_remain = (self.ijike_limit - self.ijike_cnt) * 0.1
+            str_ijike = "{}".format(math.floor(ijike_remain))
+            x, _ = self.get_center()
+            x -= (len(str_ijike) * 3) / 2
+            pyxel.text(x, self.y-self.h, str_ijike, 7)
 
 # Dot
 class DotSprite(BaseSprite):

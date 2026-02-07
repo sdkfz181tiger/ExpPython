@@ -24,18 +24,6 @@ class Game:
     def __init__(self):
         """ コンストラクタ """
 
-        # Level
-        self.level = 1
-
-        # Score
-        self.score = 0
-
-        # Mode
-        self.mode = MODE_GAME_READY
-
-        # Message
-        self.msg = "GAME READY!?"
-
         # Player
         self.player = sprite.PlayerSprite(
             0, 0, 0, 8, 1.8)
@@ -56,6 +44,9 @@ class Game:
             dot = sprite.DotSprite(0, 0, 0, 16, power_flg)
             dot.set_center(x, y)
             self.dots.append(dot)
+
+        # Ready
+        self.game_ready()
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
@@ -89,8 +80,8 @@ class Game:
 
         # Awake all dots
         if self.is_sleep_dots():
-            self.level += 1 # Level UP!!
             self.awake_dots()
+            self.level_up() # Level Up!!
 
         # GameOver
         if self.player.contains_center(self.enemy):
@@ -117,17 +108,18 @@ class Game:
         self.player.draw()
         # Enemy
         self.enemy.draw()
+        # Stats
+        self.draw_stats()
 
+    def draw_stats(self):
         # Level
         str_level = "LV:{}".format(self.level)
         x = W - (len(str_level) * 4) - 10
         pyxel.text(x, 10, str_level, 7)
-
         # Score
         str_score = "SCORE:{:03}".format(self.score)
         x = 10
         pyxel.text(x, 10, str_score, 7)
-
         # Message
         str_msg = "{}".format(self.msg)
         x = W / 2 - (len(str_msg) * 4) / 2
@@ -139,10 +131,7 @@ class Game:
 
         # Ready to Play
         if self.mode == MODE_GAME_READY:
-            self.mode = MODE_GAME_PLAY
-            self.msg = "GAME PLAY!!"
-            self.player.go_random() # Go
-            self.enemy.go_random()
+            self.game_play() # Play
             return
 
         # Play
@@ -152,16 +141,27 @@ class Game:
 
         # Over to Ready
         if self.mode == MODE_GAME_OVER:
-            self.mode = MODE_GAME_READY
-            self.msg = "GAME READY!?"
-            self.player.set_center(W/2, H/2) # Reset
-            self.enemy.set_center(0, H/2)
-            self.awake_dots() # Awake
+            self.game_ready() # Ready
             return
 
     def overlap_horizontal(self, spr):
         if spr.x < 0: spr.x = W
         if W < spr.x: spr.x = 0
+
+    def game_ready(self):
+        self.mode = MODE_GAME_READY
+        self.msg = "GAME READY!?"
+        self.level = 1 # Level
+        self.score = 0 # Score
+        self.player.set_center(W/2, H/2) # Reset
+        self.enemy.set_center(0, H/2)
+        self.awake_dots() # Awake
+
+    def game_play(self):
+        self.mode = MODE_GAME_PLAY
+        self.msg = "GAME PLAY!!"
+        self.player.go_random() # Go
+        self.enemy.go_random()
 
     def game_over(self):
         self.mode = MODE_GAME_OVER
@@ -180,6 +180,10 @@ class Game:
         # Swap
         other = random.choice(self.dots)
         self.dots[0].swap_position(other)
+
+    def level_up(self):
+        self.level += 1 # Level Up!!
+        self.enemy.speed_up(0.1) # Speed Up!!
 
 def main():
     """ メイン処理 """
