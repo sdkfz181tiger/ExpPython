@@ -46,11 +46,10 @@ class Game:
         # Dots
         self.dots = []
         pad_x = W / TOTAL_DOTS
-        power_index = random.randint(0, TOTAL_DOTS)
         for i in range(TOTAL_DOTS):
             x = i * pad_x + pad_x / 2
             y = H / 2
-            power_flg = i == power_index # Power or Normal
+            power_flg = i == 0 # Power or Normal
             dot = sprite.DotSprite(0, 0, 0, 16, power_flg)
             dot.set_center(x, y)
             self.dots.append(dot)
@@ -100,7 +99,10 @@ class Game:
             
     def draw(self):
         """ 描画処理 """
-        pyxel.cls(2)
+        pyxel.cls(4)
+
+        # Road
+        pyxel.rect(0, H/2-8, W, 16, 0)
 
         # Dots
         for dot in self.dots:
@@ -162,9 +164,9 @@ class Game:
     def awake_dots(self):
         for dot in self.dots:
             dot.awake()
-            if dot.is_power():
-                rnd = random.randint(0, TOTAL_DOTS)
-                dot.swap_position(self.dots[rnd])
+        # Swap
+        other = random.choice(self.dots)
+        self.dots[0].swap_position(other)
 
 def main():
     """ メイン処理 """
