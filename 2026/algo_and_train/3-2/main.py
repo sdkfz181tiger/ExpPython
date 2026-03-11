@@ -5,20 +5,16 @@
 3.2: 1からNまでの整数の総和を求める
 """
 
-def grade_evaluation(in_data):
-    e_result = None
-    if 80 <= in_data:
-        e_result = "評価A"
-    elif 60 <= in_data:
-        e_result = "評価B"
-    else:
-        e_result = "評価C"
-    return e_result
+def sum(num):
+    x = 0
+    for i in range(1, num+1):
+        x += i
+    return x
 
 def main():
     """ メイン処理 """
-    print("テスト1:", grade_evaluation(85))
-    print("テスト2:", grade_evaluation(70))
+    print("Test01:", sum(3)) # 1+2+3 = 6
+    print("Test02:", sum(5)) # 1+2+3+4+5 = 15
 
 if __name__ == "__main__":
     main()

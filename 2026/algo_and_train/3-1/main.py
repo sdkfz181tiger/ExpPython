@@ -17,8 +17,8 @@ def grade_evaluation(in_data):
 
 def main():
     """ メイン処理 """
-    print("テスト1:", grade_evaluation(85))
-    print("テスト2:", grade_evaluation(70))
+    print("Test01:", grade_evaluation(85))
+    print("Test02:", grade_evaluation(70))
 
 if __name__ == "__main__":
     main()
