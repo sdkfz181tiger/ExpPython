@@ -16,6 +16,7 @@ def func(data):
 
 def main():
     """ メイン処理 """
+    
     print("Test01:", func([3,8,5,4,16,13,7,9,6,5]))
 
 if __name__ == "__main__":

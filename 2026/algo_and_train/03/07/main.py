@@ -18,6 +18,7 @@ def gcd(a, b):
 
 def main():
     """ メイン処理 """
+    
     print("Test:", gcd(98, 42))
 
 if __name__ == "__main__":

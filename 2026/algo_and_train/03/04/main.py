@@ -21,6 +21,7 @@ def con_cat(x, y):
 
 def main():
     """ メイン処理 """
+    
     print("Test01:", con_cat(["A", "B", "C"], ["D", "E", "F"]))
 
 if __name__ == "__main__":

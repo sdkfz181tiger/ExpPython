@@ -19,6 +19,7 @@ def sort(k):
 
 def main():
     """ メイン処理 """
+    
     print("Before:", data)
     sort(4) # data[0] ~ data[4]まで並べ替える
     print("After:", data)

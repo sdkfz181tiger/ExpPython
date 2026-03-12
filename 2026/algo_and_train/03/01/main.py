@@ -3,6 +3,7 @@
 """
 [ アルトレ第二版 ]
 3.1: 成績評価を行う
+※プログラムの場合、配列の要素は0から始まる
 """
 
 def grade_evaluation(in_data):
@@ -17,6 +18,7 @@ def grade_evaluation(in_data):
 
 def main():
     """ メイン処理 """
+    
     print("Test01:", grade_evaluation(85))
     print("Test02:", grade_evaluation(70))
 

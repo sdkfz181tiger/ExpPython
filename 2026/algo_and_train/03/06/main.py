@@ -16,6 +16,7 @@ def sum_array(a, b):
 
 def main():
     """ メイン処理 """
+    
     print("Test:", sum_array([3,8,5,4,16,13,7,9,6,5], [3,5,8])) # 30
 
 if __name__ == "__main__":
