@@ -9,7 +9,7 @@
 def main():
     """ メイン処理 """
 
-    #prime_number(16) # 2,3,5,7,11,13
+    print("擬似言語無し")
 
 if __name__ == "__main__":
     main()
