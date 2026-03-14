@@ -8,8 +8,7 @@
 
 def main():
     """ メイン処理 """
-
-    print("擬似言語無し")
+    pass
 
 if __name__ == "__main__":
     main()
