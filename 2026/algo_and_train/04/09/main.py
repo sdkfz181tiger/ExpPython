@@ -27,8 +27,8 @@ def make_heap(num):
 
     # Heapの再構築
     while 0 < r and heap[r] < heap[p]:
-        swap(p, r) # 要素番号rと、要素番号pを交換
-        r = p # 親の要素番号へ...
+        swap(p, r)     # 要素番号rと、要素番号pを交換
+        r = p          # 親の要素番号へ...
         p = (r-1) // 2 # 更にその親の要素番号へ...
 
 def main():
