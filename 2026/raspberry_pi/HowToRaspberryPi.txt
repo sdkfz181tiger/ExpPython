@@ -1,0 +1,80 @@
+//==========
+// RaspberryPi
+
+1, OSのインストール
+	RaspberryPi3 B+の場合は、Legacy(32bit)を選択
+	https://www.raspberrypi.com/software/
+
+2, SSH
+	起動後しばらく待ってから...(HDDをUSB接続していると電力不足になる注意...)
+	$ ssh <USER NAME>@<HOST NAME>.local
+
+//==========
+// ゆっくりボイス
+
+1, 参考サイト
+	https://zenn.dev/noraworld/articles/aquestalk-pi-version-1-20-ubuntu20-arm64
+
+2, ダウンロード & インストール
+	ルートフォルダにある"AquesTalkPi"は"32bitマシン用"、
+	64bitフォルダの中には、"64bitマシン用"なので注意
+
+	$ cd Desktop
+	$ wget -qO- https://raw.githubusercontent.com/noraworld/aquestalk-installer/master/bin/pi | sh
+	$ cd aquestalk
+	$ ./AquesTalkPi これは、テストです | aplay
+
+3, ヘルプ
+	$ ./AquesTalkPi -h
+
+4, Wavファイルに保存
+	$ ./AquesTalkPi -s 150 -v f2 -k -o out.wav "ゆっくりれいむと、ゆっくりまりさだぜ" | aplay out.wav
+
+//==========
+// CRON
+
+1, CRON起動
+	$ crontab -e
+	初回起動時は下記の様になり、エディタは"nano"に選択しておく
+
+	no crontab for root - using an empty one
+
+	Select an editor.  To change later, run 'select-editor'.
+	  1. /bin/nano        <---- easiest
+	  2. /usr/bin/vim.basic
+
+	Choose 1-2 [1]: nano
+
+2-1, crontabの使い方
+
+	$ crontab -e
+		# 1分おきにログを追記(とりあえずDesktopに...)
+		*/1 * * * * echo "Hello, crontab!!" >> /home/<USER NAME>/Desktop/cron.log
+
+	$ control + O
+		Y -> Enterで保存
+
+	$ control + X
+		終了
+
+	$ cat cron.log
+		ログファイルが出力されていれば成功
+
+2-2, crontabでpython実行
+
+	$ crontab -e
+		# ブート時に実行
+		@reboot /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_reboot.py
+		@reboot /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_yukkuri.py
+
+		# 毎時1分に、リブート実行
+		1 * * * * /usr/sbin/reboot
+
+		# 10分おきに定期実行
+		*/10 * * * * /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_test.py
+
+TODO, 定時にArduinoのセンサーサーバーにアクセスし読み上げる
+
+
+
+
