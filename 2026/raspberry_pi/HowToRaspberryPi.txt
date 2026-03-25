@@ -107,13 +107,17 @@
 		  Subdevice #6: subdevice #6
 		  Subdevice #7: subdevice #7
 
-		デフォルトでは、"card 0"の、HDMIに行っている。
-		今回は、"card 1"の、ヘッドフォンを使うべきとわかるので、
-		pythonを下記のコードに変更する。
+	サウンドデバイスを指定しながらテストする方法
+		$ aplay -D plughw:0,0 /usr/share/sounds/alsa/Front_Center.wav
+		$ aplay -D plughw:1,0 /usr/share/sounds/alsa/Front_Center.wav
 
-			前: p2 = subprocess.Popen([aplay], stdin=p1.stdout)
+	デフォルトでは、"card 0"の、HDMIに行っている。
+	今回は、"card 1"の、ヘッドフォンを使うべきとわかるので、
+	pythonを下記のコードに変更する。
 
-			後: p2 = subprocess.Popen([aplay, "-D", "plughw:1,0"], stdin=p1.stdout)
+		前: p2 = subprocess.Popen([aplay], stdin=p1.stdout)
+
+		後: p2 = subprocess.Popen([aplay, "-D", "plughw:1,0"], stdin=p1.stdout)
 
 
 
