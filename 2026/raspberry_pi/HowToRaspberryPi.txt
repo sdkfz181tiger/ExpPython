@@ -10,6 +10,12 @@
 	$ ssh <USER NAME>@<HOST NAME>.local
 
 //==========
+// FTPからファイルUpload
+
+	CyberDuckでも何でもOK
+	SFTP(SSH)で接続、ホスト名、ユーザ名、パスワードで簡単接続可能
+
+//==========
 // ゆっくりボイス
 
 1, 参考サイト
@@ -45,7 +51,7 @@
 
 	Choose 1-2 [1]: nano
 
-2-1, crontabの使い方
+2, crontabの使い方
 
 	$ crontab -e
 		# 1分おきにログを追記(とりあえずDesktopに...)
@@ -60,20 +66,58 @@
 	$ cat cron.log
 		ログファイルが出力されていれば成功
 
-2-2, crontabでpython実行
+3, crontabでpython実行
 
 	$ crontab -e
 		# ブート時に実行
 		@reboot /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_reboot.py
-		@reboot /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_yukkuri.py
+		@reboot sleep 30 /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_yukkuri.py
 
-		# 毎時1分に、リブート実行
-		1 * * * * /usr/sbin/reboot
+		/usr/bin/python3 /home/kajiru/Desktop/01/main_yukkuri.py
+
+		# 6時間毎に、リブート実行
+		0 */6 * * * /usr/sbin/reboot
 
 		# 10分おきに定期実行
 		*/10 * * * * /usr/bin/python3 /home/<USER NAME>/Desktop/01/main_test.py
 
-TODO, 定時にArduinoのセンサーサーバーにアクセスし読み上げる
+@daily /usr/sbin/reboot
+
+@reboot sleep 30 && /usr/bin/python3 /home/kajiru/Desktop/01/main_yukkuri.py >> /home/kajiru/cron_error.log 2>&1
+
+*/3 * * * * /usr/bin/python3 /home/kajiru/Desktop/01/main_test.py >> /home/kajiru/cron_error.log 2>&1
+
+4, cronからだと音が出ない場合
+
+	サウンドデバイスの一覧を取得
+		$ aplay -l
+
+		**** List of PLAYBACK Hardware Devices ****
+		card 0: vc4hdmi [vc4-hdmi], device 0: MAI PCM i2s-hifi-0 [MAI PCM i2s-hifi-0]
+		  Subdevices: 1/1
+		  Subdevice #0: subdevice #0
+		card 1: Headphones [bcm2835 Headphones], device 0: bcm2835 Headphones [bcm2835 Headphones]
+		  Subdevices: 8/8
+		  Subdevice #0: subdevice #0
+		  Subdevice #1: subdevice #1
+		  Subdevice #2: subdevice #2
+		  Subdevice #3: subdevice #3
+		  Subdevice #4: subdevice #4
+		  Subdevice #5: subdevice #5
+		  Subdevice #6: subdevice #6
+		  Subdevice #7: subdevice #7
+
+		デフォルトでは、"card 0"の、HDMIに行っている。
+		今回は、"card 1"の、ヘッドフォンを使うべきとわかるので、
+		pythonを下記のコードに変更する。
+
+			前: p2 = subprocess.Popen([aplay], stdin=p1.stdout)
+
+			後: p2 = subprocess.Popen([aplay, "-D", "plughw:1,0"], stdin=p1.stdout)
+
+
+
+
 
 
 

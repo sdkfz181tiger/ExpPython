@@ -27,7 +27,7 @@ def save_file(file_name, text):
     path = os.path.join(BASE_DIR, file_name)
     file = open(path, "a")
     file.write(text)
-    file.close();
+    file.close()
 
 if __name__ == "__main__":
     main()
