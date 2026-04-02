@@ -1,4 +1,5 @@
 .DS_Store
+*.sqlite
 *.model
 *.mp4
 *.mp3
@@ -6,3 +7,5 @@
 *.wav
 *.mid
 *.sf2
+*.png
+*.jpg
