@@ -18,9 +18,9 @@ def main():
     for path in files:
         info_zeroth, info_exif, info_gps = load_exif(path)
         print("==", path, "==")
-        #pprint.pprint(info_zeroth)
-        #pprint.pprint(info_exif)
-        #pprint.pprint(info_gps)
+        pprint.pprint(info_zeroth)
+        pprint.pprint(info_exif)
+        pprint.pprint(info_gps)
 
         if any(info_gps) == True:
             get_googlemap(info_gps)
