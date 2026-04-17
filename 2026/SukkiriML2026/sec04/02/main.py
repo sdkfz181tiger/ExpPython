@@ -9,14 +9,12 @@
 import pandas as pd
 from sklearn import tree
 
-#==========
-# Main
-
 def main():
+	""" Main """
 	print("main!!")
 	
 	# CSV
-	df = pd.read_csv("./data.csv")
+	df = pd.read_csv("my_data.csv")
 	print(df.head(3))
 	print(df.tail(3))
 
@@ -28,12 +26,13 @@ def main():
 	col_x = ["cm", "kg", "era"]
 	x = df[col_x]
 	print(x.head(3))
+	print(type(x)) # DataFrame
 
 	# 教師データを準備
 	col_t = "group"
 	t = df[col_t]
 	print(t.head(3))
-	print(type(t))
+	print(type(t)) # Series
 
 	# モデルを準備し、学習を実行
 	model = tree.DecisionTreeClassifier(random_state=0)

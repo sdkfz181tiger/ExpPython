@@ -15,10 +15,8 @@ FILE_PKL = "./data.pkl"
 COLUMNS_X = ["cm", "kg", "era"]
 COLUMNS_T = "group"
 
-#==========
-# Main
-
 def main():
+	""" Main """
 	print("main!!")
 	
 	

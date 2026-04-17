@@ -7,15 +7,13 @@
 
 import pandas as pd
 
-#==========
-# Main
-
 data = {
 	"Alex": [100, 160],
 	"Becky": [80, 180]
 }
 
 def main():
+	""" Main """
 	print("main!!")
 	
 	# DataFrame
