@@ -12,13 +12,13 @@ import os.path
 from sklearn import tree
 
 COL_X    = ["japanese", "math", "english", "science", "social"]
-COL_T    = "tea"
+COL_Y    = "tea"
 MY_CSV   = "my_data.csv"
 MY_MODEL = "my_model.pkl"
 
 def main():
 	""" Main """
-	global COL_X, COL_T
+	global COL_X, COL_Y
 	print("main!!")
 
 	if os.path.isfile(MY_MODEL):
@@ -48,7 +48,7 @@ def main():
 
 def fit_model():
 	""" Fit """
-	global COL_X, COL_T
+	global COL_X, COL_Y
 	print("fit_model")
 	
 	# CSV
@@ -66,16 +66,16 @@ def fit_model():
 	print(type(x)) # DataFrame(複数列の場合)
 
 	# 教師データを準備
-	t = df[COL_T]
-	print(t.head(3))
-	print(type(t)) # Series(1列の場合)
+	y = df[COL_Y]
+	print(y.head(3))
+	print(type(y)) # Series(1列の場合)
 
 	# モデルを準備し、学習を実行
 	model = tree.DecisionTreeClassifier(random_state=0)
-	model.fit(x, t)
+	model.fit(x, y)
 
 	# モデルを評価
-	print("正解率:", model.score(x, t))
+	print("正解率:", model.score(x, y))
 
 	return model
 	

@@ -29,14 +29,14 @@ def main():
 	print(type(x)) # DataFrame
 
 	# 教師データを準備
-	col_t = "animal"
-	t = df[col_t]
-	print(t.head(3))
-	print(type(t)) # Series
+	col_y = "animal"
+	y = df[col_y]
+	print(y.head(3))
+	print(type(y)) # Series
 
 	# モデルを準備し、学習を実行
 	model = tree.DecisionTreeClassifier(random_state=0)
-	model.fit(x, t)
+	model.fit(x, y)
 	
 	# 推論を実行(推論時もDataFrameにする)
 	# animalの答え: 理系は犬派, 文系は猫派
@@ -45,7 +45,7 @@ def main():
 	print("山田:", model.predict(yamada)) # 犬派
 
 	# モデルを評価
-	print("正解率:", model.score(x, t))
+	print("正解率:", model.score(x, y))
 
 if __name__ == "__main__":
 	main()
