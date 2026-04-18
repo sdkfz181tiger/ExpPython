@@ -11,8 +11,8 @@ import pickle
 import os.path
 from sklearn import tree
 
-COL_X    = ["cm", "kg", "era"]
-COL_T    = "group"
+COL_X    = ["japanese", "math", "english", "science", "social"]
+COL_T    = "tea"
 MY_CSV   = "my_data.csv"
 MY_MODEL = "my_model.pkl"
 
@@ -34,9 +34,17 @@ def main():
 		with open(MY_MODEL, "wb") as f:
 			pickle.dump(model, f)
 
-	# 推論を実行(推論時もDataFrameにする)
-	elen = pd.DataFrame([[170, 70, 20]], columns=COL_X)
-	print(model.predict(elen))
+	# 推論を実行(推論時もDataFrameにする) 
+	# animalの答え: 理系は犬派, 文系は猫派
+	# teaの答え: 平均90以上は玉露、80以上は抹茶、それ以外は煎茶
+	yamada = pd.DataFrame([[30, 80, 20, 80, 20]], columns=COL_X)
+	print("山田:", model.predict(yamada)) # 煎茶
+
+	kawasaki = pd.DataFrame([[80, 20, 70, 30, 60]], columns=COL_X)
+	print("川崎:", model.predict(kawasaki)) # 抹茶
+
+	ito = pd.DataFrame([[90, 90, 70, 90, 70]], columns=COL_X)
+	print("伊藤:", model.predict(ito)) # 玉露
 
 def fit_model():
 	""" Fit """
@@ -49,8 +57,8 @@ def fit_model():
 	print(df.tail(3))
 
 	# 特定の列のみ
-	print(df["cm"].head(3))
-	print(df[["cm", "kg"]].head(3))
+	print(df["japanese"].head(3))
+	print(df[["japanese", "math"]].head(3))
 
 	# 特徴量を準備
 	x = df[COL_X]
@@ -70,6 +78,7 @@ def fit_model():
 	print("正解率:", model.score(x, t))
 
 	return model
+	
 
 if __name__ == "__main__":
 	main()
