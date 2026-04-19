@@ -23,7 +23,30 @@ MY_MODEL = "my_model.pkl"
 def main():
 	""" Main """
 	print("main!!")
+
+	if os.path.isfile(MY_MODEL):
+		print("Let's load model!!")
+		# Open model
+		with open(MY_MODEL, "rb") as f:
+			model = pickle.load(f)
+	else:
+		print("Let's fit model!!")
+		# Fit
+		model = fit_model()
+		# Dump model
+		with open(MY_MODEL, "wb") as f:
+			pickle.dump(model, f)
+
+	# テスト
+	new = pd.DataFrame([[150, 700, 300, 0]], columns=COL_X)
+	print(model.predict(new))
 	
+
+def fit_model():
+	""" Fit """
+	global COL_X, COL_Y
+	print("fit_model")
+
 	df = pd.read_csv(MY_CSV)
 	print(df.head(3))
 	print(df.tail(3))
@@ -93,9 +116,7 @@ def main():
 	# 0.8以上であれば、予測性能が高い計算式と言われる
 	print("Score:", model.score(x_test, y_test))
 
-	# テスト
-	#new = pd.DataFrame([[150, 700, 300, 0]], columns=COL_X)
-	#print(model.predict(new))
+	return model
 
 
 if __name__ == "__main__":
