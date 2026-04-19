@@ -83,7 +83,7 @@ def fit_model():
 	#print(df2.tail(3))
 
 	# 欠損値を指定した値(0)に置き換える
-	#df["花弁長さ"] = df["花弁長さ"].fillna(0)
+	#df["kaben_nagasa"] = df["kaben_nagasa"].fillna(0)
 	#print(df.tail(3))
 
 	# 欠損値を何に置き換えるか考える
