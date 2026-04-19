@@ -116,6 +116,11 @@ def fit_model():
 	# 0.8以上であれば、予測性能が高い計算式と言われる
 	print("Score:", model.score(x_test, y_test))
 
+	# 回帰式の係数と切片を確認する
+	# 係数の絶対値が大きい程、影響が強い
+	print("係数:", model.coef_)
+	print("切片:", model.intercept_)
+
 	return model
 
 

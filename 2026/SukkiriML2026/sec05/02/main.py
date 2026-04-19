@@ -122,7 +122,7 @@ def fit_model():
 	print(x_train.shape) # x_trainの行数と列数
 	print(x_test.shape) # x_testの行数と列数
 
-	# モデルを準備し、学習を実行
+	# 決定木モデルを準備し、学習を実行
 	# random_state: 乱数の固定(再現率を上げて調整しやすくする為)
 	# max_depth: 決定木の深さ
 	model = tree.DecisionTreeClassifier(
