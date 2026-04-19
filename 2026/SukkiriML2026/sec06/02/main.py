@@ -114,7 +114,7 @@ def fit_model():
 	print(y.head(3))
 	print(type(y)) # Series(1列の場合)
 
-	# ホールドアウト法で、訓練用と検証用とにデータを分割する
+	# ホールドアウト法で、学習用と検証用とにデータを分割する
 	# test_size: 検証用データの割合
 	x_train, x_test, y_train, y_test = train_test_split(x, y,
 		random_state=0, test_size=0.3)
