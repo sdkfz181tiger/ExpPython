@@ -56,6 +56,10 @@ def fit_model(depth):
 	#print(df.isnull().sum())
 	
 	# 欠損値を穴埋め
+	# 穴埋めを何で行うかを検討
+	print("Ageの平均値:", df["age"].mean())
+	print("Ageの中央値:", df["age"].median())
+	print("Ageの最頻値:", df["age"].mode()[0])
 	df["age"] = df["age"].fillna(df["age"].mean()) # 平均値
 	df["embarked"] = df["embarked"].fillna(df["embarked"].mode()[0]) # 最頻値
 
