@@ -15,7 +15,7 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.tree import plot_tree
 
-COL_X    = ["pclass", "age", "sib_sp", "parch", "fare"]
+COL_X    = ["pclass", "age", "sib_sp", "parch", "fare", "male"]
 COL_Y    = "survived"
 MY_CSV   = "my_survived.csv"
 MY_MODEL = "my_model.pkl"
@@ -62,7 +62,7 @@ def fit_model(depth):
 	# print("Ageの最頻値:", df["age"].mode()[0])
 	# df["age"] = df["age"].fillna(df["age"].mean()) # 平均値
 	# df["embarked"] = df["embarked"].fillna(df["embarked"].mode()[0]) # 最頻値
-	"""
+
 	# グループ集計
 	print("survivedごとの平均年齢:")
 	print(df.groupby("survived")["age"].mean())
@@ -111,6 +111,14 @@ def fit_model(depth):
 	df.loc[(df["pclass"]==3) & (df["survived"]==1) & is_null, "age"] = 20
 
 	print("欠損値の個数(After):", df["age"].isnull().sum())
+
+	# ダミー変数化(ワンホットエンコーディング)
+	# sex列は、"male"と、"female"の文字列となっている為、これらをダミー変数とする
+	#    drop_first=Trueで、1つ減らした1列のデータフレームとして取得される
+	#    drop_first=Falseで、減らさず2列のデータフレームとして取得される
+	male = pd.get_dummies(df["sex"], drop_first=True, dtype=int)
+	print(male)
+	df = pd.concat([df, male], axis=1) # データフレームに連結(列方向)
 
 	# ホールドアウト法で、訓練用と検証用とにデータを分割する
 	# test_size: 検証用データの割合
