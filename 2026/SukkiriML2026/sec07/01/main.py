@@ -15,7 +15,7 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.tree import plot_tree
 
-COL_X    = ["pc_class", "age", "sib_sp", "parch", "fare"]
+COL_X    = ["pclass", "age", "sib_sp", "parch", "fare"]
 COL_Y    = "survived"
 MY_CSV   = "my_survived.csv"
 MY_MODEL = "my_model.pkl"

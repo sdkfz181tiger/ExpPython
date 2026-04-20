@@ -15,7 +15,7 @@ from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.tree import plot_tree
 
-COL_X    = ["pc_class", "age", "sib_sp", "parch", "fare"]
+COL_X    = ["pclass", "age", "sib_sp", "parch", "fare"]
 COL_Y    = "survived"
 MY_CSV   = "my_survived.csv"
 MY_MODEL = "my_model.pkl"
@@ -56,8 +56,61 @@ def fit_model(depth):
 	#print(df.isnull().sum())
 	
 	# 欠損値を穴埋め
-	df["age"] = df["age"].fillna(df["age"].mean()) # 平均値
-	df["embarked"] = df["embarked"].fillna(df["embarked"].mode()[0]) # 最頻値
+	# 穴埋めを何で行うかを検討
+	# print("Ageの平均値:", df["age"].mean())
+	# print("Ageの中央値:", df["age"].median())
+	# print("Ageの最頻値:", df["age"].mode()[0])
+	# df["age"] = df["age"].fillna(df["age"].mean()) # 平均値
+	# df["embarked"] = df["embarked"].fillna(df["embarked"].mode()[0]) # 最頻値
+	"""
+	# グループ集計
+	print("survivedごとの平均年齢:")
+	print(df.groupby("survived")["age"].mean())
+
+	print("sexごとの平均年齢:")
+	print(df.groupby("sex")["age"].mean())
+
+	print("pclassごとの平均年齢:")
+	print(df.groupby("pclass")["age"].mean())
+
+	# クロス集計
+	#    デフォルトで平均値が集計される
+	print("行をsurvive, 列をpclassとして平均値で集計")
+	print(pd.pivot_table(df, 
+		index="survived", # 行
+		columns="pclass", # 列
+		values="age")) # 集計対象
+
+	print("中央値で集計")
+	print(pd.pivot_table(df, 
+		index="survived", # 行
+		columns="pclass", # 列
+		values="age", # 集計対象
+		aggfunc="median")) # 中央値
+
+	# 集計を元に検討し、欠損値を補完
+	print("欠損値の個数(Before):", df["age"].isnull().sum())
+
+	# 欠損している行かどうか(補完対象行かどうか)
+	is_null = df["age"].isnull()
+
+	# pclass=1に関する埋め込み(andは使えないので注意!!)
+	df.loc[(df["pclass"]==1) & (df["survived"]==0) & is_null, "age"] = 43
+	df.loc[(df["pclass"]==1) & (df["survived"]==1) & is_null, "age"] = 35
+
+	print("欠損値の個数(After):", df["age"].isnull().sum())
+
+	# pclass=2に関する埋め込み(andは使えないので注意!!)
+	df.loc[(df["pclass"]==2) & (df["survived"]==0) & is_null, "age"] = 33
+	df.loc[(df["pclass"]==2) & (df["survived"]==1) & is_null, "age"] = 25
+
+	print("欠損値の個数(After):", df["age"].isnull().sum())
+
+	# pclass=2に関する埋め込み(andは使えないので注意!!)
+	df.loc[(df["pclass"]==3) & (df["survived"]==0) & is_null, "age"] = 26
+	df.loc[(df["pclass"]==3) & (df["survived"]==1) & is_null, "age"] = 20
+
+	print("欠損値の個数(After):", df["age"].isnull().sum())
 
 	# ホールドアウト法で、訓練用と検証用とにデータを分割する
 	# test_size: 検証用データの割合
