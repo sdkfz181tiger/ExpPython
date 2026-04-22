@@ -97,7 +97,9 @@ def main():
 	# y = train_val["price"] # x
 	y = train_val[["price"]] # o: 後ほど標準化する為
 
-	# fit_model(x, y)
+	# Score
+	score_train, score_val = fit_model(x, y)
+	print("Score:", score_train, score_val)
 
 def fit_model(x, y):
 	""" Fit """
@@ -115,30 +117,33 @@ def fit_model(x, y):
 	# 訓練データを標準化
 	sc_model_x = StandardScaler()
 	sc_model_x.fit(x_train) # 各列の平均値と標準偏差を調べ格納
-	sc_x = sc_model_x.transform(x_train)
-	print(sc_x) # array型
+	sc_x_train = sc_model_x.transform(x_train)
+	print(sc_x_train) # array型
 
 	# データフレーム型に変換
-	df_tmp = pd.DataFrame(sc_x, columns=x_train.columns)
+	df_tmp = pd.DataFrame(sc_x_train, columns=x_train.columns)
 	print(df_tmp.mean()) # 平均値を確認(ほぼ0である)
 	print(df_tmp.std()) # 標準偏差(ほぼ1である)
 
 	# 正解データを標準化
 	sc_model_y = StandardScaler()
 	sc_model_y.fit(y_train)
-	sc_y = sc_model_y.transform(y_train)
-	print(sc_y) # array型
+	sc_y_train = sc_model_y.transform(y_train)
+	print(sc_y_train) # array型
 
 	# 重回帰モデルで、標準化済み訓練データを元に訓練する
 	model = LinearRegression()
-	model.fit(sc_x, sc_y)
+	model.fit(sc_x_train, sc_y_train)
 
 	# モデルの評価を行う("訓練データ"のStandardScalerで行う事!!)
 	sc_x_val = sc_model_x.transform(x_val)
 	sc_y_val = sc_model_y.transform(y_val)
-	print("Score:", model.score(sc_x_val, sc_y_val))
 
+	# Score
+	score_train = model.score(sc_x_train, sc_y_train)
+	score_val = model.score(sc_x_val, sc_y_val)
 
+	return score_train, score_val
 
 if __name__ == "__main__":
 	main()
