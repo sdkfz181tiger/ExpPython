@@ -97,6 +97,48 @@ def main():
 	# y = train_val["price"] # x
 	y = train_val[["price"]] # o: 後ほど標準化する為
 
+	# fit_model(x, y)
+
+def fit_model(x, y):
+	""" Fit """
+
+	x_train, x_val, y_train, y_val = train_test_split(x, y, 
+		test_size=0.2, random_state=0)
+
+	# データの標準化
+	# それぞれの特徴量の平均や分布が大きく異なる為、比較が難しい。。。
+	# そこで、標準化を行い特徴量の平均値と分布を統一させる。
+	# 標準化を行うと、元のデータ集合がどの様な分布でも、
+	# 標準化後のデータ集合は「平均値が0、標準偏差が1」の分布となる。
+	# これにより、適切な比較と分析が可能になる。
+
+	# 訓練データを標準化
+	sc_model_x = StandardScaler()
+	sc_model_x.fit(x_train) # 各列の平均値と標準偏差を調べ格納
+	sc_x = sc_model_x.transform(x_train)
+	print(sc_x) # array型
+
+	# データフレーム型に変換
+	df_tmp = pd.DataFrame(sc_x, columns=x_train.columns)
+	print(df_tmp.mean()) # 平均値を確認(ほぼ0である)
+	print(df_tmp.std()) # 標準偏差(ほぼ1である)
+
+	# 正解データを標準化
+	sc_model_y = StandardScaler()
+	sc_model_y.fit(y_train)
+	sc_y = sc_model_y.transform(y_train)
+	print(sc_y) # array型
+
+	# 重回帰モデルで、標準化済み訓練データを元に訓練する
+	model = LinearRegression()
+	model.fit(sc_x, sc_y)
+
+	# モデルの評価を行う("訓練データ"のStandardScalerで行う事!!)
+	sc_x_val = sc_model_x.transform(x_val)
+	sc_y_val = sc_model_y.transform(y_val)
+	print("Score:", model.score(sc_x_val, sc_y_val))
+
+
 
 if __name__ == "__main__":
 	main()
