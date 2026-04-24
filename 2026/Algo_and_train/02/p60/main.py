@@ -11,7 +11,7 @@ def binary_search(T, data):
     low = 0              # 探索範囲の左端の要素番号
     high = len(data) - 1 # 探索範囲の右端の要素番号
 
-    # TODO: この続きのコードを作る事
+    # TODO: 続きのコードを実装する事
 
 
 def main():

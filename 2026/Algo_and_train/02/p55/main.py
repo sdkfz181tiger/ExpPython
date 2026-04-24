@@ -11,7 +11,7 @@ def main():
     
     kingaku = 900
 
-    # TODO: 問題にあるコードを実装してテストをする事
+    # TODO: 続きのコードを実装する事
     
 
 if __name__ == "__main__":
