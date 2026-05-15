@@ -12,6 +12,7 @@ import pickle
 import os.path
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.covariance import MinCovDet
 
 MY_BIKE    = "my_bike.tsv"
 MY_WEATHER = "my_weather.csv"
@@ -50,25 +51,37 @@ def main():
 	# dfと、df_tempを外部結合する
 	df = df.merge(df_temp, how="left", on="dteday")
 
-	# dfの、dtedayが、2011-07-20のデータはNaNとして残る
-	#print(df[df["dteday"] == "2011-07-20"])
+	# 計算対象のデータを用意
+	df = df.loc[:, "atemp":"windspeed"]
+	df = df.dropna() # 欠損値を削除
 
-	# グラフを表示(Line)
-	#df[["temp", "hum"].plot(kind="line")
+	# マハラノビス距離を計算
+	# 特徴量を、データのバラつきや相関係数を踏まえて計算した距離
+	mcd = MinCovDet(random_state=0, support_fraction=0.7)
+	mcd.fit(df)
+	distance = mcd.mahalanobis(df)
+	print(distance)
 
-	# ヒストグラム
-	#df["temp"].plot(kind="hist")
-	#df["hum"].plot(kind="hist", alpha=0.5)
-	
-	# 欠損値付近の折れ線グラフ
-	df["atemp"].loc[695:705].plot(kind="line")
+	# 箱ヒゲ図で外れ値を確認
+	distance = pd.Series(distance)
+	distance.plot(kind="box")
+	#plt.show()
 
-	# 欠損値を線形補完する
-	df["atemp"] = df["atemp"].astype(float) # float型に変換
-	df["atemp"] = df["atemp"].interpolate() # 線形補完
-	df.loc[695:705, "atemp"].plot()
+	# 中央値を用いて外れ値を判定する
+	# IQR(四分位範囲)を求める(50%のデータが収まる範囲)
+	# 下限(25%)が、2.311196
+	# 上限(75%)が、6.554506だとわかる
+	tmp = distance.describe()
+	#print(tmp)
 
-	plt.show()
+	# IQRを元にして、外れ値を判定する閾値を計算する
+	iqr = tmp["75%"] - tmp["25%"]
+	limit_upper = tmp["75%"] + 1.5 * iqr
+	limit_lower = tmp["25%"] - 1.5 * iqr
+
+	# 外れ値
+	outliner = distance[(distance < limit_lower) | (limit_upper < distance)]
+	print(outliner)
 
 
 if __name__ == "__main__":

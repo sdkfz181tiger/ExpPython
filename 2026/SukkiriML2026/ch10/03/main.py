@@ -12,66 +12,39 @@ import pickle
 import os.path
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.tree import plot_tree
 
-MY_BIKE    = "my_bike.tsv"
-MY_WEATHER = "my_weather.csv"
-MY_TEMP    = "my_temp.json"
+MY_CSV = "my_iris.csv"
 
 def main():
 	""" Main """
 	print("main!!")
 
-	df_bike = pd.read_csv(MY_BIKE, sep="\t") # Tab区切り対応
-	#print(df_bike.head(3))
-	#print(df_bike.tail(3))
+	df_iris = pd.read_csv(MY_CSV)
+	#print(df_iris.head(3))
+	#print(df_iris.tail(3))
 
-	df_weather = pd.read_csv(MY_WEATHER, encoding="shift-jis") # Shitt-JIS対応
-	#print(df_weather.head(3))
-	#print(df_weather.tail(3))
+	# 学習用データを用意(欠損値を含む行を削除)
+	df_train = df_iris.dropna()
+	x = df_train.loc[:, "gaku_haba":"kaben_haba"]
+	y = df_train["gaku_nagasa"]
 
-	# df_bikeと、df_weatherを内部結合する
-	df = df_bike.merge(df_weather, how="inner", on="weather_id")
-	#print(df.head(3))
-	#print(df.tail(3))
+	# モデルを学習
+	model = LinearRegression()
+	model.fit(x, y)
 
-	# weatherごとのcnt平均値
-	#print(df.groupby("weather")["cnt"].mean())
+	# 欠損値を含む行を用意
+	condition = df_iris["gaku_nagasa"].isnull()
+	df_none = df_iris.loc[condition]
+	print(df_none.head(3)) # 61行目、137行目が欠損
 
-	df_temp = pd.read_json(MY_TEMP).T # 転置して行と列を入れ替え
-	#print(df_temp.head(3))
-	#print(df_temp.tail(3))
+	# モデルで予測
+	x = df_none.loc[:, "gaku_haba":"kaben_haba"]
+	y = model.predict(x)
 
-	# df_tempの、dtedayが、2011-07-20のデータが欠損している...
-	#print(df_temp.loc[199:201])
-
-	# dfの、2011-07-20のデータは存在する...
-	#print(df[df["dteday"] == "2011-07-20"])
-
-	# dfと、df_tempを外部結合する
-	df = df.merge(df_temp, how="left", on="dteday")
-
-	# dfの、dtedayが、2011-07-20のデータはNaNとして残る
-	#print(df[df["dteday"] == "2011-07-20"])
-
-	# グラフを表示(Line)
-	#df[["temp", "hum"].plot(kind="line")
-
-	# ヒストグラム
-	#df["temp"].plot(kind="hist")
-	#df["hum"].plot(kind="hist", alpha=0.5)
-	
-	# 欠損値付近の折れ線グラフ
-	df["atemp"].loc[695:705].plot(kind="line")
-
-	# 欠損値を線形補完する
-	df["atemp"] = df["atemp"].astype(float) # float型に変換
-	df["atemp"] = df["atemp"].interpolate() # 線形補完
-	df.loc[695:705, "atemp"].plot()
-
-	plt.show()
+	# 欠損値を補完
+	df_iris.loc[condition, "gaku_nagasa"] = y
+	print("61行目", df_iris.loc[61, "gaku_nagasa"]) # 61行目を確認
+	print("137行目", df_iris.loc[137, "gaku_nagasa"]) # 137行目を確認
 
 
 if __name__ == "__main__":
