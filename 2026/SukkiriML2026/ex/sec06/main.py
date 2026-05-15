@@ -39,9 +39,52 @@ def main():
 	df[COL_X] = df[COL_X].fillna(col_median)
 
 	# 欠損値の存在を確認
-	print(df[COL_X].isnull().sum())
+	#print(df[COL_X].isnull().sum())
 
-	
+	# 散布図で外れ値を探す
+	#df.plot(kind="scatter", x="x0", y="target")
+	#df.plot(kind="scatter", x="x1", y="target")
+	#df.plot(kind="scatter", x="x2", y="target")
+	#df.plot(kind="scatter", x="x3", y="target")
+	#plt.show()
+
+	# x0
+	no = df[df["x0"] < -2.5].index
+	df = df.drop(no, axis=0) # 行を削除
+	no = df[(1.25 < df["x0"]) & (100 < df["target"])].index
+	df = df.drop(no, axis=0)
+
+	# x1
+	no = df[2.5 < df["x1"]].index
+	df = df.drop(no, axis=0)
+	no = df[df["x1"] < -2].index
+	df = df.drop(no, axis=0)
+	no = df[(df["x1"] < 0.5) & (200 < df["target"])].index
+	df = df.drop(no, axis=0)
+	no = df[(0.5 < df["x1"]) & (df["target"] < -200)].index
+	df = df.drop(no, axis=0)
+
+	# x2
+	no = df[df["x2"] < -2].index
+	df = df.drop(no, axis=0)
+	no = df[(df["x2"] < -1.0) & (50 < df["target"])].index
+	df = df.drop(no, axis=0)
+
+	# x3
+	no = df[df["x3"] < -2].index
+	df = df.drop(no, axis=0)
+	no = df[df["target"] < -250].index
+	df = df.drop(no, axis=0)
+	no = df[2 < df["x3"]].index
+	df = df.drop(no, axis=0)
+
+	# 外れ値の削除確認
+	# df.plot(kind="scatter", x="x0", y="target")
+	# df.plot(kind="scatter", x="x1", y="target")
+	# df.plot(kind="scatter", x="x2", y="target")
+	# df.plot(kind="scatter", x="x3", y="target")
+	# plt.show()
+
 
 	"""
 	# 欠損値がある場合は、中央値で補完
