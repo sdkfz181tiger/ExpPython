@@ -21,8 +21,8 @@ class BaseSprite(arcade.Sprite):
         self.anim_dict = {}
         self.anim_interval = 6
         self.anim_counter = 0
-        self.anim_index = 0 # フレーム番号
-        self.anim_key = "" # 再生中のアニメ
+        self.anim_index = 0 # Index of Frames
+        self.anim_key = "" # Key of Animation
 
     def add_animation(self, key, arr):
         self.anim_dict[key] = []
@@ -31,8 +31,8 @@ class BaseSprite(arcade.Sprite):
 
     def change_animation(self, key):
         if not key in self.anim_dict: return
-        self.anim_index = 0 # フレーム番号
-        self.anim_key = key # 再生中のアニメ
+        self.anim_index = 0 # Index of Frames
+        self.anim_key = key # Key of Animation
 
     def update_animation(self):
         if not self.anim_key in self.anim_dict: return
@@ -46,6 +46,9 @@ class BaseSprite(arcade.Sprite):
 
     def stop(self):
         self.physics.set_velocity(self, (0, 0))
+
+    def check_body_type(self, body_type):
+        return self.physics.get_physics_object(self).body.body_type == body_type
 
 
 class Player(BaseSprite):
@@ -85,7 +88,7 @@ class Coin(BaseSprite):
 
 class Block(BaseSprite):
 
-    def __init__(self, physics,  filename, x, y):
+    def __init__(self, physics, filename, x, y):
         super().__init__(physics, filename, x, y)
         # Physics
         self.physics.add_sprite(self,
@@ -95,14 +98,21 @@ class Block(BaseSprite):
 
 class Cake(BaseSprite):
 
-    def __init__(self, physics,  filename, x, y):
+    def __init__(self, physics, filename, x, y):
         super().__init__(physics, filename, x, y)
         # Physics
-        self.physics.add_sprite(self, 
+        self.physics.add_sprite(self,
             friction=1.0, collision_type="cake",
             body_type=arcade.PymunkPhysicsEngine.KINEMATIC)
 
     def move(self, spd_x, spd_y):
         self.physics.set_velocity(self,(spd_x, spd_y))
 
+    def change_dynamic(self):
+        if self.check_body_type(arcade.PymunkPhysicsEngine.DYNAMIC): return False
+        self.physics.remove_sprite(self)
+        self.physics.add_sprite(self,
+            friction=1.0, collision_type="cake",
+            body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
+        return True
 
