@@ -10,8 +10,10 @@ import math
 
 class BaseSprite(arcade.Sprite):
 
-    def __init__(self, filename, x, y):
+    def __init__(self, physics, filename, x, y):
         super().__init__(filename)
+        # Physics
+        self.physics = physics
         # Position
         self.center_x = x
         self.center_y = y
@@ -42,11 +44,17 @@ class BaseSprite(arcade.Sprite):
         if len(anim) <= self.anim_index: self.anim_index = 0
         self.texture = anim[self.anim_index]
 
+    def stop(self):
+        self.physics.set_velocity(self, (0, 0))
+
 
 class Player(BaseSprite):
 
-    def __init__(self, filename, x, y):
-        super().__init__(filename, x, y)
+    def __init__(self, physics, filename, x, y):
+        super().__init__(physics, filename, x, y)
+        # Physics
+        self.physics.add_sprite(self, 
+            friction=1.0, collision_type="player")
         # Animation
         self.add_animation("stand", [
             "images/ninja/stand_01.png", "images/ninja/stand_02.png",
@@ -56,14 +64,17 @@ class Player(BaseSprite):
             "images/ninja/front_01.png", "images/ninja/front_02.png",
             "images/ninja/front_03.png", "images/ninja/front_04.png",
             "images/ninja/front_05.png"])
-
         self.change_animation("stand")
 
 
 class Coin(BaseSprite):
 
-    def __init__(self, filename, x, y):
-        super().__init__(filename, x, y)
+    def __init__(self, physics, filename, x, y):
+        super().__init__(physics, filename, x, y)
+        # Physics
+        self.physics.add_sprite(self, 
+            friction=1.0, collision_type="coin",
+            body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
         # Animation
         self.add_animation("stand", [
             "images/coin/coin_01.png", "images/coin/coin_02.png",
@@ -71,7 +82,27 @@ class Coin(BaseSprite):
             "images/coin/coin_05.png"])
         self.change_animation("stand")
 
+
 class Block(BaseSprite):
 
-    def __init__(self, filename, x, y):
-        super().__init__(filename, x, y)
+    def __init__(self, physics,  filename, x, y):
+        super().__init__(physics, filename, x, y)
+        # Physics
+        self.physics.add_sprite(self,
+            friction=1.0, collision_type="block",
+            body_type=arcade.PymunkPhysicsEngine.STATIC)
+
+
+class Cake(BaseSprite):
+
+    def __init__(self, physics,  filename, x, y):
+        super().__init__(physics, filename, x, y)
+        # Physics
+        self.physics.add_sprite(self, 
+            friction=1.0, collision_type="cake",
+            body_type=arcade.PymunkPhysicsEngine.KINEMATIC)
+
+    def move(self, spd_x, spd_y):
+        self.physics.set_velocity(self,(spd_x, spd_y))
+
+

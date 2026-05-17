@@ -26,10 +26,13 @@ class GameView(arcade.View):
         self.camera = arcade.Camera2D() # プレイヤー用カメラ
         self.camera_gui = arcade.Camera2D() # 固定したカメラ
 
+        # 物理エンジンを作る
+        self.physics = arcade.PymunkPhysicsEngine(damping=0.8, gravity=(0, -900))
+
         # プレイヤー
         self.players = arcade.SpriteList()
-        self.player = sprite.Player("images/ninja/front_01.png", 
-                             self.w/2, self.h/2)
+        self.player = sprite.Player(self.physics, 
+            "images/ninja/front_01.png", self.w/2, self.h/2)
         self.players.append(self.player)
 
         # 小判
@@ -37,7 +40,8 @@ class GameView(arcade.View):
         for i in range(10):
             x = random.random() * self.w
             y = self.h
-            coin = sprite.Coin("images/coin/coin_01.png", x, y)
+            coin = sprite.Coin(self.physics, 
+                "images/coin/coin_01.png", x, y)
             self.coins.append(coin)
 
         # ブロック
@@ -49,8 +53,18 @@ class GameView(arcade.View):
         for i in range(block_total):
             x = block_x + block_pad_x * i
             y = block_y
-            block = sprite.Block("images/block/block_01.png", x, y)
+            block = sprite.Block(self.physics,
+                "images/block/block_01.png", x, y)
             self.blocks.append(block)
+
+        # ケーキ
+        self.cakes = arcade.SpriteList()
+        x = self.w / 2 + 128
+        y = self.h / 2
+        cake = sprite.Cake(self.physics,
+            "images/cake/cake_01.png", x, y)
+        cake.move(-8, 0) # Test
+        self.cakes.append(cake)
 
         # Info
         self.msg_info = arcade.Text(
@@ -58,24 +72,6 @@ class GameView(arcade.View):
             self.w/2, self.h-20, 
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="top")
-
-        # 物理エンジンを作る
-        self.physics = arcade.PymunkPhysicsEngine(damping=0.8, gravity=(0, -900))
-        # プレイヤーを追加
-        self.physics.add_sprite(self.player, 
-            friction=1.0, collision_type="player")
-
-        # 小判を追加
-        # for coin in self.coins:
-        #     self.physics.add_sprite(coin,
-        #         friction=1.0, collision_type="wall",
-        #         body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
-
-        # ブロックを追加
-        for block in self.blocks:
-            self.physics.add_sprite(block,
-                friction=1.0, collision_type="wall",
-                body_type=arcade.PymunkPhysicsEngine.STATIC)
 
     def on_key_press(self, key, key_modifiers):
         # Move(WASD)
@@ -89,7 +85,8 @@ class GameView(arcade.View):
             self.physics.set_velocity(self.player, (PLAYER_JUMP_X, PLAYER_JUMP_Y))
         
     def on_key_release(self, key, key_modifiers):
-        self.player.stop() # Stop
+        pass
+        #self.player.stop() # Stop
 
     def on_update(self, delta_time):
 
@@ -111,6 +108,7 @@ class GameView(arcade.View):
         self.players.draw()
         self.coins.draw()
         self.blocks.draw()
+        self.cakes.draw()
 
         self.camera_gui.use()
         self.msg_info.draw()
