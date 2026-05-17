@@ -66,11 +66,11 @@ class GameView(arcade.View):
             friction=1.0, collision_type="player")
 
         # 小判を追加
-        for coin in self.coins:
-            self.physics.add_sprite(coin,
-                friction=1.0, collision_type="wall",
-                body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
-            
+        # for coin in self.coins:
+        #     self.physics.add_sprite(coin,
+        #         friction=1.0, collision_type="wall",
+        #         body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
+
         # ブロックを追加
         for block in self.blocks:
             self.physics.add_sprite(block,
@@ -94,6 +94,11 @@ class GameView(arcade.View):
     def on_update(self, delta_time):
 
         self.physics.step(delta_time) # 物理エンジンを進める
+
+        # Animation
+        self.player.update_animation()
+        for coin in self.coins:
+            coin.update_animation()
 
         # Camera
         self.camera.position = arcade.math.lerp_2d(
