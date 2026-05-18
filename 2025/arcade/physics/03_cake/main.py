@@ -15,7 +15,7 @@ PLAYER_JUMP_Y = 400
 CAKE_SPEED_X_MIN = 64
 CAKE_SPEED_X_MAX = 96
 CAKE_PAD_Y       = 24
-CAKE_INTERVAL    = 3.0
+CAKE_INTERVAL    = 2.0
 CAKE_FILES = [
     "images/cake_x2/cake_01.png",
     "images/cake_x2/cake_02.png",
