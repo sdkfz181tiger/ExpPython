@@ -34,16 +34,18 @@ class GameView(arcade.View):
         self.h = self.window.height
         self.background_color = arcade.color.PAYNE_GREY
 
-        self.ready_time = 2.0
+        self.ready_flg = True
         self.cake_y = self.h / 2
         self.cake_interval = CAKE_INTERVAL
 
         # UtilSounds
         self.sounds = utility.UtilSounds()
-        self.sounds.load_sound("game", "sounds/bgm_game.ogg")
-        self.sounds.load_sound("coin", "sounds/se_coin.ogg")
-        self.sounds.load_sound("jump", "sounds/se_jump.ogg")
-        self.sounds.load_sound("land", "sounds/se_land.ogg")
+        self.sounds.load_sound("ready", "sounds/bgm_ready.ogg")
+        self.sounds.load_sound("game",  "sounds/bgm_game.ogg")
+        self.sounds.load_sound("coin",  "sounds/se_coin.ogg")
+        self.sounds.load_sound("jump",  "sounds/se_jump.ogg")
+        self.sounds.load_sound("land",  "sounds/se_land.ogg")
+        self.sounds.play("ready", volume=0.2)
 
         # Camera
         self.camera = arcade.Camera2D() # プレイヤー用カメラ
@@ -62,7 +64,7 @@ class GameView(arcade.View):
         # Player
         self.players = arcade.SpriteList()
         self.player = sprite.Player(self.physics, 
-            "images/cake_x2/front_01.png", self.w/2, self.h/2 + 34)
+            "images/cake_x2/land_01.png", self.w/2, self.h/2 + 34)
         self.players.append(self.player)
 
         # Table
@@ -76,13 +78,20 @@ class GameView(arcade.View):
 
         # Info
         self.msg_info = arcade.Text(
-            "READY", self.w/2, self.h-20, 
+            "PRESS TO START!!", self.w/2, self.h-20, 
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="top")
 
-        self.sounds.play("game", loop=True)
 
     def on_key_press(self, key, key_modifiers):
+
+        # Ready to Start!!
+        if self.ready_flg == True:
+            self.ready_flg = False
+            self.sounds.stop("ready")
+            self.sounds.play("game", loop=True, volume=0.2)
+            return
+
         # Move(WASD)
         if key == arcade.key.A:
             self.physics.set_velocity(self.player, (-PLAYER_JUMP_X, PLAYER_JUMP_Y))
@@ -97,10 +106,9 @@ class GameView(arcade.View):
         pass
 
     def on_update(self, delta_time):
+        if self.ready_flg == True: return
 
-        # Ready...
-        self.ready_time -= delta_time
-        if 0.0 < self.ready_time: return
+        # Cakes
         self.msg_info.text = "CAKES: {}".format(len(self.cakes))
 
         self.physics.step(delta_time) # PhysicsEngine
@@ -114,7 +122,7 @@ class GameView(arcade.View):
         for cake in hit_cakes:
             if cake.change_dynamic():
                 self.cake_interval = CAKE_INTERVAL
-                self.player.change_animation("front")
+                self.player.change_animation("land")
                 self.sounds.play("land")
 
         # Spawn

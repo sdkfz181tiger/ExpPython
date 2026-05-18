@@ -38,7 +38,6 @@ class BaseSprite(arcade.Sprite):
         self.anim_key = key
         self.cur_texture = 0
         self.texture = self.anim_textures[self.anim_key][0]
-        print("change_animation:", key)
 
 
     def update_animation(self, delta_time: float=1/60):
@@ -70,12 +69,12 @@ class Player(BaseSprite):
         self.physics.add_sprite(self, 
             friction=1.0, collision_type="player")
 
-        self.anim_textures["front"] = [
-            arcade.load_texture("images/cake_x2/front_01.png"),
-            arcade.load_texture("images/cake_x2/front_02.png"),
-            arcade.load_texture("images/cake_x2/front_03.png"),
-            arcade.load_texture("images/cake_x2/front_04.png"),
-            arcade.load_texture("images/cake_x2/front_05.png"),
+        self.anim_textures["land"] = [
+            arcade.load_texture("images/cake_x2/land_01.png"),
+            arcade.load_texture("images/cake_x2/land_02.png"),
+            arcade.load_texture("images/cake_x2/land_03.png"),
+            arcade.load_texture("images/cake_x2/land_04.png"),
+            arcade.load_texture("images/cake_x2/land_05.png"),
         ]
 
         self.anim_textures["jump"] = [
@@ -86,7 +85,7 @@ class Player(BaseSprite):
             arcade.load_texture("images/cake_x2/jump_05.png"),
         ]
 
-        self.change_animation("front")
+        self.change_animation("land")
 
 
 class Block(BaseSprite):
