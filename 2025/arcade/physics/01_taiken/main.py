@@ -19,9 +19,10 @@ CAKE_FILES    = [
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png"]
-CAKE_SPEED_X  = 64
-CAKE_PAD_Y    = 24
-CAKE_INTERVAL = 3.0
+CAKE_SPEED_X_MIN = 64
+CAKE_SPEED_X_MAX = 96
+CAKE_PAD_Y       = 24
+CAKE_INTERVAL    = 3.0
 
 # Game
 class GameView(arcade.View):
@@ -75,7 +76,7 @@ class GameView(arcade.View):
 
         # Info
         self.msg_info = arcade.Text(
-            "GAME", self.w/2, self.h-20, 
+            "READY", self.w/2, self.h-20, 
             arcade.color.WHITE, 12,
             anchor_x="center", anchor_y="top")
 
@@ -99,6 +100,7 @@ class GameView(arcade.View):
         # Ready...
         self.ready_time -= delta_time
         if 0.0 < self.ready_time: return
+        self.msg_info.text = "CAKES: {}".format(len(self.cakes))
 
         self.physics.step(delta_time) # PhysicsEngine
 
@@ -149,7 +151,7 @@ class GameView(arcade.View):
         path = random.choice(CAKE_FILES)
         x = 0
         y = self.cake_y + CAKE_PAD_Y
-        spd_x = CAKE_SPEED_X
+        spd_x = random.randrange(CAKE_SPEED_X_MIN, CAKE_SPEED_X_MAX)
         if random.random() < 0.5:
             x = self.w
             spd_x *= -1
@@ -158,6 +160,7 @@ class GameView(arcade.View):
         cake.move(spd_x, 0)
         self.cakes.append(cake)
 
+        # Highest
         highest_y = 0
         for cake in self.cakes:
             if highest_y < cake.center_y:
