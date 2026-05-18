@@ -86,9 +86,11 @@ class GameView(arcade.View):
         # Move(WASD)
         if key == arcade.key.A:
             self.physics.set_velocity(self.player, (-PLAYER_JUMP_X, PLAYER_JUMP_Y))
+            self.player.change_animation("jump")
             self.sounds.play("jump")
         if key == arcade.key.S:
             self.physics.set_velocity(self.player, (PLAYER_JUMP_X, PLAYER_JUMP_Y))
+            self.player.change_animation("jump")
             self.sounds.play("jump")
         
     def on_key_release(self, key, key_modifiers):
@@ -112,6 +114,7 @@ class GameView(arcade.View):
         for cake in hit_cakes:
             if cake.change_dynamic():
                 self.cake_interval = CAKE_INTERVAL
+                self.player.change_animation("front")
                 self.sounds.play("land")
 
         # Spawn

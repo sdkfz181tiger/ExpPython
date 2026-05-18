@@ -38,6 +38,7 @@ class BaseSprite(arcade.Sprite):
         self.anim_key = key
         self.cur_texture = 0
         self.texture = self.anim_textures[self.anim_key][0]
+        print("change_animation:", key)
 
 
     def update_animation(self, delta_time: float=1/60):
