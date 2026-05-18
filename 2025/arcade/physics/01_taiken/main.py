@@ -10,15 +10,17 @@ import sprite
 
 PLAYER_JUMP_X = 10
 PLAYER_JUMP_Y = 400
-GROUND_Y      = 30
 
 CAKE_FILES    = [
-    "images/cake/cake_03.png",
-    "images/cake/cake_03.png",
-    "images/cake/cake_03.png"]
+    "images/cake_x2/cake_01.png",
+    "images/cake_x2/cake_02.png",
+    "images/cake_x2/cake_02.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png"]
 CAKE_SPEED_X  = 64
-CAKE_PAD_Y    = 42
-CAKE_INTERVAL = 5.0
+CAKE_PAD_Y    = 24
+CAKE_INTERVAL = 3.0
 
 # Game
 class GameView(arcade.View):
@@ -30,7 +32,7 @@ class GameView(arcade.View):
         self.h = self.window.height
         self.background_color = arcade.color.PAYNE_GREY
 
-        self.cake_y = GROUND_Y + CAKE_PAD_Y
+        self.cake_y = self.h / 2
         self.cake_interval = CAKE_INTERVAL
 
         # Camera
@@ -44,21 +46,14 @@ class GameView(arcade.View):
         # Player
         self.players = arcade.SpriteList()
         self.player = sprite.Player(self.physics, 
-            "images/ninja/front_01.png", self.w/2, self.h/2)
+            "images/cake_x2/front_01.png", self.w/2, self.h/2 + 48)
         self.players.append(self.player)
 
-        # Blocks
-        block_pad_x = 48
-        block_total = 16
-        block_x = self.w / 2 - block_pad_x * (block_total-1) / 2
-        block_y = GROUND_Y
+        # Table
         self.blocks = arcade.SpriteList()
-        for i in range(block_total):
-            x = block_x + block_pad_x * i
-            y = block_y
-            block = sprite.Block(self.physics,
-                "images/block/block_01.png", x, y)
-            self.blocks.append(block)
+        table = sprite.Block(self.physics,
+                "images/cake_x2/table_01.png", self.w/2, self.h/2 - 64)
+        self.blocks.append(table)
 
         # Cakes
         self.cakes = arcade.SpriteList()
@@ -83,6 +78,9 @@ class GameView(arcade.View):
     def on_update(self, delta_time):
 
         self.physics.step(delta_time) # PhysicsEngine
+
+        # Animation
+        self.players.update_animation(delta_time)
 
         # Player x Cakes
         hit_cakes = arcade.check_for_collision_with_list(
@@ -113,14 +111,16 @@ class GameView(arcade.View):
         self.blocks.draw()
         self.cakes.draw()
 
+        # Debug
+        self.players.draw_hit_boxes()
+
         self.camera_gui.use()
         self.msg_info.draw()
 
     def spawn_cake(self):
         path = random.choice(CAKE_FILES)
-        print("spawn_cake:", path)
         x = 0
-        y = self.cake_y
+        y = self.cake_y + CAKE_PAD_Y
         spd_x = CAKE_SPEED_X
         if random.random() < 0.5:
             x = self.w
@@ -130,16 +130,15 @@ class GameView(arcade.View):
         cake.move(spd_x, 0)
         self.cakes.append(cake)
 
-        highest_y = GROUND_Y
+        highest_y = 0
         for cake in self.cakes:
             if highest_y < self.cake_y:
                 highest_y = cake.center_y
         self.cake_y = highest_y + CAKE_PAD_Y
 
-
 def main():
     """ メイン処理 """
-    window = arcade.Window(320, 480, "Hello, Arcade!!")
+    window = arcade.Window(480, 480, "Hello, Arcade!!")
     window.show_view(GameView(window)) # GameView
     arcade.run()
 

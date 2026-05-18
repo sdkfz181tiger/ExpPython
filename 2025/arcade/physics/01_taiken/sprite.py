@@ -18,31 +18,32 @@ class BaseSprite(arcade.Sprite):
         self.center_x = x
         self.center_y = y
         # Animation
-        self.anim_dict = {}
-        self.anim_interval = 6
-        self.anim_counter = 0
-        self.anim_index = 0 # Index of Frames
+        self.anim_interval_cnt = 0
+        self.anim_interval_limit = 6
+        self.anim_textures = {}
         self.anim_key = "" # Key of Animation
 
-    def add_animation(self, key, arr):
-        self.anim_dict[key] = []
-        for path in arr:
-            self.anim_dict[key].append(arcade.load_texture(path))
 
     def change_animation(self, key):
-        if not key in self.anim_dict: return
-        self.anim_index = 0 # Index of Frames
-        self.anim_key = key # Key of Animation
+        if not key in self.anim_textures: return
+        self.anim_key = key
+        self.cur_texture = 0
+        self.texture = self.anim_textures[self.anim_key][0]
 
-    def update_animation(self):
-        if not self.anim_key in self.anim_dict: return
-        anim = self.anim_dict[self.anim_key]
-        self.anim_counter += 1 # Counter
-        if(self.anim_counter < self.anim_interval): return
-        self.anim_counter = 0
-        self.anim_index += 1 # Index
-        if len(anim) <= self.anim_index: self.anim_index = 0
-        self.texture = anim[self.anim_index]
+
+    def update_animation(self, delta_time: float=1/60):
+        # Textures
+        textures = self.anim_textures[self.anim_key]
+
+        # Interval
+        self.anim_interval_cnt += 1
+        if self.anim_interval_cnt < self.anim_interval_limit: return
+        self.anim_interval_cnt = 0
+        # Frames
+        self.cur_texture += 1
+        if self.cur_texture >= len(textures):
+            self.cur_texture = 0
+        self.texture = textures[self.cur_texture]
 
     def stop(self):
         self.physics.set_velocity(self, (0, 0))
@@ -58,32 +59,24 @@ class Player(BaseSprite):
         # Physics
         self.physics.add_sprite(self, 
             friction=1.0, collision_type="player")
-        # Animation
-        self.add_animation("stand", [
-            "images/ninja/stand_01.png", "images/ninja/stand_02.png",
-            "images/ninja/stand_03.png", "images/ninja/stand_04.png",
-            "images/ninja/stand_05.png"])
-        self.add_animation("jump", [
-            "images/ninja/front_01.png", "images/ninja/front_02.png",
-            "images/ninja/front_03.png", "images/ninja/front_04.png",
-            "images/ninja/front_05.png"])
-        self.change_animation("stand")
 
+        self.anim_textures["front"] = [
+            arcade.load_texture("images/cake_x2/front_01.png"),
+            arcade.load_texture("images/cake_x2/front_02.png"),
+            arcade.load_texture("images/cake_x2/front_03.png"),
+            arcade.load_texture("images/cake_x2/front_04.png"),
+            arcade.load_texture("images/cake_x2/front_05.png"),
+        ]
 
-class Coin(BaseSprite):
+        self.anim_textures["jump"] = [
+            arcade.load_texture("images/cake_x2/jump_01.png"),
+            arcade.load_texture("images/cake_x2/jump_02.png"),
+            arcade.load_texture("images/cake_x2/jump_03.png"),
+            arcade.load_texture("images/cake_x2/jump_04.png"),
+            arcade.load_texture("images/cake_x2/jump_05.png"),
+        ]
 
-    def __init__(self, physics, filename, x, y):
-        super().__init__(physics, filename, x, y)
-        # Physics
-        self.physics.add_sprite(self, 
-            friction=1.0, collision_type="coin",
-            body_type=arcade.PymunkPhysicsEngine.DYNAMIC)
-        # Animation
-        self.add_animation("stand", [
-            "images/coin/coin_01.png", "images/coin/coin_02.png",
-            "images/coin/coin_03.png", "images/coin/coin_04.png",
-            "images/coin/coin_05.png"])
-        self.change_animation("stand")
+        self.change_animation("front")
 
 
 class Block(BaseSprite):
