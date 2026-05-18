@@ -8,7 +8,7 @@ import arcade
 import random
 import math
 
-class Carpet(arcade.Sprite):
+class Background(arcade.Sprite):
 
     def __init__(self, filename, x, y):
         super().__init__(filename)

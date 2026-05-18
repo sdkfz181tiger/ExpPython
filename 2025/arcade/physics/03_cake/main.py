@@ -12,17 +12,23 @@ import utility
 PLAYER_JUMP_X = 30
 PLAYER_JUMP_Y = 400
 
-CAKE_FILES    = [
+CAKE_SPEED_X_MIN = 64
+CAKE_SPEED_X_MAX = 96
+CAKE_PAD_Y       = 24
+CAKE_INTERVAL    = 3.0
+CAKE_FILES = [
     "images/cake_x2/cake_01.png",
     "images/cake_x2/cake_02.png",
     "images/cake_x2/cake_02.png",
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png"]
-CAKE_SPEED_X_MIN = 64
-CAKE_SPEED_X_MAX = 96
-CAKE_PAD_Y       = 24
-CAKE_INTERVAL    = 3.0
+
+STAR_FILES = [
+    "images/cake_x2/star_01.png",
+    "images/cake_x2/star_02.png",
+    "images/cake_x2/star_03.png",
+    "images/cake_x2/star_04.png"]
 
 # Game
 class GameView(arcade.View):
@@ -32,7 +38,7 @@ class GameView(arcade.View):
         self.window = window
         self.w = self.window.width
         self.h = self.window.height
-        self.background_color = arcade.color.PAYNE_GREY
+        self.background_color = arcade.color.POMP_AND_POWER
 
         self.ready_flg = True
         self.cake_y = self.h / 2
@@ -57,9 +63,19 @@ class GameView(arcade.View):
 
         # Backgrounds
         self.backgrounds = arcade.SpriteList()
-        carpet = sprite.Carpet(
+
+        # Carpet
+        carpet = sprite.Background(
             "images/cake_x2/carpet_01.png", self.w/2, 50)
         self.backgrounds.append(carpet)
+
+        # Stars
+        for i in range(16):
+            x = self.camera.position.x - self.w/2 + random.randrange(int(self.w))
+            y = self.camera.position.y + random.randrange(int(self.h*2))
+            file = random.choice(STAR_FILES)
+            star = sprite.Background(file, x, y)
+            self.backgrounds.append(star)
 
         # Player
         self.players = arcade.SpriteList()
@@ -79,7 +95,7 @@ class GameView(arcade.View):
         # Info
         self.msg_info = arcade.Text(
             "PRESS TO START!!", self.w/2, self.h-20, 
-            arcade.color.WHITE, 12,
+            arcade.color.WHITE, 16,
             anchor_x="center", anchor_y="top")
 
 
