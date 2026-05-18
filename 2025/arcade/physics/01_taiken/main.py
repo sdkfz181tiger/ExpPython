@@ -9,15 +9,16 @@ import random
 import sprite
 
 PLAYER_JUMP_X = 10
-PLAYER_JUMP_Y = 300
+PLAYER_JUMP_Y = 400
 GROUND_Y      = 30
 
 CAKE_FILES    = [
-    "images/cake/cake_01.png",
-    "images/cake/cake_02.png",
+    "images/cake/cake_03.png",
+    "images/cake/cake_03.png",
     "images/cake/cake_03.png"]
-CAKE_SPEED_X  = 48
+CAKE_SPEED_X  = 64
 CAKE_PAD_Y    = 42
+CAKE_INTERVAL = 5.0
 
 # Game
 class GameView(arcade.View):
@@ -30,6 +31,7 @@ class GameView(arcade.View):
         self.background_color = arcade.color.PAYNE_GREY
 
         self.cake_y = GROUND_Y + CAKE_PAD_Y
+        self.cake_interval = CAKE_INTERVAL
 
         # Camera
         self.camera = arcade.Camera2D() # プレイヤー用カメラ
@@ -45,18 +47,9 @@ class GameView(arcade.View):
             "images/ninja/front_01.png", self.w/2, self.h/2)
         self.players.append(self.player)
 
-        # Coins
-        self.coins = arcade.SpriteList()
-        for i in range(1):
-            x = random.random() * self.w
-            y = self.h
-            coin = sprite.Coin(self.physics, 
-                "images/coin/coin_01.png", x, y)
-            #self.coins.append(coin)
-
         # Blocks
         block_pad_x = 48
-        block_total = 8
+        block_total = 16
         block_x = self.w / 2 - block_pad_x * (block_total-1) / 2
         block_y = GROUND_Y
         self.blocks = arcade.SpriteList()
@@ -69,7 +62,6 @@ class GameView(arcade.View):
 
         # Cakes
         self.cakes = arcade.SpriteList()
-        self.spawn_cake() # First Cake!!
 
         # Info
         self.msg_info = arcade.Text(
@@ -92,16 +84,17 @@ class GameView(arcade.View):
 
         self.physics.step(delta_time) # PhysicsEngine
 
-        # Animation
-        self.player.update_animation()
-        for coin in self.coins:
-            coin.update_animation()
-
         # Player x Cakes
         hit_cakes = arcade.check_for_collision_with_list(
             self.player, self.cakes)
         for cake in hit_cakes:
             if cake.change_dynamic():
+                self.cake_interval = CAKE_INTERVAL
+
+        # Spawn
+        if 0.0 < self.cake_interval:
+            self.cake_interval -= delta_time
+            if self.cake_interval < 0.0:
                 self.spawn_cake() # Spawn
 
         # Camera
@@ -112,8 +105,11 @@ class GameView(arcade.View):
         self.clear() # Clear
 
         self.camera.use()
+        arcade.draw_line(
+            0, self.cake_y, self.w, self.cake_y, 
+            (255, 255, 255, 100), 1)
+
         self.players.draw()
-        self.coins.draw()
         self.blocks.draw()
         self.cakes.draw()
 
@@ -123,7 +119,6 @@ class GameView(arcade.View):
     def spawn_cake(self):
         path = random.choice(CAKE_FILES)
         print("spawn_cake:", path)
-
         x = 0
         y = self.cake_y
         spd_x = CAKE_SPEED_X
@@ -131,14 +126,20 @@ class GameView(arcade.View):
             x = self.w
             spd_x *= -1
         cake = sprite.Cake(self.physics,
-            "images/cake/cake_01.png", x, y)
+            path, x, y)
         cake.move(spd_x, 0)
         self.cakes.append(cake)
-        self.cake_y += CAKE_PAD_Y # Next
+
+        highest_y = GROUND_Y
+        for cake in self.cakes:
+            if highest_y < self.cake_y:
+                highest_y = cake.center_y
+        self.cake_y = highest_y + CAKE_PAD_Y
+
 
 def main():
     """ メイン処理 """
-    window = arcade.Window(480, 320, "Hello, Arcade!!")
+    window = arcade.Window(320, 480, "Hello, Arcade!!")
     window.show_view(GameView(window)) # GameView
     arcade.run()
 
