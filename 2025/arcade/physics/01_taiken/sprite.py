@@ -8,6 +8,15 @@ import arcade
 import random
 import math
 
+class Carpet(arcade.Sprite):
+
+    def __init__(self, filename, x, y):
+        super().__init__(filename)
+        # Position
+        self.center_x = x
+        self.center_y = y
+
+
 class BaseSprite(arcade.Sprite):
 
     def __init__(self, physics, filename, x, y):

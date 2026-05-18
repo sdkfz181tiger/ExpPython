@@ -67,5 +67,17 @@ class Stats:
         for text_object in self.text_objects: text_object.draw()
 
 
+# Sound
+class UtilSounds:
 
+    def __init__(self):
+        self.sounds = {}
+
+    def load_sound(self, key, file_name):
+        self.sounds[key] = arcade.Sound(file_name)
+
+    def play(self, key, loop=False, volume=0.3):
+        if not key in self.sounds: return
+        arcade.play_sound(self.sounds[key], 
+            loop=loop, volume=volume)
 
