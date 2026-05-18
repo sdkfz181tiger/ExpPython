@@ -14,7 +14,7 @@ PLAYER_JUMP_Y = 400
 
 CAKE_SPEED_X_MIN = 64
 CAKE_SPEED_X_MAX = 96
-CAKE_PAD_Y       = 24
+CAKE_PAD_Y       = 48
 CAKE_INTERVAL    = 2.0
 CAKE_FILES = [
     "images/cake_x2/cake_01.png",
@@ -41,7 +41,7 @@ class GameView(arcade.View):
         self.background_color = arcade.color.POMP_AND_POWER
 
         self.ready_flg = True
-        self.cake_y = self.h / 2
+        self.cake_y = self.h / 2 + CAKE_PAD_Y / 2
         self.cake_interval = CAKE_INTERVAL
 
         # UtilSounds
@@ -146,8 +146,11 @@ class GameView(arcade.View):
                 self.spawn_cake() # Spawn
 
         # Camera
-        self.camera.position = arcade.math.lerp_2d(
-            self.camera.position, self.player.position, 0.1)
+        camera_x = self.camera.position[0]
+        camera_y = arcade.math.lerp(
+            self.camera.position[1],
+            self.player.position[1], 0.1)
+        self.camera.position = (camera_x, camera_y)
 
     def on_draw(self):
         self.clear() # Clear
@@ -174,7 +177,7 @@ class GameView(arcade.View):
     def spawn_cake(self):
         path = random.choice(CAKE_FILES)
         x = 0
-        y = self.cake_y + CAKE_PAD_Y
+        y = self.cake_y + 1
         spd_x = random.randrange(CAKE_SPEED_X_MIN, CAKE_SPEED_X_MAX)
         if random.random() < 0.5:
             x = self.w
@@ -183,13 +186,8 @@ class GameView(arcade.View):
             path, x, y)
         cake.move(spd_x, 0)
         self.cakes.append(cake)
-
-        # Highest
-        highest_y = 0
-        for cake in self.cakes:
-            if highest_y < cake.center_y:
-                highest_y = cake.center_y
-        self.cake_y = highest_y + CAKE_PAD_Y
+        self.cake_y += CAKE_PAD_Y
+        
 
 def main():
     """ メイン処理 """
