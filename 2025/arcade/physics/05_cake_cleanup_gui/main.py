@@ -48,23 +48,28 @@ class GameView(arcade.View):
         self.sounds.load_sound("coin",  "sounds/se_coin.ogg")
         self.sounds.load_sound("jump",  "sounds/se_jump.ogg")
         self.sounds.load_sound("land",  "sounds/se_land.ogg")
-        self.sounds.play("ready", volume=0.2)
 
         # Camera
         self.camera = arcade.Camera2D()
         self.camera_gui = arcade.Camera2D()
 
-        # Retry
+        # UI
         self.ui_manager = arcade.gui.UIManager()
-        btn_retry = arcade.gui.UIFlatButton(text="RETRY", width=128, height=32)
+        btn_retry = arcade.gui.UIFlatButton(
+            text="RETRY", width=128, height=32)
         btn_retry.on_click = self.on_click_retry_button
 
         # Grid
+        rows = 10
+        cols = 10
+        h_spacing = self.w / cols
+        v_spacing = self.h / rows
         self.grid = arcade.gui.UIGridLayout(
-            column_count=10, row_count=10, 
-            horizontal_spacing=48, vertical_spacing=48
+            column_count=rows, row_count=cols, 
+            horizontal_spacing=h_spacing, 
+            vertical_spacing=v_spacing
         )
-        self.grid.add(btn_retry, column=8, row=9)
+        self.grid.add(btn_retry, column=7, row=9)
         self.anchor = self.ui_manager.add(arcade.gui.UIAnchorLayout())
         self.anchor.add(
             anchor_x="center_x", anchor_y="center_y", child=self.grid,
@@ -77,6 +82,9 @@ class GameView(arcade.View):
         self.ready_flg = True
         self.cake_y = self.h / 2 + CAKE_PAD_Y / 2
         self.cake_interval = CAKE_INTERVAL
+
+        self.sounds.stop_all()
+        self.sounds.play("ready", volume=0.2)
 
         # PhysicsEngine
         self.physics = arcade.PymunkPhysicsEngine(
@@ -116,6 +124,9 @@ class GameView(arcade.View):
             "PRESS KEY TO START!!", self.w/2, self.h-20, 
             arcade.color.WHITE, 16,
             anchor_x="center", anchor_y="top")
+
+        # Camera
+        self.camera.position = self.player.position
 
     def on_hide_view(self):
         self.ui_manager.disable()
@@ -193,9 +204,9 @@ class GameView(arcade.View):
         self.cakes.draw()
 
         # Debug
-        self.players.draw_hit_boxes()
-        self.blocks.draw_hit_boxes()
-        self.cakes.draw_hit_boxes()
+        #self.players.draw_hit_boxes()
+        #self.blocks.draw_hit_boxes()
+        #self.cakes.draw_hit_boxes()
 
         self.camera_gui.use()
         self.msg_info.draw()
@@ -222,7 +233,7 @@ class GameView(arcade.View):
 
 def main():
     """ メイン処理 """
-    window = arcade.Window(480, 480, "Hello, Arcade!!")
+    window = arcade.Window(320, 480, "Hello, Arcade!!")
     window.show_view(GameView(window)) # GameView
     arcade.run()
 
