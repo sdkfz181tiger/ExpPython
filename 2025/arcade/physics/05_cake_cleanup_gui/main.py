@@ -125,7 +125,7 @@ class GameView(arcade.View):
 
     def on_key_press(self, key, key_modifiers):
 
-        # Ready to Start!!
+        # Ready...
         if self.ready_flg == True:
             self.ready_flg = False
             self.sounds.stop("ready")
