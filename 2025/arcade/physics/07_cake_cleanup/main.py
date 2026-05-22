@@ -10,26 +10,13 @@ import random
 import sprite
 import utility
 
-PLAYER_JUMP_X = 10
+PLAYER_JUMP_X = 0
 PLAYER_JUMP_Y = 400
 
 CAKE_SPEED_X_MIN = 64
 CAKE_SPEED_X_MAX = 96
 CAKE_PAD_Y       = 48
 CAKE_INTERVAL    = 2.0
-CAKE_FILES = [
-    "images/cake_x2/cake_01.png",
-    "images/cake_x2/cake_02.png",
-    "images/cake_x2/cake_02.png",
-    "images/cake_x2/cake_03.png",
-    "images/cake_x2/cake_03.png",
-    "images/cake_x2/cake_03.png"]
-
-STAR_FILES = [
-    "images/cake_x2/star_01.png",
-    "images/cake_x2/star_02.png",
-    "images/cake_x2/star_03.png",
-    "images/cake_x2/star_04.png"]
 
 # Game
 class GameView(arcade.View):
@@ -94,25 +81,20 @@ class GameView(arcade.View):
         for i in range(16):
             x = self.camera.position.x - self.w/2 + random.randrange(int(self.w))
             y = self.camera.position.y + random.randrange(int(self.h*2))
-            file = random.choice(STAR_FILES)
-            star = sprite.Background(file, x, y)
+            star = sprite.Star(x, y)
             self.backgrounds.append(star)
 
         # Carpet
-        carpet = sprite.Background(
-            "images/cake_x2/carpet_01.png", 
-            self.w/2, 50)
+        carpet = sprite.Carpet(self.w/2, 50)
         self.backgrounds.append(carpet)
 
         # 1, Table
-        table = sprite.Block(self.physics,
-            "images/cake_x2/table_01.png", 
+        table = sprite.Table(self.physics, 
             self.w/2, self.h/2 - 64)
         self.blocks.append(table)
 
         # 2, Player
         self.player = sprite.Player(self.physics, 
-            "images/cake_x2/land_01.png", 
             self.w/2, self.h/2 + 34)
         self.players.append(self.player)
 
@@ -143,11 +125,9 @@ class GameView(arcade.View):
         # 4, Action(WASD)
         if key == arcade.key.A:
             self.player.jump(-PLAYER_JUMP_X, PLAYER_JUMP_Y)
-            self.player.change_animation("jump")
             self.sounds.play("jump")
         if key == arcade.key.S:
             self.player.jump(PLAYER_JUMP_X, PLAYER_JUMP_Y)
-            self.player.change_animation("jump")
             self.sounds.play("jump")
 
     def on_key_release(self, key, key_modifiers):
@@ -170,7 +150,7 @@ class GameView(arcade.View):
         for cake in hit_cakes:
             if cake.change_dynamic():
                 self.cake_interval = CAKE_INTERVAL
-                self.player.change_animation("land")
+                self.player.land()
                 self.sounds.play("land")
 
         # Spawn
@@ -210,15 +190,13 @@ class GameView(arcade.View):
         self.ui_manager.draw()
 
     def spawn_cake(self):
-        path = random.choice(CAKE_FILES)
         x = 0
         y = self.cake_y + 1
         spd_x = random.randrange(CAKE_SPEED_X_MIN, CAKE_SPEED_X_MAX)
         if random.random() < 0.5:
             x = self.w
             spd_x *= -1
-        cake = sprite.Cake(self.physics,
-            path, x, y)
+        cake = sprite.Cake(self.physics, x, y)
         cake.move(spd_x, 0)
         self.cakes.append(cake)
         self.cake_y += CAKE_PAD_Y
@@ -226,7 +204,7 @@ class GameView(arcade.View):
     def on_click_retry_button(self, event):
         print("RETRY")
         self.reset()
-        
+
 
 def main():
     """ メイン処理 """

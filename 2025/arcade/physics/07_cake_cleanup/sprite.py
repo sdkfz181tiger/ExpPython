@@ -8,10 +8,34 @@ import arcade
 import random
 import math
 
-class Background(arcade.Sprite):
+STAR_FILES = [
+    "images/cake_x2/star_01.png",
+    "images/cake_x2/star_02.png",
+    "images/cake_x2/star_03.png",
+    "images/cake_x2/star_04.png"]
 
-    def __init__(self, filename, x, y):
-        super().__init__(filename)
+CAKE_FILES = [
+    "images/cake_x2/cake_01.png",
+    "images/cake_x2/cake_02.png",
+    "images/cake_x2/cake_02.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png"]
+
+
+class Star(arcade.Sprite):
+
+    def __init__(self, x, y):
+        super().__init__(random.choice(STAR_FILES))
+        # Position
+        self.center_x = x
+        self.center_y = y
+
+
+class Carpet(arcade.Sprite):
+
+    def __init__(self, x, y):
+        super().__init__("images/cake_x2/carpet_01.png")
         # Position
         self.center_x = x
         self.center_y = y
@@ -61,19 +85,11 @@ class BaseSprite(arcade.Sprite):
 
 class Player(BaseSprite):
 
-    def __init__(self, physics, filename, x, y):
-        super().__init__(physics, filename, x, y)
+    def __init__(self, physics, x, y):
+        super().__init__(physics, "images/cake_x2/land_01.png", x, y)
         # Physics
         self.physics.add_sprite(self, 
             friction=1.0, collision_type="player")
-
-        self.anim_textures["land"] = [
-            arcade.load_texture("images/cake_x2/land_01.png"),
-            arcade.load_texture("images/cake_x2/land_02.png"),
-            arcade.load_texture("images/cake_x2/land_03.png"),
-            arcade.load_texture("images/cake_x2/land_04.png"),
-            arcade.load_texture("images/cake_x2/land_05.png"),
-        ]
 
         self.anim_textures["jump"] = [
             arcade.load_texture("images/cake_x2/jump_01.png"),
@@ -82,17 +98,27 @@ class Player(BaseSprite):
             arcade.load_texture("images/cake_x2/jump_04.png"),
             arcade.load_texture("images/cake_x2/jump_05.png"),
         ]
-
+        self.anim_textures["land"] = [
+            arcade.load_texture("images/cake_x2/land_01.png"),
+            arcade.load_texture("images/cake_x2/land_02.png"),
+            arcade.load_texture("images/cake_x2/land_03.png"),
+            arcade.load_texture("images/cake_x2/land_04.png"),
+            arcade.load_texture("images/cake_x2/land_05.png"),
+        ]
         self.change_animation("land")
 
     def jump(self, jump_x, jump_y):
+        self.change_animation("jump")
         self.physics.set_velocity(self, (jump_x, jump_y))
 
+    def land(self):
+        self.change_animation("land")
 
-class Block(BaseSprite):
 
-    def __init__(self, physics, filename, x, y):
-        super().__init__(physics, filename, x, y)
+class Table(BaseSprite):
+
+    def __init__(self, physics, x, y):
+        super().__init__(physics, "images/cake_x2/table_01.png", x, y)
         # Physics
         self.physics.add_sprite(self,
             friction=1.0, collision_type="block",
@@ -101,8 +127,8 @@ class Block(BaseSprite):
 
 class Cake(BaseSprite):
 
-    def __init__(self, physics, filename, x, y):
-        super().__init__(physics, filename, x, y)
+    def __init__(self, physics, x, y):
+        super().__init__(physics, random.choice(CAKE_FILES), x, y)
         # Physics
         self.physics.add_sprite(self,
             friction=1.0, collision_type="cake",
