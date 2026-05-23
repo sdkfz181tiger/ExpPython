@@ -15,9 +15,9 @@ STAR_FILES = [
     "images/cake_x2/star_04.png"]
 
 CAKE_FILES = [
-    "images/cake_x2/cake_01.png",
-    "images/cake_x2/cake_02.png",
-    "images/cake_x2/cake_02.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png",
+    "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png",
     "images/cake_x2/cake_03.png"]

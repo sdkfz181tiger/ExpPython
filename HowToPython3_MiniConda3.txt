@@ -1,0 +1,36 @@
+How To MiniConda3
+
+1, Install
+	https://www.anaconda.com/download
+
+2, Check
+	$conda --version
+
+3, Uninstall(コマンドが見つからなかった場合)
+	$rmdir -r /opt/miniconda3
+
+4, Create
+	$conda create -n my_conda python=3.12
+
+5, Activate
+	$conda activate my_conda
+
+6, Check
+	$conda info
+	> active environment: my_conda
+
+7, Path(VS-Codeで後ほど設定する)
+	$which python
+	> /opt/miniconda3/envs/my_conda/bin/python
+
+8, Let's coding!!
+	$pip install xxx
+	$python3 xxx.py
+
+9, Deactivate
+	$conda deactivate
+
+10, VS-Code
+	Settings -> Search: python Interpreter
+	conda環境のpythonまでのパスを貼り付ける
+

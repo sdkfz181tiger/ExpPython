@@ -89,9 +89,9 @@ class GameView(arcade.View):
         self.backgrounds.append(carpet)
 
         # ステップ1: Table
-        # table = sprite.Table(self.physics, 
-        #     self.w/2, self.h/2 - 64)
-        # self.blocks.append(table)
+        table = sprite.Table(self.physics, 
+            self.w/2, self.h/2 - 64)
+        self.blocks.append(table)
 
         # Player
         self.player = sprite.Player(self.physics, 
@@ -103,6 +103,9 @@ class GameView(arcade.View):
             "PRESS KEY TO START!!", self.w/2, self.h-20, 
             arcade.color.WHITE, 16,
             anchor_x="center", anchor_y="top")
+
+        # Camera
+        self.camera.position = (self.w/2, self.h/2 + 34)
 
     def on_hide_view(self):
         self.ui_manager.disable()
@@ -120,12 +123,12 @@ class GameView(arcade.View):
             return
 
         # ステップ2: Action
-        # if key == arcade.key.A:
-        #     self.player.jump(-PLAYER_JUMP_X, PLAYER_JUMP_Y)
-        #     self.sounds.play("jump")
-        # if key == arcade.key.S:
-        #     self.player.jump(PLAYER_JUMP_X, PLAYER_JUMP_Y)
-        #     self.sounds.play("jump")
+        if key == arcade.key.A:
+            self.player.jump(-PLAYER_JUMP_X, PLAYER_JUMP_Y)
+            self.sounds.play("jump")
+        if key == arcade.key.S:
+            self.player.jump(PLAYER_JUMP_X, PLAYER_JUMP_Y)
+            self.sounds.play("jump")
 
     def on_key_release(self, key, key_modifiers):
         pass
@@ -190,14 +193,17 @@ class GameView(arcade.View):
         x = 0
         y = self.cake_y + 1
         spd_x = random.randrange(CAKE_SPEED_X_MIN, CAKE_SPEED_X_MAX)
+        
         # ステップ4: Random
-        # if random.random() < 0.5:
-        #     x = self.w
-        #     spd_x *= -1
+        if random.random() < 0.5:
+            x = self.w
+            spd_x *= -1
+
         # ステップ3: Cake
-        # cake = sprite.Cake(self.physics, x, y)
-        # cake.move(spd_x, 0)
-        # self.cakes.append(cake)
+        cake = sprite.Cake(self.physics, x, y)
+        cake.move(spd_x, 0)
+        self.cakes.append(cake)
+
         self.cake_y += CAKE_PAD_Y
 
     def on_click_retry_button(self, event):
