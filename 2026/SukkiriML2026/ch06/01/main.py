@@ -47,6 +47,7 @@ def main():
 	# 外れ値を探してインデックスを得る
 	# データフレームに判定条件を直接指定する事が可能
 	# and や or　は使えないので注意
+	# drop(対象index, axis=0:行,1:列)
 
 	no = df[(900 < df["sns1"])].index
 	df = df.drop(no, axis=0) # 該当行を削除

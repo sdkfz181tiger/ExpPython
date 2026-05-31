@@ -71,13 +71,13 @@ def fit_model():
 	# データフレームに判定条件を直接指定する事が可能
 	# and や or　は使えないので注意
 
-	no = df[(900 < df["sns1"])].index
-	df = df.drop(no, axis=0) # 該当行を削除
+	# no = df[(900 < df["sns1"])].index
+	# df = df.drop(no, axis=0) # 該当行を削除
 
-	no = df[(750 < df["sns1"]) & (df["sales"] < 9500)].index
-	df = df.drop(no, axis=0) # 該当行を削除
+	# no = df[(750 < df["sns1"]) & (df["sales"] < 9500)].index
+	# df = df.drop(no, axis=0) # 該当行を削除
 	
-	no = df[(1100 < df["sns2"]) & (df["sales"] < 8500)].index
+	no = df[(1000 < df["sns2"]) & (df["sales"] < 8500)].index
 	df = df.drop(no, axis=0) # 該当行を削除
 
 	#df.plot(kind="scatter", x="sns1", y="sales")
@@ -111,15 +111,25 @@ def fit_model():
 	print("MAE:", mae) # 356.xxx
 
 	# 決定係数を計算
+	# 専門知識が無い場合は決定計数を利用する
 	# 0~1の間をとり、値が大きくなるほど予測値と実測値の誤差が少ない計算式であると判断できる
 	# 平均絶対誤差とは異なり、正解データの持つ意味に依存することはない
 	# 0.8以上であれば、予測性能が高い計算式と言われる
 	print("Score:", model.score(x_test, y_test))
 
-	# 回帰式の係数と切片を確認する
-	# 係数の絶対値が大きい程、影響が強い
+	# 完成した回帰式の係数を確認
 	print("係数:", model.coef_)
 	print("切片:", model.intercept_)
+	# DataFrameにして確認
+	tmp = pd.DataFrame(model.coef_)
+	tmp.index = COL_X
+	# 以下の回帰式を得る事ができる
+	# 1.1 x sns1 + 0.5 x sns2 + 0.3 x actor + 148 x original + 6492
+	print(tmp)
+
+	# テスト
+	#new = pd.DataFrame([[150, 700, 300, 0]], columns=COL_X)
+	#print(model.predict(new))
 
 	return model
 
