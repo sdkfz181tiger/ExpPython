@@ -83,6 +83,16 @@ def main():
 	# 決定係数(0.8以上であれば高い予測性能とされる)
 	print("Score:", model.score(x_test, y_test)) # 0.993...
 
+	# 完成した回帰式の係数を確認
+	print("係数:", model.coef_)
+	print("切片:", model.intercept_)
+	# DataFrameにして確認
+	tmp = pd.DataFrame(model.coef_)
+	tmp.index = COL_X
+	# 以下の回帰式を得る事ができる
+	# 32.8 x x0 + 62.3 x x1 + 87.4 x x2 + -2.2 x x3 + 9.29
+	print(tmp)
+
 
 if __name__ == "__main__":
 	main()
