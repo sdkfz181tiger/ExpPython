@@ -10,7 +10,7 @@
 import pandas as pd
 import pickle
 import os.path
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -24,13 +24,14 @@ def main():
     """ Main """
     print("main!!")
 
-    # リッジ回帰
+    # ラッソ回帰
+    # 特徴: 不要な特徴量を削除した上で回帰式を作成
     # 回帰式は以下の様な式になる。
     # y = a * x1 + b * x2 + c * x3 + d
     # 上記回帰式との4つのデータとの誤差を、
     # それぞれe1, e2, e3としたとき、
     # E = e1^2 + e2^2 + e3^2 (誤差の二乗和)
-    # F = a^2 + b^2 + c^2 + d^2 (係数の二乗和)
+    # F = |a| + |b| + |c| + |d| (係数の絶対値の和) <- リッジ回帰との違い
     # L = E + F
     # 上記Lが最小となるような回帰式の係数a, bを求める。
     # 更に、F(正則化項)に対して定数を掛け算し、最適な値を導き出す。
@@ -81,25 +82,25 @@ def main():
     # リッジ回帰で過学習が抑えられるか確認
     # alpha: 正規化項につく定数
     # 最低値が0であり、実際には0.01刻みでテストを繰り返す
-    model_ridge = Ridge(alpha=10)
-    model_ridge.fit(x_train, y_train)
-    print("訓練データスコア(リッジ):", model_ridge.score(x_train, y_train)) # 0.86...
-    print("テストデータスコア(リッジ):", model_ridge.score(x_test, y_test)) # 0.84...
+    model_lasso = Lasso(alpha=0.1)
+    model_lasso.fit(x_train, y_train)
+    print("訓練データスコア(ラッソ):", model_lasso.score(x_train, y_train)) # 0.82...
+    print("テストデータスコア(ラッソ):", model_lasso.score(x_test, y_test)) # 0.85...
 
     # 回帰式の係数を確認する
-    weight = model_ridge.coef_
+    weight = model_lasso.coef_
     print(weight)
 
-    """ 回帰式の係数
-    [ 0.36225478 
-    -0.17240076 
-    -0.40247634
-    0.12355322
-    -0.05920453
-    -0.08296411
-    -0.06523803 
-    -0.01635637
-    0.07480436]
+    """ 回帰式の係数(無駄な係数が0になっている!!)
+    [ 0.40942617
+    -0.08310439
+    -0.28771435
+    0.15000106
+    -0.
+    -0.03744993
+    -0.
+    0.
+    0.]
     """
 
 
