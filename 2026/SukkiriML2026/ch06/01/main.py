@@ -2,9 +2,9 @@
 
 """
 1, Install
-	$ python3 -m pip install pandas
-	$ python3 -m pip install scikit-learn
-	$ python3 -m pip install matplotlib
+    $ python3 -m pip install pandas
+    $ python3 -m pip install scikit-learn
+    $ python3 -m pip install matplotlib
 """
 
 import pandas as pd
@@ -21,47 +21,47 @@ MY_CSV   = "my_cinema.csv"
 MY_MODEL = "my_model.pkl"
 
 def main():
-	""" Main """
-	print("main!!")
-	
-	df = pd.read_csv(MY_CSV)
-	print(df.head(3))
-	print(df.tail(3))
+    """ Main """
+    print("main!!")
+    
+    df = pd.read_csv(MY_CSV)
+    print(df.head(3))
+    print(df.tail(3))
 
-	# 欠損値の確認
-	print(df.isnull().any(axis=0))
-	
-	# 欠損値を平均値で穴埋め
-	df = df.fillna(df.mean())
-	# 欠損値の確認
-	print(df.isnull().any(axis=0))
+    # 欠損値の確認
+    print(df.isnull().any(axis=0))
+    
+    # 欠損値を平均値で穴埋め
+    df = df.fillna(df.mean())
+    # 欠損値の確認
+    print(df.isnull().any(axis=0))
 
-	# 外れ値の存在を確認する(xを特徴量に...)
-	# sns1と、sns2に外れ値が存在する
-	df.plot(kind="scatter", x="sns1", y="sales")
-	df.plot(kind="scatter", x="sns2", y="sales")
-	df.plot(kind="scatter", x="actor", y="sales")
-	df.plot(kind="scatter", x="original", y="sales")
-	plt.show()
+    # 外れ値の存在を確認する(xを特徴量に...)
+    # sns1と、sns2に外れ値が存在する
+    df.plot(kind="scatter", x="sns1", y="sales")
+    df.plot(kind="scatter", x="sns2", y="sales")
+    df.plot(kind="scatter", x="actor", y="sales")
+    df.plot(kind="scatter", x="original", y="sales")
+    plt.show()
 
-	# 外れ値を探してインデックスを得る
-	# データフレームに判定条件を直接指定する事が可能
-	# and や or　は使えないので注意
-	# drop(対象index, axis=0:行,1:列)
+    # 外れ値を探してインデックスを得る
+    # データフレームに判定条件を直接指定する事が可能
+    # and や or　は使えないので注意
+    # drop(対象index, axis=0:行,1:列)
 
-	no = df[(900 < df["sns1"])].index
-	df = df.drop(no, axis=0) # 該当行を削除
+    no = df[(900 < df["sns1"])].index
+    df = df.drop(no, axis=0) # 該当行を削除
 
-	no = df[(750 < df["sns1"]) & (df["sales"] < 9500)].index
-	df = df.drop(no, axis=0) # 該当行を削除
-	
-	no = df[(1100 < df["sns2"]) & (df["sales"] < 8500)].index
-	df = df.drop(no, axis=0) # 該当行を削除
+    no = df[(750 < df["sns1"]) & (df["sales"] < 9500)].index
+    df = df.drop(no, axis=0) # 該当行を削除
+    
+    no = df[(1100 < df["sns2"]) & (df["sales"] < 8500)].index
+    df = df.drop(no, axis=0) # 該当行を削除
 
-	# df.plot(kind="scatter", x="sns1", y="sales")
-	# df.plot(kind="scatter", x="sns2", y="sales")
-	# plt.show()
+    # df.plot(kind="scatter", x="sns1", y="sales")
+    # df.plot(kind="scatter", x="sns2", y="sales")
+    # plt.show()
 
 
 if __name__ == "__main__":
-	main()
+    main()

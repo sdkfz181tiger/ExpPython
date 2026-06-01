@@ -57,6 +57,7 @@ def fit_model(depth):
 	
 	# 欠損値を穴埋め
 	# 穴埋めを何で行うかを検討
+	# Ageは平均値、embarkedは最頻値、cabinは欠損が多いので不採用(COL_Xから削除)
 	# print("Ageの平均値:", df["age"].mean())
 	# print("Ageの中央値:", df["age"].median())
 	# print("Ageの最頻値:", df["age"].mode()[0])
