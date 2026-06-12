@@ -15,8 +15,6 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-COL_X  = ["rm", "ptratio", "lstat"]
-COL_Y  = ["price"]
 MY_CSV = "my_boston.csv"
 
 def main():
