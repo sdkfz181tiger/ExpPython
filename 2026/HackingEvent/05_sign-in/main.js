@@ -18,6 +18,9 @@ window.onload = ()=>{
 		const pass = document.querySelector("#floatingPassword").value;
 		signIn(id, pass).then(result=>{
 			console.log("signIn:", result);
+			if(result){
+				pushLine();
+			}
 		});
 	}
 
@@ -57,12 +60,59 @@ window.onload = ()=>{
 //==========
 // p5js
 
+console.log(p5.prototype.VERSION);
+console.log(window.preload);
+console.log(window.setup);
+console.log(window.draw);
+
+console.log(typeof preload);
+console.log(typeof setup);
+console.log(typeof draw);
+
+const OFFSET_Y = 24;
+const FONT     = "./assets/p5js/fonts/PixelMplus10-Bold.ttf";
+let lines      = [];
+
 function setup() {
+    //console.log("setup!!");
     createCanvas(windowWidth, windowHeight).parent("canvas");
-    noLoop();
+	background(0, 0, 0, 0);// Transparent
+	frameRate(8);
+	noStroke();
+	loadFont(FONT).then((font)=>{
+		textFont(font);
+	});
+	//pushLine();// Test
 }
 
 function draw() {
-    background(0, 0, 0, 0);// Transparent
-    circle(100, 100, 50);
+    //console.log("draw!!");
+	if(lines.length <= 0) return;
+    background(33);// Transparent
+
+	// Draw all lines or delete
+	for(let i=lines.length-1; 0<=i; i--){
+		if(lines[i].isDead()){
+			lines.splice(i, 1);
+		}else{
+			lines[i].draw();
+		}
+	}
+}
+
+function pushLine(){
+	// Push new line
+	if(lines.length < 30){
+		for(let i=0; i<8; i++){
+			let x = random(0, width);
+			let y = random(0, 100);
+			let size = random(16, 32);
+			let sLine = new StrLine(x, y, size);
+			lines.push(sLine);
+		}
+	}else{
+		return;
+	}
+	const rdm = 1000 * Math.random() + 300;
+	setTimeout(()=>{pushLine();}, rdm);
 }
