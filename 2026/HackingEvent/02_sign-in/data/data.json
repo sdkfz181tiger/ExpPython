@@ -1,0 +1,9 @@
+{
+	"data":[
+		{"id": "admin", "pass": "password"},
+		{"id": "yamada", "pass": "pass_1010"},
+		{"id": "umino", "pass": "pass_1230"},
+		{"id": "kawaguchi", "pass": "pass_1230"},
+		{"id": "izumida", "pass": "pass_1230"}
+	]
+}
