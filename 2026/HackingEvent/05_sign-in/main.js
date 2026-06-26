@@ -22,12 +22,13 @@ window.onload = ()=>{
 				//pushLine();
 			}
 		});
+		// Toast
+		showToast();
 	}
 
 	// Test
 	document.querySelector("#test").onclick = async ()=>{
 		
-
 		// 1st try!!
 		const id = "ito";
 		for(let i=0; i<1000; i++){
@@ -98,7 +99,7 @@ function pushLine(){
 	if(lines.length < 30){
 		for(let i=0; i<2; i++){
 			const x = random(0, width);
-			const y = random(0, 100);
+			const y = random(0, -100);
 			const size = random(12, 24);
 			const sLine = new StrLine(x, y, size);
 			lines.push(sLine);
@@ -106,6 +107,15 @@ function pushLine(){
 	}else{
 		return;
 	}
-	const rdm = 4000 * Math.random();
+	const rdm = 8000 * Math.random();
 	setTimeout(()=>{pushLine();}, rdm);
+}
+
+function showToast(){
+	// Toast
+	document.getElementById("toastTitle").textContent = "ハッキング成功!!";
+	document.getElementById("toastBody").textContent = "もれなくうまい棒プレゼント!!";
+	const liveToast = document.getElementById("liveToast");
+	const toastBootstrap = bootstrap.Toast.getOrCreateInstance(liveToast);
+	toastBootstrap.show();
 }
