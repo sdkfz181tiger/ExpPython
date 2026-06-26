@@ -53,3 +53,16 @@ window.onload = ()=>{
 		console.log("Failed...");
 	}
 }
+
+//==========
+// p5js
+
+function setup() {
+    createCanvas(windowWidth, windowHeight).parent("canvas");
+    noLoop();
+}
+
+function draw() {
+    background(0, 0, 0, 0);// Transparent
+    circle(100, 100, 50);
+}
