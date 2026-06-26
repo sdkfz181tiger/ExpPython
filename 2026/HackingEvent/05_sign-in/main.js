@@ -19,7 +19,7 @@ window.onload = ()=>{
 		signIn(id, pass).then(result=>{
 			console.log("signIn:", result);
 			if(result){
-				pushLine();
+				//pushLine();
 			}
 		});
 	}
@@ -61,13 +61,6 @@ window.onload = ()=>{
 // p5js
 
 console.log(p5.prototype.VERSION);
-console.log(window.preload);
-console.log(window.setup);
-console.log(window.draw);
-
-console.log(typeof preload);
-console.log(typeof setup);
-console.log(typeof draw);
 
 const OFFSET_Y = 24;
 const FONT     = "./assets/p5js/fonts/PixelMplus10-Bold.ttf";
@@ -82,7 +75,7 @@ function setup() {
 	loadFont(FONT).then((font)=>{
 		textFont(font);
 	});
-	//pushLine();// Test
+	pushLine();// Test
 }
 
 function draw() {
@@ -103,16 +96,16 @@ function draw() {
 function pushLine(){
 	// Push new line
 	if(lines.length < 30){
-		for(let i=0; i<8; i++){
-			let x = random(0, width);
-			let y = random(0, 100);
-			let size = random(16, 32);
-			let sLine = new StrLine(x, y, size);
+		for(let i=0; i<2; i++){
+			const x = random(0, width);
+			const y = random(0, 100);
+			const size = random(12, 24);
+			const sLine = new StrLine(x, y, size);
 			lines.push(sLine);
 		}
 	}else{
 		return;
 	}
-	const rdm = 1000 * Math.random() + 300;
+	const rdm = 4000 * Math.random();
 	setTimeout(()=>{pushLine();}, rdm);
 }
