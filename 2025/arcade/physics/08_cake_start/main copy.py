@@ -88,14 +88,14 @@ class GameView(arcade.View):
         carpet = sprite.Carpet(self.w/2, 50)
         self.backgrounds.append(carpet)
 
-        # ステップ2: Table
+        # ステップ1: Table
         table = sprite.Table(self.physics, 
-             self.w/2, self.h/2 - 64)
+            self.w/2, self.h/2 - 64)
         self.blocks.append(table)
 
-        # ステップ1: Player
+        # Player
         self.player = sprite.Player(self.physics, 
-                                    self.w/2, self.h/2 + 36)
+            self.w/2, self.h/2 + 34)
         self.players.append(self.player)
 
         # Info
@@ -122,10 +122,13 @@ class GameView(arcade.View):
             self.sounds.play("game", loop=True, volume=0.2)
             return
 
-        # ステップ3: Action
+        # ステップ2: Action
         if key == arcade.key.A:
-            self.player.jump(0, 400)
-            self.sound.play("jump")
+            self.player.jump(-PLAYER_JUMP_X, PLAYER_JUMP_Y)
+            self.sounds.play("jump")
+        if key == arcade.key.S:
+            self.player.jump(PLAYER_JUMP_X, PLAYER_JUMP_Y)
+            self.sounds.play("jump")
 
     def on_key_release(self, key, key_modifiers):
         pass
@@ -191,11 +194,12 @@ class GameView(arcade.View):
         y = self.cake_y + 1
         spd_x = random.randrange(CAKE_SPEED_X_MIN, CAKE_SPEED_X_MAX)
         
-        # ステップ5: Random
+        # ステップ4: Random
         if random.random() < 0.5:
             x = self.w
+            spd_x *= -1
 
-        # ステップ4: Cake
+        # ステップ3: Cake
         cake = sprite.Cake(self.physics, x, y)
         cake.move(spd_x, 0)
         self.cakes.append(cake)

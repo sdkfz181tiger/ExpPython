@@ -18,12 +18,8 @@ window.onload = ()=>{
 		const pass = document.querySelector("#floatingPassword").value;
 		signIn(id, pass).then(result=>{
 			console.log("signIn:", result);
-			if(result){
-				//pushLine();
-			}
+			showToast(result);
 		});
-		// Toast
-		showToast();
 	}
 
 	// Test
@@ -109,13 +105,4 @@ function pushLine(){
 	}
 	const rdm = 8000 * Math.random();
 	setTimeout(()=>{pushLine();}, rdm);
-}
-
-function showToast(){
-	// Toast
-	document.getElementById("toastTitle").textContent = "ハッキング成功!!";
-	document.getElementById("toastBody").textContent = "もれなくうまい棒プレゼント!!";
-	const liveToast = document.getElementById("liveToast");
-	const toastBootstrap = bootstrap.Toast.getOrCreateInstance(liveToast);
-	toastBootstrap.show();
 }

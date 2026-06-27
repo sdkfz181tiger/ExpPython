@@ -41,6 +41,20 @@ const loadJson = async (path)=>{
 	}
 }
 
+function showToast(result){
+	// Toast
+	if(!result){
+		document.getElementById("toastTitle").textContent = "失敗";
+		document.getElementById("toastBody").textContent = "残念、ログイン失敗です...";
+	}else{
+		document.getElementById("toastTitle").textContent = "成功";
+		document.getElementById("toastBody").textContent = "おめでとう!!ログイン成功です!!";
+	}
+	const liveToast = document.getElementById("liveToast");
+	const toastBootstrap = bootstrap.Toast.getOrCreateInstance(liveToast);
+	toastBootstrap.show();
+}
+
 //==========
 // p5js
 
