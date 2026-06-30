@@ -50,7 +50,7 @@ def start_detection(model, path_from, path_to):
                     pt1=(int(x1), int(y1)), 
                     pt2=(int(x2), int(y2)),
                     color=(33, 255, 33))
-        drawGrid(w, h, frame, (140, 140, 140), 1)
+        drawGrid(w, h, frame, (33, 33, 33), 1)
         cap_to.write(frame)
 
 
