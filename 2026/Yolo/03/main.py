@@ -17,7 +17,7 @@ def main():
     model = YOLO("yolo11n.pt")
 
     # Detection
-    start_detection(model, "../assets/sample_01.mp4", "./out.mp4")
+    start_detection(model, "../assets/sample_02.mp4", "./out.mp4")
 
 
 def start_detection(model, path_from, path_to):
@@ -44,12 +44,21 @@ def start_detection(model, path_from, path_to):
         for result in results:
             # Draw Boxes
             xyxy = result.boxes.xyxy.cpu().numpy()
-            for i in range(len(xyxy)):
-                x1, y1, x2, y2 = xyxy[i]
+            confs = result.boxes.conf.cpu().numpy()
+            clss = result.boxes.cls.cpu().numpy()
+
+            for box, conf, cls in zip(xyxy, confs, clss):
+                x1, y1, x2, y2 = map(int, box)
+                name = result.names[int(cls)]
                 cv2.rectangle(frame,
                     pt1=(int(x1), int(y1)), 
                     pt2=(int(x2), int(y2)),
                     color=(33, 255, 33))
+                cv2.putText(frame, f"{conf:.2f}:{name}",
+                    (x1, y1 - 5),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.4, 
+                    (33, 255, 33), 1)
+
         drawGrid(w, h, frame, (33, 33, 33), 1)
         cap_to.write(frame)
 
