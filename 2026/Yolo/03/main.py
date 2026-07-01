@@ -25,10 +25,10 @@ def start_detection(model, path_from, path_to):
 
     # Video(From)
     cap_from = cv2.VideoCapture(path_from)
-    w     = int(cap_from.get(cv2.CAP_PROP_FRAME_WIDTH))# Width
-    h     = int(cap_from.get(cv2.CAP_PROP_FRAME_HEIGHT))# Height
-    count = int(cap_from.get(cv2.CAP_PROP_FRAME_COUNT))# Count
-    fps   = int(cap_from.get(cv2.CAP_PROP_FPS))# Fps
+    w        = int(cap_from.get(cv2.CAP_PROP_FRAME_WIDTH))# Width
+    h        = int(cap_from.get(cv2.CAP_PROP_FRAME_HEIGHT))# Height
+    count    = int(cap_from.get(cv2.CAP_PROP_FRAME_COUNT))# Count
+    fps      = int(cap_from.get(cv2.CAP_PROP_FPS))# Fps
     print("Video W:%d H:%d COUNT:%d FPS:%d" % (w, h, count, fps))
 
     # Video(To)
@@ -42,9 +42,9 @@ def start_detection(model, path_from, path_to):
         
         results = model(frame) # Prediction
         for result in results:
-            frame = result.plot() # Draw all
+            frame = result.plot() # Draw(Auto)
             """
-            # Draw Boxes
+            # Draw Boxes(Manual)
             xyxy = result.boxes.xyxy.cpu().numpy()
             confs = result.boxes.conf.cpu().numpy()
             clss = result.boxes.cls.cpu().numpy()
