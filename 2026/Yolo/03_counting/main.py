@@ -56,10 +56,10 @@ def start_prediction(path_file):
 
         # Counter
         frame_counter = counter(frame).plot_im
-        cap_to.write(frame_counter)
 
         # Grid
         utility.draw_grid(w, h, frame_counter, (255, 255, 255), 1)
+        cap_to.write(frame_counter)
 
     # Release
     cap_from.release()

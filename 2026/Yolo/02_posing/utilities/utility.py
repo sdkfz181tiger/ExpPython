@@ -14,9 +14,9 @@ def draw_grid(w, h, frame, l_color, l_width):
     for r in range(1, rows):
         y = r * g_size
         cv2.line(frame, (0, y), (w, y), l_color, l_width)
-        for c in range(1, cols):
-            x = c * g_size
-            cv2.line(frame, (x, 0), (x, h), l_color, l_width)
+    for c in range(1, cols):
+        x = c * g_size
+        cv2.line(frame, (x, 0), (x, h), l_color, l_width)
 
 
 def write_audio(path_from, path_to, path_comp):

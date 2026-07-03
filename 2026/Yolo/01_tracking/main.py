@@ -53,10 +53,10 @@ def start_prediction(path_file):
         # Track
         frame_tracked = model.track(
             frame, persist=True, verbose=False)[0].plot()
-        cap_to.write(frame_tracked)
 
         # Grid
-        utility.draw_grid(w, h, frame, (255, 255, 255), 1)
+        utility.draw_grid(w, h, frame_tracked, (255, 255, 255), 1)
+        cap_to.write(frame_tracked)
 
     # Release
     cap_from.release()
