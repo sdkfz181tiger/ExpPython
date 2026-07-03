@@ -24,7 +24,7 @@ w = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
 h = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Model
-model = YOLO("yolo26n.pt")
+model = YOLO("yolo26m.pt")
 
 
 def main():

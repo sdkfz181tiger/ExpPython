@@ -45,7 +45,7 @@ def start_prediction(path_file):
     # Model
     counter = solutions.ObjectCounter(
         model="yolo26n.pt", show=False, 
-        region=[(0, 800), (1080, 800)],
+        region=[(0, 600), (1080, 600)],
         classes=[2, 3, 5, 7],
         line_width=4)
 

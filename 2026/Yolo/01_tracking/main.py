@@ -17,7 +17,7 @@ def main():
     print("main")
 
     # Prediction
-    start_prediction("../assets/sample_11.mp4")
+    start_prediction("../assets/sample_20.mp4")
 
 
 def start_prediction(path_file):
