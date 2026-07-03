@@ -6,6 +6,7 @@
 """
 
 import cv2, os
+from moviepy import VideoFileClip, AudioFileClip, AudioArrayClip
 from pathlib import Path
 from PIL import Image
 from ultralytics import YOLO, solutions
@@ -17,12 +18,12 @@ def main():
     # Prediction
     start_prediction(
         "yolo26n-pose.pt", 
-        path_file="../assets/thriller.mp4")
+        path_file="../assets/sample_02.mp4")
 
 
 def start_prediction(path_model, path_file):
     print("start_prediction:", path_model, path_file)
-
+    
     # Model
     # yolo11n < yolo11s < yolo11m ...
     model = YOLO(path_model)
@@ -30,7 +31,8 @@ def start_prediction(path_model, path_file):
     path = Path(path_file)
     path_from = path
     path_to   = path.name
-
+    path_comp = Path(f"{path.stem}_comp{path.suffix}")
+    
     # Video(From)
     cap_from   = cv2.VideoCapture(path_from)
     w          = int(cap_from.get(cv2.CAP_PROP_FRAME_WIDTH))# Width
@@ -58,10 +60,12 @@ def start_prediction(path_model, path_file):
     # Release
     cap_from.release()
     cap_to.release()
-    cv2.destroyAllWindows()
+    
+    # Audio
+    write_audio(path_from, path_to, path_comp)
 
 
-def drawGrid(w, h, frame, l_color, l_width):
+def draw_grid(w, h, frame, l_color, l_width):
     g_size = int(w / 20)
     rows = int(h / g_size)
     cols = int(w / g_size)
@@ -71,6 +75,14 @@ def drawGrid(w, h, frame, l_color, l_width):
         for c in range(1, cols):
             x = c * g_size
             cv2.line(frame, (x, 0), (x, h), l_color, l_width)
+
+
+def write_audio(path_from, path_to, path_comp):
+    print("write_audio!!")
+    clip_from = VideoFileClip(path_from).subclipped() # From
+    clip_to = VideoFileClip(path_to).subclipped() # To
+    clip_comp = clip_to.with_audio(clip_from.audio) # Comp
+    clip_comp.write_videofile(path_comp, codec="libx264", audio_codec="aac")
 
 
 if __name__ == "__main__":
