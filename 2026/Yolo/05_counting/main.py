@@ -6,6 +6,9 @@
 """
 
 import cv2, os
+import utilities.utility as utility
+from moviepy import VideoFileClip, AudioFileClip, AudioArrayClip
+from pathlib import Path
 from PIL import Image
 from ultralytics import YOLO, solutions
 
@@ -13,31 +16,18 @@ def main():
     """ Main """
     print("main")
 
-    # Model
-    # yolo11n < yolo11s < yolo11m ...
-    # class:
-    # 0: person, 2: car, 3: mortercycle,
-    # 5: bus, 7: truck
+    # Prediction
+    start_prediction("../assets/sample_11.mp4")
 
-    # Detection
-    # start_detection(
-    #     "yolo11n.pt", 
-    #     path_from="../assets/sample_09.mp4", 
-    #     path_to="./out_09.mp4",
-    #     line_points=[(2900, 0), (2900, 2160)],
-    #     classes=[0])
+
+def start_prediction(path_file):
+    print("start_prediction:", path_file)
+
+    path = Path(path_file)
+    path_from = path
+    path_to   = path.name
+    path_comp = Path(f"{path.stem}_comp{path.suffix}")
     
-    start_detection(
-        "yolo11n.pt", 
-        path_from="../assets/sample_11.mp4", 
-        path_to="./out_11.mp4",
-        line_points=[(0, 800), (1080, 800)],
-        classes=[2, 3, 5, 7])
-
-
-def start_detection(path_model, path_from, path_to, line_points, classes):
-    print("start_detection:", path_model, path_from, path_to)
-
     # Video(From)
     cap_from   = cv2.VideoCapture(path_from)
     w          = int(cap_from.get(cv2.CAP_PROP_FRAME_WIDTH))# Width
@@ -52,36 +42,32 @@ def start_detection(path_model, path_from, path_to, line_points, classes):
     cap_to = cv2.VideoWriter(
         path_to, fourcc, fps, resolution)
 
-    # Points
+    # Model
+    # yolo11n < yolo11s < yolo11m ...
     counter = solutions.ObjectCounter(
-        model=path_model, show=False, 
-        region=line_points, classes=classes,
+        model="yolo26n.pt", show=False, 
+        region=[(0, 800), (1080, 800)],
+        classes=[2, 3, 5, 7],
         line_width=4)
 
     # Render
     for n in range(count):
         ret, frame = cap_from.read()# Read
         if ret==False: break
+
         # Counter
-        frame_counter = counter(frame)
-        cap_to.write(frame_counter.plot_im)
+        frame_counter = counter(frame).plot_im
+        cap_to.write(frame_counter)
+
+        # Grid
+        utility.draw_grid(w, h, frame_counter, (255, 255, 255), 1)
 
     # Release
     cap_from.release()
     cap_to.release()
-    cv2.destroyAllWindows()
-
-
-def drawGrid(w, h, frame, l_color, l_width):
-    g_size = int(w / 20)
-    rows = int(h / g_size)
-    cols = int(w / g_size)
-    for r in range(1, rows):
-        y = r * g_size
-        cv2.line(frame, (0, y), (w, y), l_color, l_width)
-        for c in range(1, cols):
-            x = c * g_size
-            cv2.line(frame, (x, 0), (x, h), l_color, l_width)
+    
+    # Audio
+    #utility.write_audio(path_from, path_to, path_comp)
 
 
 if __name__ == "__main__":

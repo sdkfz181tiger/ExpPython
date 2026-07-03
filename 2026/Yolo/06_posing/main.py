@@ -6,6 +6,7 @@
 """
 
 import cv2, os
+import utilities.utility as utility
 from moviepy import VideoFileClip, AudioFileClip, AudioArrayClip
 from pathlib import Path
 from PIL import Image
@@ -16,17 +17,11 @@ def main():
     print("main")
 
     # Prediction
-    start_prediction(
-        "yolo26n-pose.pt", 
-        path_file="../assets/sample_02.mp4")
+    start_prediction("../assets/sample_18.mp4")
 
 
-def start_prediction(path_model, path_file):
-    print("start_prediction:", path_model, path_file)
-    
-    # Model
-    # yolo11n < yolo11s < yolo11m ...
-    model = YOLO(path_model)
+def start_prediction(path_file):
+    print("start_prediction:", path_file)
 
     path = Path(path_file)
     path_from = path
@@ -47,6 +42,10 @@ def start_prediction(path_model, path_file):
     cap_to = cv2.VideoWriter(
         path_to, fourcc, fps, resolution)
 
+    # Model
+    # yolo11n < yolo11s < yolo11m ...
+    model = YOLO("yolo26n-pose.pt")
+
     # Render
     for n in range(count):
         ret, frame = cap_from.read()# Read
@@ -57,32 +56,15 @@ def start_prediction(path_model, path_file):
             frame, persist=True, verbose=False)[0].plot()
         cap_to.write(frame_tracked)
 
+        # Grid
+        utility.draw_grid(w, h, frame, (255, 255, 255), 1)
+
     # Release
     cap_from.release()
     cap_to.release()
     
     # Audio
-    write_audio(path_from, path_to, path_comp)
-
-
-def draw_grid(w, h, frame, l_color, l_width):
-    g_size = int(w / 20)
-    rows = int(h / g_size)
-    cols = int(w / g_size)
-    for r in range(1, rows):
-        y = r * g_size
-        cv2.line(frame, (0, y), (w, y), l_color, l_width)
-        for c in range(1, cols):
-            x = c * g_size
-            cv2.line(frame, (x, 0), (x, h), l_color, l_width)
-
-
-def write_audio(path_from, path_to, path_comp):
-    print("write_audio!!")
-    clip_from = VideoFileClip(path_from).subclipped() # From
-    clip_to = VideoFileClip(path_to).subclipped() # To
-    clip_comp = clip_to.with_audio(clip_from.audio) # Comp
-    clip_comp.write_videofile(path_comp, codec="libx264", audio_codec="aac")
+    #utility.write_audio(path_from, path_to, path_comp)
 
 
 if __name__ == "__main__":
