@@ -19,7 +19,7 @@ def main():
     # Tracking
     #start_tracking("yolo26n.pt", "../assets/cats_05.mp4")
 
-    # Pose
+    # Posing
     #start_tracking("yolo26n-pose.pt", "../assets/chaplin_01.mp4")
 
     # Counting
