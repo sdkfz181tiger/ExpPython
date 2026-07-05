@@ -36,7 +36,7 @@ def write_audio(path_from, path_to, path_comp):
 
 def my_decorator(func):
 
-    def wrapper(path_file):
+    def wrapper(path_model, path_file):
 
         path = Path(path_file)
         path_from = path
@@ -57,7 +57,7 @@ def my_decorator(func):
         cap_to = cv2.VideoWriter(
             path_to, fourcc, fps, resolution)
 
-        func(w, h, count, cap_from, cap_to)
+        func(path_model, w, h, count, cap_from, cap_to)
 
         # Release
         cap_from.release()
