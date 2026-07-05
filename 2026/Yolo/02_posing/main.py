@@ -17,7 +17,7 @@ def main():
     print("main")
 
     # Prediction
-    start_prediction("../assets/sample_18.mp4")
+    start_prediction("../assets/sample_11.mp4")
 
 
 def start_prediction(path_file):
@@ -43,7 +43,8 @@ def start_prediction(path_file):
         path_to, fourcc, fps, resolution)
 
     # Model
-    model = YOLO("yolo26n-pose.pt")
+    #model = YOLO("yolo26n-pose.pt")
+    model = YOLO("yolo26n-seg.pt")
 
     # Render
     for n in range(count):
