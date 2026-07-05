@@ -20,10 +20,10 @@ def main():
     #start_tracking("yolo26n.pt", "../assets/cats_05.mp4")
 
     # Pose
-    start_tracking("yolo26n-pose.pt", "../assets/chaplin_01.mp4")
+    #start_tracking("yolo26n-pose.pt", "../assets/chaplin_01.mp4")
 
     # Counting
-    #start_counting("yolo26n.pt", "../assets/sample_11.mp4")
+    start_counting("yolo26n.pt", "../assets/sample_11.mp4")
 
 
 @utility.my_decorator
