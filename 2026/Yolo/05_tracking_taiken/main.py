@@ -17,16 +17,23 @@ def main():
     print("main")
 
     # Tracking
-    #start_tracking("yolo26n.pt", "../assets/cats_05.mp4")
+    #start_tracking("yolo26n-obb.pt", "../assets/sample_13.mp4")
+
+    # Tracking(横断歩道) plotの引数調整
+    start_tracking("yolo26n.pt", "../assets/crossing_01.mp4") # 横断歩道
+
+    # Tracking(Parking) plotの引数調整
+    # classes=[9, 10]
+    #start_tracking("yolo26n-obb.pt", "../assets/parking_02.mp4") # Parking
 
     # Segmentation
-    start_tracking("yolo26n-seg.pt", "../assets/sample_07.mp4")
+    #start_tracking("yolo26n-seg.pt", "../assets/cats_07.mp4") # Cats
 
     # Posing
-    #start_tracking("yolo26n-pose.pt", "../assets/chaplin_01.mp4")
+    #start_tracking("yolo26n-pose.pt", "../assets/chaplin_01.mp4") # Chaplin
 
     # Counting
-    #start_counting("yolo26n.pt", "../assets/sample_11.mp4")
+    #start_counting("yolo26n.pt", "../assets/sample_11.mp4") # Traffics
 
 
 @utility.my_decorator
@@ -43,7 +50,11 @@ def start_tracking(path_model, w, h, count, cap_from, cap_to):
 
         # Track
         frame_tracked = model.track(
-            frame, persist=True, verbose=False)[0].plot()
+            frame, 
+            persist=True, 
+            verbose=False)[0].plot(
+            labels=False, 
+            conf=False)
 
         # Grid
         #utility.draw_grid(w, h, frame_tracked, (255, 255, 255), 1)

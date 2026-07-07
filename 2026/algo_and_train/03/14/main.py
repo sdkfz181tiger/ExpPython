@@ -21,7 +21,7 @@ def bit_or(a, b):
 def main():
     """ メイン処理 """
 
-    print("Test01:", bit_or(0b10010000, 0b00000110))
+    print("Test01:", bit_or(0b01001011, 0b10001010))
 
 if __name__ == "__main__":
     main()

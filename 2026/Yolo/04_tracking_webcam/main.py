@@ -18,13 +18,18 @@ app = Flask(__name__)
 
 # WebCam
 # Linux: $ ls /dev/video*
+camera = cv2.VideoCapture(0)
 # Mac: $ system_profiler SPCameraDataType
-camera = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
-w = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
-h = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
+#camera = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
+
+# Fixed camera size
+w = 640
+h = 480
+camera.set(cv2.CAP_PROP_FRAME_WIDTH, w)
+camera.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
 
 # Model
-model = YOLO("yolo26m.pt")
+model = YOLO("yolo26n.pt")
 
 
 def main():
@@ -32,27 +37,33 @@ def main():
     print("main")
 
     # Server
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
 
 
 def generate_frames():
     global w, h, model
 
+    counter = 0 # Counter
     while True:
         # Camera
         success, frame = camera.read()
         if not success:
             break
 
-        # Track
-        frame_tracked = model.track(
-            frame, persist=True, verbose=False)[0].plot()
-
-        # Grid
-        utility.draw_grid(w, h, frame_tracked, (255, 255, 255), 1)
-
-        # Frame -> JPG
-        ret, buffer = cv2.imencode(".jpg", frame_tracked)
+        if counter % 13 == 0:
+            # Tracking
+            frame_tracked = model.track(
+                frame, 
+                imgsz=320,
+                persist=True, 
+                verbose=False)[0].plot()
+            # Grid
+            #utility.draw_grid(w, h, frame_tracked, (255, 255, 255), 1)
+            # Frame -> JPG
+            ret, buffer = cv2.imencode(".jpg", frame_tracked)
+        else:
+            # Frame -> JPG
+            ret, buffer = cv2.imencode(".jpg", frame)
 
         # JPG -> MIME
         yield(b"--frame\r\n"
