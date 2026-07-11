@@ -7,23 +7,22 @@ from PIL import Image
 from ultralytics import YOLO, solutions
 
 
-def draw_grid(w, h, frame, l_color, l_width,
-    f_scale=1.0, f_color=(255, 255, 255), f_thickness=4):
+def draw_grid(w, h, frame, l_width, color=(255, 255, 255)):
     g_size = int(w / 20)
     rows = int(h / g_size)
     cols = int(w / g_size)
+    face = cv2.FONT_HERSHEY_SIMPLEX
+    scale = cv2.getFontScaleFromHeight(face, int(g_size / 5))
     for r in range(1, rows):
         y = r * g_size
-        cv2.line(frame, (0, y), (w, y), l_color, l_width)
+        cv2.line(frame, (0, y), (w, y), color, l_width)
         cv2.putText(frame, str(y), (10, y), 
-            cv2.FONT_HERSHEY_SIMPLEX, 
-            f_scale, f_color, f_thickness)
+            face, scale, color)
     for c in range(1, cols):
         x = c * g_size
-        cv2.line(frame, (x, 0), (x, h), l_color, l_width)
+        cv2.line(frame, (x, 0), (x, h), color, l_width)
         cv2.putText(frame, str(x), (x, h-10), 
-            cv2.FONT_HERSHEY_SIMPLEX, 
-            f_scale, f_color, f_thickness)
+            face, scale, color)
 
 
 def write_audio(path_from, path_to, path_comp):
