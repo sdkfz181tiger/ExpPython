@@ -47,7 +47,7 @@ class Game:
 
         # Pyxel
         pyxel.init(W, H, title="Hello, Pyxel!!")
-        pyxel.load("shooter.pyxres")
+        pyxel.load("my_resource.pyxres")
         pyxel.run(self.update, self.draw)
 
     def update(self):

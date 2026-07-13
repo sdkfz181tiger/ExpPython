@@ -55,7 +55,7 @@ class Game:
 
         # Pyxelの起動
         pyxel.init(W, H, title="Hello, Pyxel!!")
-        pyxel.load("vampire.pyxres")
+        pyxel.load("my_resource.pyxres")
         pyxel.run(self.update, self.draw) # Pyxel実行
 
     def update(self):
