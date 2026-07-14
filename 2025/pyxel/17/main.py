@@ -230,7 +230,7 @@ class Game:
         else:
             x = random.randint(0, W)
             spr.set_center(x, 0) # Vertical
-        pyxel.play(1, 1, loop=False) # サウンド
+        pyxel.play(1, 3, loop=False) # サウンド
 
     def get_nearest_monster(self):
         """ 最も近いモンスターの座標 """
