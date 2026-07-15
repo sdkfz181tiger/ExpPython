@@ -94,9 +94,7 @@ class BaseSprite:
         t_type, u, v = self.get_tile_type(x, y)
         if t_type == TILE_OBSTACLE:
             self.y = (v-1) * 8
-            self.vx = 0
             self.vy = 0
-            return
         # x Top
         x, y = self.get_top()
         t_type, u, v = self.get_tile_type(x, y)
@@ -136,10 +134,14 @@ class PlayerSprite(BaseSprite):
         pyxel.blt(self.x, self.y, 0, 
             0, 16, self.w, self.h, 0)
 
-    def jumpL(self):
-        self.vx = -self.jump_x
+    def jump(self):
         self.vy = self.jump_y
 
-    def jumpR(self):
+    def runL(self):
+        self.vx = -self.jump_x
+
+    def runR(self):
         self.vx = self.jump_x
-        self.vy = self.jump_y
+
+    def stopLR(self):
+        self.vx = 0

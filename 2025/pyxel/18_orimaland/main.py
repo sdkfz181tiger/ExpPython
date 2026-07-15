@@ -11,11 +11,11 @@ import sprite
 
 W, H = 160, 120
 
-START_X = 70
-START_Y = 90
+START_X = W / 4
+START_Y = H / 2 - 16
 
-MODE_TITLE = "title"
-MODE_PLAY = "play"
+MODE_TITLE     = "title"
+MODE_PLAY      = "play"
 MODE_GAME_OVER = "game_over"
 
 CAMERA_PAD_X = 60
@@ -130,10 +130,16 @@ class Game:
                 self.reset() # Reset
         else:
             # Player
+            if pyxel.btnp(pyxel.KEY_W):
+                self.player.jump()
             if pyxel.btnp(pyxel.KEY_A):
-                self.player.jumpL()
+                self.player.runL()
             if pyxel.btnp(pyxel.KEY_D):
-                self.player.jumpR()
+                self.player.runR()
+            if pyxel.btnr(pyxel.KEY_A):
+                self.player.stopLR()
+            if pyxel.btnr(pyxel.KEY_D):
+                self.player.stopLR()
 
 def main():
     """ Main """
