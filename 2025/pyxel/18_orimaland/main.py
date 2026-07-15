@@ -18,6 +18,10 @@ MODE_TITLE = "title"
 MODE_PLAY = "play"
 MODE_GAME_OVER = "game_over"
 
+CAMERA_PAD_X = 60
+CAMERA_LIMIT_L = W - 640
+CAMERA_LIMIT_R = 0
+
 # Game
 class Game:
     def __init__(self):
@@ -36,7 +40,7 @@ class Game:
         self.reset()
 
         # Pyxel
-        pyxel.init(W, H, title="Hello, Pyxel!!", fps=24)
+        pyxel.init(W, H, title="Hello, Pyxel!!")
         pyxel.load("my_resource.pyxres")
         pyxel.run(self.update, self.draw)
 
@@ -65,10 +69,20 @@ class Game:
         pyxel.cls(6)
 
         # Camera(Set)
-        pyxel.camera(self.player.x - START_X, 0)
+        line_r = W - self.camera_x - CAMERA_PAD_X
+        if line_r < self.player.x:
+            self.camera_x += line_r - self.player.x
+            if self.camera_x < CAMERA_LIMIT_L:
+                self.camera_x = CAMERA_LIMIT_L
+        line_l = 0 - self.camera_x + CAMERA_PAD_X
+        if self.player.x < line_l:
+            self.camera_x += line_l - self.player.x
+            if CAMERA_LIMIT_R < self.camera_x:
+                self.camera_x = CAMERA_LIMIT_R
+        pyxel.camera(-self.camera_x, 0)
 
         # Tilemap
-        pyxel.bltm(0, 0, 0, 0, 0, 192, 128, 0)
+        pyxel.bltm(0, 0, 0, 0, 0, 640, 128, 0)
 
         # Player
         self.player.draw()
@@ -88,6 +102,9 @@ class Game:
             "SCORE:{:04}".format(self.score), 1)
 
     def reset(self):
+
+        # Camera
+        self.camera_x = 0
 
         # Reset
         self.player.x = START_X

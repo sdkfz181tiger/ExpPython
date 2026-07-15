@@ -12,7 +12,7 @@ TILE_NONE = 0
 TILE_OBSTACLE = 1
 
 TILE_TYPES = {
-    (0, 7): TILE_OBSTACLE,
+    (0, 7): TILE_OBSTACLE, # Grounds
     (1, 7): TILE_OBSTACLE,
     (2, 7): TILE_OBSTACLE,
     (3, 7): TILE_OBSTACLE,
@@ -22,8 +22,14 @@ TILE_TYPES = {
     (2, 8): TILE_OBSTACLE,
     (3, 8): TILE_OBSTACLE,
     (4, 8): TILE_OBSTACLE,
-    (4, 2): TILE_OBSTACLE, # Block
-    (5, 2): TILE_OBSTACLE  # Block
+    (4, 2): TILE_OBSTACLE, # Blocks
+    (5, 2): TILE_OBSTACLE,
+    (2, 2): TILE_OBSTACLE, # Tunnels
+    (3, 2): TILE_OBSTACLE,
+    (2, 3): TILE_OBSTACLE,
+    (3, 3): TILE_OBSTACLE,
+    (2, 4): TILE_OBSTACLE,
+    (3, 4): TILE_OBSTACLE
 }
 
 class BaseSprite:
