@@ -34,10 +34,12 @@ TILE_TYPES = {
 
 class BaseSprite:
 
-    def __init__(self, x, y, w=8, h=8):
+    def __init__(self, x, y, u, v, w=8, h=8):
         """ Constructor """
         self.x = x
         self.y = y
+        self.u = u
+        self.v = v
         self.w = w
         self.h = h
         self.vx = 0
@@ -104,24 +106,26 @@ class BaseSprite:
             return
         # x Left
         x, y = self.get_left()
-        t_type, u, v = self.get_tile_type(x, y)
-        if t_type == TILE_OBSTACLE:
-            self.x = (u+1) * 8
-            self.vx = 0
-            return
+        if self.vx < 0:
+            t_type, u, v = self.get_tile_type(x, y)
+            if t_type == TILE_OBSTACLE:
+                self.x = (u+1) * 8
+                self.vx = 0
+                return
         # x Right
-        x, y = self.get_right()
-        t_type, u, v = self.get_tile_type(x, y)
-        if t_type == TILE_OBSTACLE:
-            self.x = (u-1) * 8
-            self.vx = 0
-            return
+        if 0 < self.vx:
+            x, y = self.get_right()
+            t_type, u, v = self.get_tile_type(x, y)
+            if t_type == TILE_OBSTACLE:
+                self.x = (u-1) * 8
+                self.vx = 0
+                return
                 
 class PlayerSprite(BaseSprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, u, v):
         """ Constructor """
-        super().__init__(x, y)
+        super().__init__(x, y, u, v)
         self.gravity = 0.4 # Gravity
         self.jump_x = 0.8
         self.jump_y = -2.4
@@ -132,7 +136,7 @@ class PlayerSprite(BaseSprite):
 
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 
-            0, 16, self.w, self.h, 0)
+            self.u, self.v, self.w, self.h, 0)
 
     def jump(self):
         self.vy = self.jump_y

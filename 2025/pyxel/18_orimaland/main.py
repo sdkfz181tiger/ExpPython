@@ -34,7 +34,7 @@ class Game:
         self.game_mode = MODE_TITLE
 
         # Player
-        self.player = sprite.PlayerSprite(START_X, START_Y)
+        self.player = sprite.PlayerSprite(START_X, START_Y, 0, 16)
 
         # Reset
         self.reset()
@@ -66,7 +66,7 @@ class Game:
             self.game_mode = MODE_GAME_OVER
 
     def draw(self):
-        pyxel.cls(6)
+        pyxel.cls(1)
 
         # Camera(Set)
         line_r = W - self.camera_x - CAMERA_PAD_X
