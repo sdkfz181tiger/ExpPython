@@ -8,10 +8,12 @@ import pyxel
 import math
 import random
 import sprite
+import utility
 
 W, H = 160, 120
+
 START_X = W / 2
-START_Y = H / 2 - 10
+START_Y = H / 2
 PLAYER_SPD = 1
 
 # Game
@@ -23,9 +25,8 @@ class Game:
         pyxel.init(W, H, title="Hello, Pyxel!!")
         pyxel.load("my_resource.pyxres")
 
-        # タイルマップスクロール位置
-        self.scroll_u = 0
-        self.scroll_v = 128
+        # マップを初期化
+        self.map = utility.MapManager(0, 0, 0, 0, 0, W, H, 256, 256)
 
         # プレイヤーを初期化
         self.player = sprite.PlayerSprite(
@@ -46,9 +47,8 @@ class Game:
         """ 描画処理 """
         pyxel.cls(0)
 
-        # タイルマップ
-        # x, y, tm, u, v, w, h, colkey=None, rotate=0, scale=1
-        pyxel.bltm(0, 0, 0, self.scroll_u, self.scroll_v, 128, 128)
+        # タイルマップを描画
+        self.map.draw()
 
         # プレイヤーを描画
         self.player.draw()
@@ -56,10 +56,10 @@ class Game:
     def control(self):
 
         # タイルマップスクロール
-        if pyxel.btn(pyxel.KEY_A):
-            self.scroll_u += 1
-        if pyxel.btn(pyxel.KEY_D):
-            self.scroll_u -= 1
+        # if pyxel.btn(pyxel.KEY_A):
+        #     self.scroll_u += 1
+        # if pyxel.btn(pyxel.KEY_D):
+        #     self.scroll_u -= 1
 
         # W
         if pyxel.btnp(pyxel.KEY_W):
