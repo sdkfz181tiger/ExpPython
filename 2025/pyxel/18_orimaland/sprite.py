@@ -8,7 +8,6 @@ import pyxel
 import math
 import random
 
-TILE_NONE = 0
 TILE_OBSTACLE = 1
 
 TILE_TYPES = {

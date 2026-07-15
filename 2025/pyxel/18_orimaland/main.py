@@ -68,18 +68,8 @@ class Game:
     def draw(self):
         pyxel.cls(1)
 
-        # Camera(Set)
-        line_r = W - self.camera_x - CAMERA_PAD_X
-        if line_r < self.player.x:
-            self.camera_x += line_r - self.player.x
-            if self.camera_x < CAMERA_LIMIT_L:
-                self.camera_x = CAMERA_LIMIT_L
-        line_l = 0 - self.camera_x + CAMERA_PAD_X
-        if self.player.x < line_l:
-            self.camera_x += line_l - self.player.x
-            if CAMERA_LIMIT_R < self.camera_x:
-                self.camera_x = CAMERA_LIMIT_R
-        pyxel.camera(-self.camera_x, 0)
+        # Camera(on)
+        self.camera_on()
 
         # Tilemap
         pyxel.bltm(0, 0, 0, 0, 0, 640, 128, 0)
@@ -87,7 +77,8 @@ class Game:
         # Player
         self.player.draw()
 
-        pyxel.camera() # Camera(Reset)
+        # Camera(off)
+        self.camera_off()
 
         # Message
         if self.game_mode == MODE_TITLE:
@@ -140,6 +131,22 @@ class Game:
                 self.player.stopLR()
             if pyxel.btnr(pyxel.KEY_D):
                 self.player.stopLR()
+
+    def camera_on(self):
+        line_r = W - self.camera_x - CAMERA_PAD_X
+        if line_r < self.player.x:
+            self.camera_x += line_r - self.player.x
+            if self.camera_x < CAMERA_LIMIT_L:
+                self.camera_x = CAMERA_LIMIT_L
+        line_l = 0 - self.camera_x + CAMERA_PAD_X
+        if self.player.x < line_l:
+            self.camera_x += line_l - self.player.x
+            if CAMERA_LIMIT_R < self.camera_x:
+                self.camera_x = CAMERA_LIMIT_R
+        pyxel.camera(-self.camera_x, 0)
+
+    def camera_off(self):
+        pyxel.camera()
 
 def main():
     """ Main """
