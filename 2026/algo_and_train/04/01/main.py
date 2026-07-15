@@ -28,7 +28,7 @@ def calc_score(mark):
 def main():
     """ メイン処理 """
     
-    print("Test01:", calc_score(["1", "+", "2", "-", "9", "5"]))
+    print("Test01:", calc_score(["1", "+", "2", "-", "3", "6", "5"]))
 
 if __name__ == "__main__":
     main()
