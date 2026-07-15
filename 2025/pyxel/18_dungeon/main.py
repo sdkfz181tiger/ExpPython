@@ -26,7 +26,7 @@ class Game:
         pyxel.load("my_resource.pyxres")
 
         # マップを初期化
-        self.map = utility.MapManager(0, 0, 0, 0, 0, W, H, 256, 256)
+        self.m_mng = utility.MapManager(0, 0, 0, 0, 0, W, H, 256, 256)
 
         # プレイヤーを初期化
         self.player = sprite.PlayerSprite(
@@ -48,7 +48,7 @@ class Game:
         pyxel.cls(0)
 
         # タイルマップを描画
-        self.map.draw()
+        self.m_mng.draw()
 
         # プレイヤーを描画
         self.player.draw()
@@ -56,10 +56,14 @@ class Game:
     def control(self):
 
         # タイルマップスクロール
-        # if pyxel.btn(pyxel.KEY_A):
-        #     self.scroll_u += 1
-        # if pyxel.btn(pyxel.KEY_D):
-        #     self.scroll_u -= 1
+        if pyxel.btn(pyxel.KEY_W):
+            self.m_mng.offUV(0, 1)
+        if pyxel.btn(pyxel.KEY_A):
+            self.m_mng.offUV(1, 0)
+        if pyxel.btn(pyxel.KEY_S):
+            self.m_mng.offUV(0, -1)
+        if pyxel.btn(pyxel.KEY_D):
+            self.m_mng.offUV(-1, 0)
 
         # W
         if pyxel.btnp(pyxel.KEY_W):

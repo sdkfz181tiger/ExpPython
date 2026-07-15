@@ -12,7 +12,7 @@ class MapManager:
 
     def __init__(self, 
         x, y, img, u, v, w, h,
-        max_x, max_y):
+        map_w, map_h):
         """ コンストラクタ """
         self.x = x
         self.y = y
@@ -21,8 +21,8 @@ class MapManager:
         self.v = v
         self.w = w
         self.h = h
-        self.max_x = max_x
-        self.max_y = max_y
+        self.map_w = map_w
+        self.map_h = map_h
         
     def update(self):
         """ 更新処理 """
@@ -33,6 +33,25 @@ class MapManager:
         
         pyxel.bltm(self.x, self.y, self.img,
             self.u, self.v, self.w, self.h)
-        
 
-    
+    def offUV(self, off_u, off_v):
+        """ 表示座標オフセット """
+        self.u += off_u
+        self.v += off_v
+        self.adjustUV()
+
+    def setUV(u, v):
+        """ 表示座標指定 """
+        self.u = u
+        self.v = v
+        self.adjustUV()
+
+    def adjustUV(self):
+        if self.u < 0:
+            self.u = 0
+        if self.map_w < (self.u + self.w):
+            self.u = self.map_w - self.w
+        if self.v < 0:
+            self.v = 0
+        if self.map_h < (self.v + self.h):
+            self.v = self.map_h - self.h
