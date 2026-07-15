@@ -30,14 +30,18 @@ class MapManager:
 
     def draw(self):
         """ 描画処理 """
-        
         pyxel.bltm(self.x, self.y, self.img,
             self.u, self.v, self.w, self.h)
 
-    def offUV(self, off_u, off_v):
+    def getXY(self, r, c):
+        x = c * 8 - self.u
+        y = r * 8 - self.v
+        return (x, y)
+
+    def offUV(self, u, v):
         """ 表示座標オフセット """
-        self.u += off_u
-        self.v += off_v
+        self.u += u
+        self.v += v
         self.adjustUV()
 
     def setUV(u, v):

@@ -12,8 +12,6 @@ import utility
 
 W, H = 160, 120
 
-START_X = W / 2
-START_Y = H / 2
 PLAYER_SPD = 1
 
 # Game
@@ -29,8 +27,9 @@ class Game:
         self.m_mng = utility.MapManager(0, 0, 0, 0, 0, W, H, 256, 256)
 
         # プレイヤーを初期化
+        x, y = self.m_mng.getXY(3, 3)
         self.player = sprite.PlayerSprite(
-            START_X, START_Y, 0, 72, PLAYER_SPD, self)
+            x, y, 0, 72, PLAYER_SPD, self)
 
         pyxel.run(self.update, self.draw) # Pyxel実行
 
