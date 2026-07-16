@@ -10,6 +10,7 @@ import random
 
 TILE_NONE     = 0
 TILE_OBSTACLE = 1
+TILE_ITEM     = 2
 
 TILE_TYPES = {
     (0, 7): TILE_OBSTACLE, # Grounds
@@ -29,7 +30,9 @@ TILE_TYPES = {
     (2, 3): TILE_OBSTACLE,
     (3, 3): TILE_OBSTACLE,
     (2, 4): TILE_OBSTACLE,
-    (3, 4): TILE_OBSTACLE
+    (3, 4): TILE_OBSTACLE,
+    (0, 2): TILE_ITEM,     # Coin
+    (1, 2): TILE_ITEM      # Onigiri
 }
 
 class BaseSprite:
@@ -90,13 +93,14 @@ class BaseSprite:
             return TILE_NONE, u, v
         return TILE_TYPES[tile], u, v
 
-    def collide_obstacles(self):
+    def collide_tiles(self):
         # x Bottom
         x, y = self.get_bottom()
         t_type, u, v = self.get_tile_type(x, y)
         if t_type == TILE_OBSTACLE:
             self.y = (v-1) * 8
             self.vy = 0
+            self.land() # Land
         # x Top
         x, y = self.get_top()
         t_type, u, v = self.get_tile_type(x, y)
@@ -127,8 +131,10 @@ class PlayerSprite(BaseSprite):
         """ Constructor """
         super().__init__(x, y, u, v)
         self.gravity = 0.4 # Gravity
-        self.jump_x = 0.8
-        self.jump_y = -2.4
+        self.jump_x  = 0.8
+        self.jump_y  = -2.4
+        self.off_u   = 0
+        self.off_v   = 0
 
     def update(self):
         super().update()
@@ -136,16 +142,25 @@ class PlayerSprite(BaseSprite):
 
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 
-            self.u, self.v, self.w, self.h, 0)
+            self.u + self.off_u, 
+            self.v + self.off_v, 
+            self.w, self.h, 0)
 
     def jump(self):
+        self.off_v = 8
         self.vy = self.jump_y
 
     def runL(self):
+        self.off_u = 8
         self.vx = -self.jump_x
 
     def runR(self):
+        self.off_u = 0
         self.vx = self.jump_x
 
     def stopLR(self):
+        self.off_v = 0
         self.vx = 0
+
+    def land(self):
+        self.off_v = 0
