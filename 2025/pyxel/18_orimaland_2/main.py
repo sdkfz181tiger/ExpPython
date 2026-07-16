@@ -58,8 +58,9 @@ class Game:
         # Player
         self.player.update()
 
-        # x Obstacles
-        self.player.collide_tiles()
+        # x Obstacles, Items
+        self.player.collide_obstacles()
+        self.player.collide_items()
 
         # Game Over
         if H < self.player.y: 

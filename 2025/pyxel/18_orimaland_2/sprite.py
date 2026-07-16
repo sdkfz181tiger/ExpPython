@@ -85,45 +85,68 @@ class BaseSprite:
     def get_bottom(self):
         return (self.x + self.hw, self.y + self.h)
 
-    def get_tile_type(self, x, y):
+    def is_tile_type(self, x, y, type):
         tilemap = pyxel.tilemaps[0]
         u, v = x // 8, y // 8
         tile = tilemap.pget(u, v)
         if not(tile in TILE_TYPES):
             return TILE_NONE, u, v
-        return TILE_TYPES[tile], u, v
+        return TILE_TYPES[tile] == type, u, v
 
-    def collide_tiles(self):
-        # x Bottom
-        x, y = self.get_bottom()
-        t_type, u, v = self.get_tile_type(x, y)
-        if t_type == TILE_OBSTACLE:
+    def collide_obstacles(self):
+        t_obs = TILE_OBSTACLE
+        x, y = self.get_bottom()# x Bottom
+        flg, u, v = self.is_tile_type(x, y, t_obs)
+        if flg:
             self.y = (v-1) * 8
             self.vy = 0
             self.land() # Land
-        # x Top
-        x, y = self.get_top()
-        t_type, u, v = self.get_tile_type(x, y)
-        if t_type == TILE_OBSTACLE:
+        x, y = self.get_top() # x Top
+        flg, u, v = self.is_tile_type(x, y, t_obs)
+        if flg:
             self.y = (v+1) * 8
             self.vy = 0
             return
         # x Left
-        x, y = self.get_left()
         if self.vx < 0:
-            t_type, u, v = self.get_tile_type(x, y)
-            if t_type == TILE_OBSTACLE:
+            x, y = self.get_left() # Left
+            flg, u, v = self.is_tile_type(x, y, t_obs)
+            if flg:
                 self.x = (u+1) * 8
                 self.vx = 0
                 return
         # x Right
         if 0 < self.vx:
-            x, y = self.get_right()
-            t_type, u, v = self.get_tile_type(x, y)
-            if t_type == TILE_OBSTACLE:
+            x, y = self.get_right() # Right
+            flg, u, v = self.is_tile_type(x, y, t_obs)
+            if flg:
                 self.x = (u-1) * 8
                 self.vx = 0
                 return
+
+    def collide_items(self):
+        tilemap = pyxel.tilemaps[0]
+        t_item = TILE_ITEM
+        x, y = self.get_bottom()# x Bottom
+        flg, u, v = self.is_tile_type(x, y, t_item)
+        if flg:
+            tilemap.pset(u, v, (0, 0))
+            return
+        x, y = self.get_top() # x Top
+        flg, u, v = self.is_tile_type(x, y, t_item)
+        if flg:
+            tilemap.pset(u, v, (0, 0))
+            return
+        x, y = self.get_left() # Left
+        flg, u, v = self.is_tile_type(x, y, t_item)
+        if flg:
+            tilemap.pset(u, v, (0, 0))
+            return
+        x, y = self.get_right() # Right
+        flg, u, v = self.is_tile_type(x, y, t_item)
+        if flg:
+            tilemap.pset(u, v, (0, 0))
+            return
                 
 class PlayerSprite(BaseSprite):
 
