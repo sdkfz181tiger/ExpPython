@@ -27,6 +27,13 @@ class Game:
     def __init__(self):
         """ Constructor """
 
+        # Pyxel
+        pyxel.init(W, H, title="Hello, Pyxel!!")
+        pyxel.load("my_resource.pyxres")
+
+        # Tilemap(Copy 0 -> 1)
+        pyxel.tilemaps[1].blt(0, 0, 0, 0, 0, 640, 128)
+
         # Score
         self.score = 0
 
@@ -39,9 +46,7 @@ class Game:
         # Reset
         self.reset()
 
-        # Pyxel
-        pyxel.init(W, H, title="Hello, Pyxel!!")
-        pyxel.load("my_resource.pyxres")
+        # Run
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -84,10 +89,10 @@ class Game:
         # Message
         if self.game_mode == MODE_TITLE:
             msg = "WASD TO PLAY"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
+            pyxel.text(W/2-len(msg)*2, 16, msg, 7)
         elif self.game_mode == MODE_GAME_OVER:
             msg = "GAME OVER"
-            pyxel.text(W/2-len(msg)*2, H/2, msg, 1)
+            pyxel.text(W/2-len(msg)*2, 16, msg, 7)
 
         # Score
         pyxel.text(10, 10, 
@@ -95,12 +100,14 @@ class Game:
 
     def reset(self):
 
+        # Tilemap(1 -> 0)
+        pyxel.tilemaps[0].blt(0, 0, 1, 0, 0, 640, 128) # Copy
+
         # Camera
         self.camera_x = 0
 
         # Reset
-        self.player.x = START_X
-        self.player.y = START_Y
+        self.player.reset(START_X, START_Y)
 
     def controll(self):
 

@@ -57,6 +57,12 @@ class BaseSprite:
     def draw(self):
         pass
 
+    def reset(self, x, y):
+        self.x = x
+        self.y = y
+        self.vx = 0
+        self.vy = 0
+
     def move(self, spd, deg):
         rad = deg * math.pi / 180
         self.vx = spd * math.cos(rad)
