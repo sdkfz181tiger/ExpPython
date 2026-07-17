@@ -11,26 +11,26 @@ def main():
     """ Main """
     print("main")
 
-    #train()
-    #validate()
-    predict()
+    train()    # 学習をテスト
+    #validate() # 検証をテスト <- 試す時にコメントアウト
+    #predict()  # 推論をテスト <- 試す時にコメントアウト
 
 
 def train():
+    """ 学習 """
 
-    # Model
+    # Model(ベースになるモデル)
     model = YOLO("yolo26n.pt")
 
     # Train
-    # ベースであるmodelに転移学習を行う(追加学習)
+    # 学習(COCO8データセットを利用)
     results = model.train(
         data="coco8.yaml", 
-        epochs=30, 
+        epochs=100, 
         imgsz=640)
-    print(results)
-
 
 def validate():
+    """ 検証 """
 
     # Model
     model = YOLO("./runs/detect/train/weights/best.pt") # 学習中に最も良い評価結果を出したモデル
@@ -47,6 +47,7 @@ def validate():
 
 
 def predict():
+    """ 推論 """
 
     # Model
     model = YOLO("./runs/detect/train/weights/best.pt")
