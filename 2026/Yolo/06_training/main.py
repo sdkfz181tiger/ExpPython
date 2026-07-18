@@ -11,9 +11,9 @@ def main():
     """ Main """
     print("main")
 
-    train()    # 学習をテスト
+    #train()    # 学習をテスト
     #validate() # 検証をテスト <- 試す時にコメントアウト
-    #predict()  # 推論をテスト <- 試す時にコメントアウト
+    predict()  # 推論をテスト <- 試す時にコメントアウト
 
 
 def train():
@@ -21,13 +21,17 @@ def train():
 
     # Model(ベースになるモデル)
     model = YOLO("yolo26n.pt")
+    #model = YOLO("./runs/detect/train/weights/last.pt") # 最終エポック終了時点からの続き
 
     # Train
-    # 学習(COCO8データセットを利用)
+    # 学習(任意のデータセットを利用)
+    # 最初は5エポックで様子を見る...
     results = model.train(
-        data="coco8.yaml", 
-        epochs=100, 
+        data="./my_dataset/dataset.yaml",
+        device="cpu", # mps: Apple Silicon
+        epochs=30, 
         imgsz=640)
+
 
 def validate():
     """ 検証 """
@@ -55,7 +59,12 @@ def predict():
     # Predict
     # ./runs/detect/predict/bus.jpg
     results = model.predict(
-        source="https://ultralytics.com/images/bus.jpg",
+        source=[
+            "cat01.jpg", "cat02.jpg", "cat03.jpg", 
+            "cat04.jpg", "cat04.jpg", "cat05.jpg",
+            "cat06.jpg"],
+            # "buri1.jpg", "buri2.jpg", "buri3.jpg", 
+            # "buri4.jpg", "buri5.jpg", "buri6.jpg"],
         save=True)
     print(results)
 

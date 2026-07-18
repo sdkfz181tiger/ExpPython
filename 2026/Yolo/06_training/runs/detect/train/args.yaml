@@ -1,7 +1,7 @@
 task: detect
 mode: train
 model: yolo26n.pt
-data: coco8.yaml
+data: ./my_dataset/dataset.yaml
 epochs: 30
 time: null
 patience: 100
@@ -13,7 +13,7 @@ cache: false
 device: cpu
 workers: 8
 project: null
-name: train
+name: train-2
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -108,4 +108,4 @@ auto_augment: randaugment
 erasing: 0.4
 cfg: null
 tracker: tracktrack.yaml
-save_dir: /Users/shimejikajiru/Public/GitHub/ExpPython/2026/Yolo/06_training/runs/detect/train
+save_dir: /Users/shimejikajiru/Public/GitHub/ExpPython/2026/Yolo/06_training/runs/detect/train-2
