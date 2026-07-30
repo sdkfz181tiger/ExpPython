@@ -59,3 +59,30 @@ class PlayerSprite(BaseSprite):
 
     def draw(self):
         super().draw()
+        if not self.is_moving(): return
+        dx = self.to_x - self.x
+        dy = self.to_y - self.y
+
+        # Left or Right
+        if dx == 0:
+            pass
+        elif 0 < dx:
+            pyxel.blt(self.x-8, self.y, 0, 
+                self.u+16, self.v,
+                self.w, self.h, 0)
+        else:
+            pyxel.blt(self.x+8, self.y, 0, 
+                self.u+24, self.v,
+                self.w, self.h, 0)
+
+        # Up or Down
+        if dy == 0:
+            pass
+        elif 0 < dy:
+            pyxel.blt(self.x, self.y-8, 0, 
+                self.u+16, self.v+8,
+                self.w, self.h, 0)
+        else:
+            pyxel.blt(self.x, self.y+8, 0, 
+                self.u+24, self.v+8,
+                self.w, self.h, 0)
