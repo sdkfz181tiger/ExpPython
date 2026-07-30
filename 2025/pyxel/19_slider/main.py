@@ -14,13 +14,23 @@ W, H = 128, 128
 START_R = 7
 START_C = 8
 
-MODE_TITLE     = "title"
-MODE_PLAY      = "play"
-MODE_GAME_OVER = "game_over"
-
 CAMERA_PAD_X   = 0
 CAMERA_LIMIT_L = -W
 CAMERA_LIMIT_R = W
+
+TILE_NONE  = 0
+TILE_COIN  = 1
+TILE_BLOCK = 2
+
+# u, v
+TILE_COINS = {
+    (0, 4): TILE_COIN
+}
+
+# u, v
+TILE_BLOCKS = {
+    (0, 4): TILE_BLOCK
+}
 
 # Game
 class Game:
@@ -54,6 +64,9 @@ class Game:
 
         # Player
         self.player.update()
+
+        # Player x Coins
+
 
     def draw(self):
         pyxel.cls(1)
@@ -95,14 +108,23 @@ class Game:
 
     def controll(self):
         # Player
+        from_u, from_v = self.get_uv(self.player.x, self.player.y)
         if pyxel.btnp(pyxel.KEY_W):
-            self.player.go(0, -1)
+            to_u, to_v = self.search_block(from_u, from_v, 0, -1)
+            self.player.go(to_u, to_v)
+            return
         if pyxel.btnp(pyxel.KEY_A):
-            self.player.go(-1, 0)
+            to_u, to_v = self.search_block(from_u, from_v, -1, 0)
+            self.player.go(to_u, to_v)
+            return
         if pyxel.btnp(pyxel.KEY_S):
-            self.player.go(0, 1)
+            to_u, to_v = self.search_block(from_u, from_v, 0, 1)
+            self.player.go(to_u, to_v)
+            return
         if pyxel.btnr(pyxel.KEY_D):
-            self.player.go(1, 0)
+            to_u, to_v = self.search_block(from_u, from_v, 1, 0)
+            self.player.go(to_u, to_v)
+            return
 
     def camera_on(self):
         line_r = W - self.camera_x - CAMERA_PAD_X
@@ -119,6 +141,24 @@ class Game:
 
     def camera_off(self):
         pyxel.camera()
+
+    def get_uv(self, x, y):
+        return (x//8, y//8)
+
+    def get_tile(self, u, v):
+        return pyxel.tilemaps[0].pget(u, v)
+
+    def search_block(self, from_u, from_v, off_u, off_v):
+        to_u = from_u + off_u
+        to_v = from_v + off_v
+        if to_u < 0: return from_u, from_v
+        if to_v < 0: return from_u, from_v
+        if 15 < to_u: return from_u, from_v
+        if 15 < to_v: return from_u, from_v 
+        tile = self.get_tile(to_u, to_v)
+        if tile in TILE_BLOCKS:
+            return from_u, from_v
+        return self.search_block(to_u, to_v, off_u, off_v)
 
 def main():
     """ Main """
