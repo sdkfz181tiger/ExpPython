@@ -27,11 +27,23 @@ class BaseSprite:
         if abs(dx) < 4: 
             self.x = self.to_x
         else:
-            self.x += dx / 4
+            self.x += dx / 2
         if abs(dy) < 4: 
             self.y = self.to_y
         else:
-            self.y += dy / 4
+            self.y += dy / 2
+
+    def draw(self):
+        pass
+
+class PlayerSprite(BaseSprite):
+
+    def __init__(self, x, y, u, v):
+        """ Constructor """
+        super().__init__(x, y, u, v)
+
+    def update(self):
+        super().update()
 
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 
@@ -47,15 +59,3 @@ class BaseSprite:
         if self.x != self.to_x: return True
         if self.y != self.to_y: return True
         return False
-
-class PlayerSprite(BaseSprite):
-
-    def __init__(self, x, y, u, v):
-        """ Constructor """
-        super().__init__(x, y, u, v)
-
-    def update(self):
-        super().update()
-
-    def draw(self):
-        super().draw()

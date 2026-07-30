@@ -24,7 +24,7 @@ TILE_BLOCK = 2
 
 # u, v
 TILE_COINS = {
-    (0, 4): TILE_COIN
+    (0, 2): TILE_COIN
 }
 
 # u, v
@@ -38,7 +38,7 @@ class Game:
         """ Constructor """
 
         # Pyxel
-        pyxel.init(W, H, title="Hello, Pyxel!!", fps=32)
+        pyxel.init(W, H, title="Hello, Pyxel!!", fps=50)
         pyxel.load("my_resource.pyxres")
 
         # Tilemap(Copy 0 -> 1)
@@ -66,7 +66,11 @@ class Game:
         self.player.update()
 
         # Player x Coins
-
+        u, v = self.get_uv(self.player.x, self.player.y)
+        tile = self.get_tile(u, v)
+        if tile in TILE_COINS:
+            self.score += 1 # Score
+            self.set_tile(u, v, (0, 0)) # Delete
 
     def draw(self):
         pyxel.cls(1)
@@ -147,6 +151,9 @@ class Game:
 
     def get_tile(self, u, v):
         return pyxel.tilemaps[0].pget(u, v)
+
+    def set_tile(self, u, v, tile):
+        pyxel.tilemaps[0].pset(u, v, tile)
 
     def search_block(self, from_u, from_v, off_u, off_v):
         to_u = from_u + off_u
