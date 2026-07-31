@@ -46,6 +46,8 @@ class Game:
 
         # Score
         self.score = 0
+        # Counter
+        self.counter = self.count_coins()
 
         # Camera
         self.camera_x = 0
@@ -70,6 +72,7 @@ class Game:
         tile = self.get_tile(u, v)
         if tile in TILE_COINS:
             self.score += 1 # Score
+            self.counter -= 1 # Counter
             self.set_tile(u, v, (0, 0)) # Delete
             pyxel.play(1, 4, loop=False) # サウンド
 
@@ -91,6 +94,8 @@ class Game:
         # Score
         pyxel.text(1, 1, 
             "SCORE:{:04}".format(self.score), 7)
+        pyxel.text(80, 1, 
+            "COUNTER:{:04}".format(self.counter), 7)
 
     def controll(self):
 
@@ -153,6 +158,18 @@ class Game:
         if tile in TILE_BLOCKS:
             return from_u, from_v
         return self.search_block(to_u, to_v, off_u, off_v)
+
+    def count_coins(self):
+        tilemap = pyxel.tilemaps[0]
+        w = tilemap.width
+        h = tilemap.height
+        counter = 0
+        for u in range(w):
+            for v in range(h):
+                tile = tilemap.pget(u, v)
+                if tile in TILE_COINS:
+                    counter += 1
+        return counter
 
 def main():
     """ Main """
