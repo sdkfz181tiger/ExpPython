@@ -29,22 +29,7 @@ TILE_COINS = {
 
 # u, v
 TILE_BLOCKS = {
-    (0, 4): TILE_BLOCK,
-    (1, 4): TILE_BLOCK,
-    (2, 4): TILE_BLOCK,
-    (3, 4): TILE_BLOCK,
-    (4, 4): TILE_BLOCK,
-    (5, 4): TILE_BLOCK,
-    (6, 4): TILE_BLOCK,
-    (7, 4): TILE_BLOCK,
-    (0, 5): TILE_BLOCK,
-    (1, 5): TILE_BLOCK,
-    (2, 5): TILE_BLOCK,
-    (3, 5): TILE_BLOCK,
-    (0, 6): TILE_BLOCK,
-    (1, 6): TILE_BLOCK,
-    (2, 6): TILE_BLOCK,
-    (3, 6): TILE_BLOCK
+    (0, 4): TILE_BLOCK
 }
 
 # Game
@@ -89,10 +74,7 @@ class Game:
             self.score += 1 # Score
             self.counter -= 1 # Counter
             self.set_tile(u, v, (0, 0)) # Delete
-            if 0 < self.counter:
-                pyxel.play(1, 4, loop=False) # サウンド
-            else:
-                pyxel.play(1, 6, loop=False) # サウンド
+            pyxel.play(1, 4, loop=False) # サウンド
 
     def draw(self):
         pyxel.cls(1)
@@ -112,12 +94,8 @@ class Game:
         # Score
         pyxel.text(1, 1, 
             "SCORE:{:04}".format(self.score), 7)
-        pyxel.text(92, 1, 
-            "REST:{:04}".format(self.counter), 7)
-
-        # CLEAR
-        if self.counter <= 0:
-            pyxel.text(42, H-8, "GAME CLEAR!!", 7)
+        pyxel.text(80, 1, 
+            "COUNTER:{:04}".format(self.counter), 7)
 
     def controll(self):
 
