@@ -38,6 +38,171 @@ TILE_BLOCKS = {
     (2, 6): TILE_BLOCK, (3, 6): TILE_BLOCK
 }
 
+# Game
+class Game:
+    def __init__(self):
+        """ Constructor """
+
+        # Pyxel
+        pyxel.init(W, H, title="Hello, Pyxel!!", fps=50)
+        pyxel.load("my_resource.pyxres")
+
+        # Tilemap(Copy 0 -> 1)
+        pyxel.tilemaps[1].blt(0, 0, 0, 0, 0, 640, 128)
+
+        # Score
+        self.score = 0
+        # Counter
+        self.coin_total = self.count_coins()
+        self.coin_rest = self.coin_total
+
+        # Camera
+        self.camera_x = 0
+
+        # Player
+        self.player = PlayerSprite(
+            START_C * 8, START_R * 8, 16, 0)
+
+        # Run
+        pyxel.run(self.update, self.draw)
+
+    def update(self):
+
+        # Controll
+        self.controll()
+
+        # Player
+        self.player.update()
+
+        # Player x Coins
+        u, v = self.get_uv(self.player.x, self.player.y)
+        tile = self.get_tile(u, v)
+        if tile in TILE_COINS:
+            self.score += 1 # Score
+            self.coin_rest -= 1 # Counter
+            self.set_tile(u, v, (0, 0)) # Delete
+            if 0 < self.coin_rest:
+                pyxel.play(1, 4, loop=False) # Sound
+            else:
+                pyxel.play(1, 6, loop=False) # Sound
+
+    def draw(self):
+
+        # Clear
+        pyxel.cls(0)
+
+        # Camera(on)
+        self.camera_on()
+
+        # Tilemap
+        pyxel.bltm(0, 0, 0, 0, 0, 640, 128, 0)
+
+        # Player
+        self.player.draw()
+
+        # Camera(off)
+        self.camera_off()
+
+        # Score
+        pyxel.text(1, 1, 
+            "SCORE:{:03}".format(self.score), 7)
+
+        # ポイント3: 残りコイン表示
+        # Rest
+        pyxel.text(80, 1, 
+            "REST:{:03}/{:03}".format(self.coin_rest, self.coin_total), 7)
+
+        # CLEAR
+        if self.coin_rest <= 0:
+            pyxel.text(42, H-8, "GAME CLEAR!!", 7)
+
+    def controll(self):
+        # Player
+        from_u, from_v = self.get_uv(self.player.x, self.player.y)
+
+        # ポイント2: コントロール&サウンド
+        if pyxel.btnp(pyxel.KEY_W):
+            to_u, to_v = self.search_block(from_u, from_v, 0, -1)
+            if self.player.go(4, to_u, to_v):
+                pyxel.play(0, 0, loop=False) # Sound
+            else:
+                pyxel.play(0, 8, loop=False) # Sound
+            return
+
+        if pyxel.btnp(pyxel.KEY_A):
+            to_u, to_v = self.search_block(from_u, from_v, -1, 0)
+            if self.player.go(4, to_u, to_v):
+                pyxel.play(0, 0, loop=False) # Sound
+            else:
+                pyxel.play(0, 8, loop=False) # Sound
+            return
+
+        # if pyxel.btnp(pyxel.KEY_S):
+        #     to_u, to_v = self.search_block(from_u, from_v, 0, 1)
+        #     if self.player.go(4, to_u, to_v):
+        #         pyxel.play(0, 0, loop=False) # Sound
+        #     else:
+        #         pyxel.play(0, 8, loop=False) # Sound
+        #     return
+
+        # if pyxel.btnr(pyxel.KEY_D):
+        #     to_u, to_v = self.search_block(from_u, from_v, 1, 0)
+        #     if self.player.go(4, to_u, to_v):
+        #         pyxel.play(0, 0, loop=False) # Sound
+        #     else:
+        #         pyxel.play(0, 8, loop=False) # Sound
+        #     return
+
+    def camera_on(self):
+        line_r = W - self.camera_x - CAMERA_PAD_X
+        if line_r < self.player.x:
+            self.camera_x += line_r - self.player.x
+            if self.camera_x < CAMERA_LIMIT_L:
+                self.camera_x = CAMERA_LIMIT_L
+        line_l = 0 - self.camera_x + CAMERA_PAD_X
+        if self.player.x < line_l:
+            self.camera_x += line_l - self.player.x
+            if CAMERA_LIMIT_R < self.camera_x:
+                self.camera_x = CAMERA_LIMIT_R
+        pyxel.camera(-self.camera_x, 0)
+
+    def camera_off(self):
+        pyxel.camera()
+
+    def get_uv(self, x, y):
+        return (x//8, y//8)
+
+    def get_tile(self, u, v):
+        return pyxel.tilemaps[0].pget(u, v)
+
+    def set_tile(self, u, v, tile):
+        pyxel.tilemaps[0].pset(u, v, tile)
+
+    def search_block(self, from_u, from_v, off_u, off_v):
+        to_u = from_u + off_u
+        to_v = from_v + off_v
+        if to_u < 0: return from_u, from_v
+        if to_v < 0: return from_u, from_v
+        if 15 < to_u: return from_u, from_v
+        if 15 < to_v: return from_u, from_v
+        # ポイント3: 衝突判定
+        # tile = self.get_tile(to_u, to_v)
+        # if tile in TILE_BLOCKS:
+        #     return from_u, from_v
+        return self.search_block(to_u, to_v, off_u, off_v)
+
+    def count_coins(self):
+        tilemap = pyxel.tilemaps[0]
+        w = tilemap.width
+        h = tilemap.height
+        counter = 0
+        for u in range(w):
+            for v in range(h):
+                tile = tilemap.pget(u, v)
+                if tile in TILE_COINS:
+                    counter += 1
+        return counter
+
 class BaseSprite:
 
     def __init__(self, x, y, u, v, w=8, h=8):
@@ -129,167 +294,6 @@ class PlayerSprite(BaseSprite):
             pyxel.blt(self.x, self.y+8, 0, 
                 self.u+24, self.v+8,
                 self.w, self.h, 0)
-
-# Game
-class Game:
-    def __init__(self):
-        """ Constructor """
-
-        # Pyxel
-        pyxel.init(W, H, title="Hello, Pyxel!!", fps=50)
-        pyxel.load("my_resource.pyxres")
-
-        # Tilemap(Copy 0 -> 1)
-        pyxel.tilemaps[1].blt(0, 0, 0, 0, 0, 640, 128)
-
-        # Score
-        self.score = 0
-        # Counter
-        self.coin_total = self.count_coins()
-        self.coin_rest = self.coin_total
-
-        # Camera
-        self.camera_x = 0
-
-        # Player
-        self.player = PlayerSprite(
-            START_C * 8, START_R * 8, 16, 0)
-
-        # Run
-        pyxel.run(self.update, self.draw)
-
-    def update(self):
-
-        # Controll
-        self.controll()
-
-        # Player
-        self.player.update()
-
-        # Player x Coins
-        u, v = self.get_uv(self.player.x, self.player.y)
-        tile = self.get_tile(u, v)
-        if tile in TILE_COINS:
-            self.score += 1 # Score
-            self.coin_rest -= 1 # Counter
-            self.set_tile(u, v, (0, 0)) # Delete
-            if 0 < self.coin_rest:
-                pyxel.play(1, 4, loop=False) # Sound
-            else:
-                pyxel.play(1, 6, loop=False) # Sound
-
-    def draw(self):
-
-        # ポイント1: 背景の描画
-        pyxel.cls(0)
-
-        # Camera(on)
-        self.camera_on()
-
-        # Tilemap
-        pyxel.bltm(0, 0, 0, 0, 0, 640, 128, 0)
-
-        # Player
-        self.player.draw()
-
-        # Camera(off)
-        self.camera_off()
-
-        # ポイント2: スコアの表示
-        pyxel.text(1, 1, 
-            "SCORE:{:04}".format(self.score), 7)
-        pyxel.text(92, 1, 
-            "REST:{:04}".format(self.coin_rest), 7)
-
-        # CLEAR
-        if self.coin_rest <= 0:
-            pyxel.text(42, H-8, "GAME CLEAR!!", 7)
-
-    def controll(self):
-        # Player
-        from_u, from_v = self.get_uv(self.player.x, self.player.y)
-
-        # ポイント3: キャラクターのコントロール(WASD)
-        if pyxel.btnp(pyxel.KEY_W):
-            to_u, to_v = self.search_block(from_u, from_v, 0, -1)
-            if self.player.go(4, to_u, to_v):
-                pyxel.play(0, 0, loop=False) # Sound
-            else:
-                pyxel.play(0, 8, loop=False) # Sound
-            return
-
-        if pyxel.btnp(pyxel.KEY_A):
-            to_u, to_v = self.search_block(from_u, from_v, -1, 0)
-            if self.player.go(4, to_u, to_v):
-                pyxel.play(0, 0, loop=False) # Sound
-            else:
-                pyxel.play(0, 8, loop=False) # Sound
-            return
-
-        if pyxel.btnp(pyxel.KEY_S):
-            to_u, to_v = self.search_block(from_u, from_v, 0, 1)
-            if self.player.go(4, to_u, to_v):
-                pyxel.play(0, 0, loop=False) # Sound
-            else:
-                pyxel.play(0, 8, loop=False) # Sound
-            return
-
-        if pyxel.btnr(pyxel.KEY_D):
-            to_u, to_v = self.search_block(from_u, from_v, 1, 0)
-            if self.player.go(4, to_u, to_v):
-                pyxel.play(0, 0, loop=False) # Sound
-            else:
-                pyxel.play(0, 8, loop=False) # Sound
-            return
-
-    def camera_on(self):
-        line_r = W - self.camera_x - CAMERA_PAD_X
-        if line_r < self.player.x:
-            self.camera_x += line_r - self.player.x
-            if self.camera_x < CAMERA_LIMIT_L:
-                self.camera_x = CAMERA_LIMIT_L
-        line_l = 0 - self.camera_x + CAMERA_PAD_X
-        if self.player.x < line_l:
-            self.camera_x += line_l - self.player.x
-            if CAMERA_LIMIT_R < self.camera_x:
-                self.camera_x = CAMERA_LIMIT_R
-        pyxel.camera(-self.camera_x, 0)
-
-    def camera_off(self):
-        pyxel.camera()
-
-    def get_uv(self, x, y):
-        return (x//8, y//8)
-
-    def get_tile(self, u, v):
-        return pyxel.tilemaps[0].pget(u, v)
-
-    def set_tile(self, u, v, tile):
-        pyxel.tilemaps[0].pset(u, v, tile)
-
-    def search_block(self, from_u, from_v, off_u, off_v):
-        to_u = from_u + off_u
-        to_v = from_v + off_v
-        if to_u < 0: return from_u, from_v
-        if to_v < 0: return from_u, from_v
-        if 15 < to_u: return from_u, from_v
-        if 15 < to_v: return from_u, from_v 
-        tile = self.get_tile(to_u, to_v)
-        if tile in TILE_BLOCKS:
-            return from_u, from_v
-        return self.search_block(to_u, to_v, off_u, off_v)
-
-    def count_coins(self):
-        tilemap = pyxel.tilemaps[0]
-        w = tilemap.width
-        h = tilemap.height
-        counter = 0
-        for u in range(w):
-            for v in range(h):
-                tile = tilemap.pget(u, v)
-                if tile in TILE_COINS:
-                    counter += 1
-        return counter
 
 def main():
     """ Main """
