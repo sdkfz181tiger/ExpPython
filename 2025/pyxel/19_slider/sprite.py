@@ -31,14 +31,12 @@ class BaseSprite:
             self.x = self.to_x
             self.vx = 0
         else:
-            #self.x += dx / 4
             self.x += self.vx
 
         if abs(dy) < 4:
             self.y = self.to_y
             self.vy = 0
         else:
-            #self.y += dy / 4
             self.y += self.vy
 
     def draw(self):

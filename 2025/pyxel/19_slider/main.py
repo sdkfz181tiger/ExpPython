@@ -29,22 +29,14 @@ TILE_COINS = {
 
 # u, v
 TILE_BLOCKS = {
-    (0, 4): TILE_BLOCK,
-    (1, 4): TILE_BLOCK,
-    (2, 4): TILE_BLOCK,
-    (3, 4): TILE_BLOCK,
-    (4, 4): TILE_BLOCK,
-    (5, 4): TILE_BLOCK,
-    (6, 4): TILE_BLOCK,
-    (7, 4): TILE_BLOCK,
-    (0, 5): TILE_BLOCK,
-    (1, 5): TILE_BLOCK,
-    (2, 5): TILE_BLOCK,
-    (3, 5): TILE_BLOCK,
-    (0, 6): TILE_BLOCK,
-    (1, 6): TILE_BLOCK,
-    (2, 6): TILE_BLOCK,
-    (3, 6): TILE_BLOCK
+    (0, 4): TILE_BLOCK, (1, 4): TILE_BLOCK,
+    (2, 4): TILE_BLOCK, (3, 4): TILE_BLOCK,
+    (4, 4): TILE_BLOCK, (5, 4): TILE_BLOCK, 
+    (6, 4): TILE_BLOCK, (7, 4): TILE_BLOCK,
+    (0, 5): TILE_BLOCK, (1, 5): TILE_BLOCK,
+    (2, 5): TILE_BLOCK, (3, 5): TILE_BLOCK,
+    (0, 6): TILE_BLOCK, (1, 6): TILE_BLOCK,
+    (2, 6): TILE_BLOCK, (3, 6): TILE_BLOCK
 }
 
 # Game
@@ -95,7 +87,7 @@ class Game:
                 pyxel.play(1, 6, loop=False) # サウンド
 
     def draw(self):
-        pyxel.cls(1)
+        pyxel.cls(0)
 
         # Camera(on)
         self.camera_on()
