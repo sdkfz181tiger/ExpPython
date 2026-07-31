@@ -20,28 +20,41 @@ class BaseSprite:
         self.h = h
         self.to_x = x
         self.to_y = y
+        self.vx = 0
+        self.vy = 0
 
     def update(self):
         dx = self.to_x - self.x
         dy = self.to_y - self.y
-        if abs(dx) < 4: 
+
+        if abs(dx) < 4:
             self.x = self.to_x
+            self.vx = 0
         else:
-            self.x += dx / 4
-        if abs(dy) < 4: 
+            #self.x += dx / 4
+            self.x += self.vx
+
+        if abs(dy) < 4:
             self.y = self.to_y
+            self.vy = 0
         else:
-            self.y += dy / 4
+            #self.y += dy / 4
+            self.y += self.vy
 
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 
             self.u, self.v,
             self.w, self.h, 0)
 
-    def go(self, to_u, to_v):
+    def go(self, spd, to_u, to_v):
         if self.is_moving(): return
         self.to_x = to_u * 8
         self.to_y = to_v * 8
+        dx = self.to_x - self.x
+        dy = self.to_y - self.y
+        rad = math.atan2(dy, dx)
+        self.vx = math.cos(rad) * spd
+        self.vy = math.sin(rad) * spd
 
     def is_moving(self):
         if self.x != self.to_x: return True

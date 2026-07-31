@@ -71,6 +71,7 @@ class Game:
         if tile in TILE_COINS:
             self.score += 1 # Score
             self.set_tile(u, v, (0, 0)) # Delete
+            pyxel.play(1, 4, loop=False) # サウンド
 
     def draw(self):
         pyxel.cls(1)
@@ -87,47 +88,33 @@ class Game:
         # Camera(off)
         self.camera_off()
 
-        # Message
-        # if self.game_mode == MODE_TITLE:
-        #     msg = "WASD TO PLAY"
-        #     pyxel.text(W/2-len(msg)*2, 16, msg, 7)
-        # elif self.game_mode == MODE_GAME_OVER:
-        #     msg = "GAME OVER"
-        #     pyxel.text(W/2-len(msg)*2, 16, msg, 7)
-
         # Score
         pyxel.text(1, 1, 
             "SCORE:{:04}".format(self.score), 7)
 
-    def reset(self):
-
-        # Tilemap(1 -> 0)
-        pyxel.tilemaps[0].blt(0, 0, 1, 0, 0, 640, 128) # Copy
-
-        # Camera
-        self.camera_x = 0
-
-        # Reset
-        self.player.reset(START_X, START_Y)
-
     def controll(self):
+
         # Player
         from_u, from_v = self.get_uv(self.player.x, self.player.y)
         if pyxel.btnp(pyxel.KEY_W):
             to_u, to_v = self.search_block(from_u, from_v, 0, -1)
-            self.player.go(to_u, to_v)
+            self.player.go(4, to_u, to_v)
+            pyxel.play(0, 0, loop=False) # サウンド
             return
         if pyxel.btnp(pyxel.KEY_A):
             to_u, to_v = self.search_block(from_u, from_v, -1, 0)
-            self.player.go(to_u, to_v)
+            self.player.go(4, to_u, to_v)
+            pyxel.play(0, 0, loop=False) # サウンド
             return
         if pyxel.btnp(pyxel.KEY_S):
             to_u, to_v = self.search_block(from_u, from_v, 0, 1)
-            self.player.go(to_u, to_v)
+            self.player.go(4, to_u, to_v)
+            pyxel.play(0, 0, loop=False) # サウンド
             return
         if pyxel.btnr(pyxel.KEY_D):
             to_u, to_v = self.search_block(from_u, from_v, 1, 0)
-            self.player.go(to_u, to_v)
+            self.player.go(4, to_u, to_v)
+            pyxel.play(0, 0, loop=False) # サウンド
             return
 
     def camera_on(self):
