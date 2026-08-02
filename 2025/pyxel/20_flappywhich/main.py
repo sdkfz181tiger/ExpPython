@@ -10,31 +10,51 @@ import random
 
 W, H = 128, 128
 
-CAMERA_PAD_X   = 0
-CAMERA_LIMIT_L = -W
-CAMERA_LIMIT_R = W
+VEL_X     = 0.8
+VEL_Y     = 0.8
+GRAVITY_X = -0.01
+GRAVITY_Y = 0.02
 
 class BaseSprite:
 
     def __init__(self, x, y, u, v, w=8, h=8):
         """ Constructor """
-        self.x    = x
-        self.y    = y
-        self.u    = u
-        self.v    = v
-        self.w    = w
-        self.h    = h
-        self.vx   = 0
-        self.vy   = 0
+        self.x  = x
+        self.y  = y
+        self.u  = u
+        self.v  = v
+        self.w  = w
+        self.h  = h
+        self.vx = 0
+        self.vy = -VEL_Y
+        self.accel_flg = False
 
     def update(self):
         self.x += self.vx
         self.y += self.vy
 
+        # Accel
+        if self.accel_flg:
+            self.vx = VEL_X
+            self.vy = VEL_Y
+        else:
+            # Gravity
+            self.vx += GRAVITY_X
+            self.vy += GRAVITY_Y
+
     def draw(self):
         pyxel.blt(self.x, self.y, 0, 
             self.u, self.v,
             self.w, self.h, 0)
+
+    def action_press(self):
+        self.accel_flg = True
+
+    def action_release(self):
+        self.accel_flg = False
+        self.vx = 0
+        self.vy = -VEL_Y
+
 
 class PlayerSprite(BaseSprite):
 
@@ -54,14 +74,11 @@ class Game:
         """ Constructor """
 
         # Pyxel
-        pyxel.init(W, H, title="Hello, Pyxel!!", fps=50)
+        pyxel.init(W, H, title="Hello, Pyxel!!", fps=32)
         pyxel.load("my_resource.pyxres")
 
         # Score
         self.score = 0
-
-        # Camera
-        self.camera_x = 0
 
         # Player
         self.player = PlayerSprite(
@@ -83,14 +100,8 @@ class Game:
         # Clear
         pyxel.cls(0)
 
-        # Camera(on)
-        self.camera_on()
-
         # Player
         self.player.draw()
-
-        # Camera(off)
-        self.camera_off()
 
         # Score
         pyxel.text(1, 1, 
@@ -100,22 +111,10 @@ class Game:
         # Btn
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             print("pressed!!")
-
-    def camera_on(self):
-        line_r = W - self.camera_x - CAMERA_PAD_X
-        if line_r < self.player.x:
-            self.camera_x += line_r - self.player.x
-            if self.camera_x < CAMERA_LIMIT_L:
-                self.camera_x = CAMERA_LIMIT_L
-        line_l = 0 - self.camera_x + CAMERA_PAD_X
-        if self.player.x < line_l:
-            self.camera_x += line_l - self.player.x
-            if CAMERA_LIMIT_R < self.camera_x:
-                self.camera_x = CAMERA_LIMIT_R
-        pyxel.camera(-self.camera_x, 0)
-
-    def camera_off(self):
-        pyxel.camera()
+            self.player.action_press()
+        if pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT):
+            print("released!!")
+            self.player.action_release()
 
 def main():
     """ Main """
