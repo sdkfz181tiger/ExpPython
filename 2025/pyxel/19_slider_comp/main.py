@@ -275,7 +275,7 @@ class Game:
         if to_u < 0: return from_u, from_v
         if to_v < 0: return from_u, from_v
         if 15 < to_u: return from_u, from_v
-        if 15 < to_v: return from_u, from_v 
+        if 15 < to_v: return from_u, from_v
         tile = self.get_tile(to_u, to_v)
         if tile in TILE_BLOCKS:
             return from_u, from_v
