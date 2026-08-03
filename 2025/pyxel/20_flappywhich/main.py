@@ -118,26 +118,24 @@ class Game:
             20, H/2, 16, 0)
 
         # Cloud
-        cloud_w = 32
-        cloud_h = 16
-        cloud_vx = -0.4
+        self.cloud_w = 32
+        self.cloud_h = 16
+        self.cloud_vx = -0.4
         self.clouds_top = []
         for i in range(0, 6):
-            x = i * cloud_w
+            x = i * self.cloud_w
             cloud = CloudSprite(
-                x, -4, 0, 56, cloud_w, cloud_h)
-            cloud.slide(cloud_vx)# slide
+                x, -4, 0, 56, self.cloud_w, self.cloud_h)
+            cloud.slide(self.cloud_vx)# slide
             self.clouds_top.append(cloud)
-        self.clouds_top_w = self.clouds_top[0].w * len(self.clouds_top)
 
         self.clouds_bottom = []
         for i in range(0, 6):
-            x = i * cloud_w
+            x = i * self.cloud_w
             cloud = CloudSprite(
-                x, H - 12, 0, 72, cloud_w, cloud_h)
-            cloud.slide(cloud_vx)# slide
+                x, H - 12, 0, 72, self.cloud_w, self.cloud_h)
+            cloud.slide(self.cloud_vx)# slide
             self.clouds_bottom.append(cloud)
-        self.clouds_bottom_w = self.clouds_bottom[0].w * len(self.clouds_bottom)
 
         # Run
         pyxel.run(self.update, self.draw)
@@ -164,12 +162,12 @@ class Game:
         for cloud in self.clouds_top:
             cloud.update()
             if cloud.right < 0:
-                cloud.x = cloud.x + self.clouds_top_w
+                cloud.x = cloud.x + self.cloud_w * len(self.clouds_top)
 
         for cloud in self.clouds_bottom:
             cloud.update()
             if cloud.right < 0:
-                cloud.x = cloud.x + self.clouds_bottom_w
+                cloud.x = cloud.x + self.cloud_w * len(self.clouds_bottom)
 
     def draw(self):
 
