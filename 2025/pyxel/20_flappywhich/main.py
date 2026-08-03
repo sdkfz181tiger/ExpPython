@@ -84,6 +84,23 @@ class PlayerSprite(BaseSprite):
         self.vx = 0
         self.vy = -VEL_Y
 
+class CloudSprite(BaseSprite):
+
+    def __init__(self, x, y, u, v, w, h):
+        """ Constructor """
+        super().__init__(x, y, u, v, w, h)
+        self.vx = 0
+        self.vy = 0
+
+    def update(self):
+        super().update()
+
+    def draw(self):
+        super().draw()
+
+    def slide(self, vx):
+        self.vx = vx
+
 # Game
 class Game:
     def __init__(self):
@@ -99,6 +116,28 @@ class Game:
         # Player
         self.player = PlayerSprite(
             20, H/2, 16, 0)
+
+        # Cloud
+        cloud_w = 32
+        cloud_h = 16
+        cloud_vx = -0.4
+        self.clouds_top = []
+        for i in range(0, 6):
+            x = i * cloud_w
+            cloud = CloudSprite(
+                x, -4, 0, 56, cloud_w, cloud_h)
+            cloud.slide(cloud_vx)# slide
+            self.clouds_top.append(cloud)
+        self.clouds_top_w = self.clouds_top[0].w * len(self.clouds_top)
+
+        self.clouds_bottom = []
+        for i in range(0, 6):
+            x = i * cloud_w
+            cloud = CloudSprite(
+                x, H - 12, 0, 72, cloud_w, cloud_h)
+            cloud.slide(cloud_vx)# slide
+            self.clouds_bottom.append(cloud)
+        self.clouds_bottom_w = self.clouds_bottom[0].w * len(self.clouds_bottom)
 
         # Run
         pyxel.run(self.update, self.draw)
@@ -121,6 +160,17 @@ class Game:
         if H < self.player.bottom:
             self.player.y = H - self.player.h
 
+        # Cloud
+        for cloud in self.clouds_top:
+            cloud.update()
+            if cloud.right < 0:
+                cloud.x = cloud.x + self.clouds_top_w
+
+        for cloud in self.clouds_bottom:
+            cloud.update()
+            if cloud.right < 0:
+                cloud.x = cloud.x + self.clouds_bottom_w
+
     def draw(self):
 
         # Clear
@@ -131,6 +181,13 @@ class Game:
 
         # Player
         self.player.draw()
+
+        # Cloud
+        for cloud in self.clouds_top:
+            cloud.draw()
+
+        for cloud in self.clouds_bottom:
+            cloud.draw()
 
         # Score
         pyxel.text(1, 1, 
