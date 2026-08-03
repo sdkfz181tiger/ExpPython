@@ -8,7 +8,7 @@ import pyxel
 import math
 import random
 
-W, H = 180, 120
+W, H = 128, 128
 
 VEL_X     = 0.8
 VEL_Y     = 0.8
@@ -125,6 +125,9 @@ class Game:
 
         # Clear
         pyxel.cls(0)
+
+        # Tilemap
+        pyxel.bltm(0, 0, 0, 0, 0, 128, 128, 0)
 
         # Player
         self.player.draw()
