@@ -8,7 +8,7 @@ import pyxel
 import math
 import random
 
-W, H = 128, 128
+W, H = 180, 120
 
 VEL_X     = 0.8
 VEL_Y     = 0.8
@@ -19,20 +19,49 @@ class BaseSprite:
 
     def __init__(self, x, y, u, v, w=8, h=8):
         """ Constructor """
-        self.x  = x
-        self.y  = y
-        self.u  = u
-        self.v  = v
-        self.w  = w
-        self.h  = h
-        self.vx = 0
-        self.vy = -VEL_Y
-        self.accel_flg = False
+        self.x = x
+        self.y = y
+        self.u = u
+        self.v = v
+        self.w = w
+        self.h = h
 
     def update(self):
         self.x += self.vx
         self.y += self.vy
 
+    def draw(self):
+        pyxel.blt(self.x, self.y, 0, 
+            self.u, self.v,
+            self.w, self.h, 0)
+
+    @property
+    def left(self):
+        return self.x
+
+    @property
+    def right(self):
+        return self.x + self.w
+
+    @property
+    def top(self):
+        return self.y
+
+    @property
+    def bottom(self):
+        return self.y + self.h
+
+class PlayerSprite(BaseSprite):
+
+    def __init__(self, x, y, u, v):
+        """ Constructor """
+        super().__init__(x, y, u, v, 16, 16)
+        self.vx = 0
+        self.vy = -VEL_Y
+        self.accel_flg = False
+
+    def update(self):
+        super().update()
         # Accel
         if self.accel_flg:
             self.vx = VEL_X
@@ -43,30 +72,17 @@ class BaseSprite:
             self.vy += GRAVITY_Y
 
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 
-            self.u, self.v,
-            self.w, self.h, 0)
+        super().draw()
 
     def action_press(self):
         self.accel_flg = True
+        self.u = 32
 
     def action_release(self):
         self.accel_flg = False
+        self.u = 16
         self.vx = 0
         self.vy = -VEL_Y
-
-
-class PlayerSprite(BaseSprite):
-
-    def __init__(self, x, y, u, v):
-        """ Constructor """
-        super().__init__(x, y, u, v)
-
-    def update(self):
-        super().update()
-
-    def draw(self):
-        super().draw()
 
 # Game
 class Game:
@@ -94,6 +110,16 @@ class Game:
 
         # Player
         self.player.update()
+
+        # LRTB
+        if self.player.left < 0:
+            self.player.x = 0
+        if W < self.player.right:
+            self.player.x = W - self.player.w
+        if self.player.top < 0:
+            self.player.y = 0
+        if H < self.player.bottom:
+            self.player.y = H - self.player.h
 
     def draw(self):
 
