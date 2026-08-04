@@ -25,15 +25,21 @@ class BaseSprite:
         self.v = v
         self.w = w
         self.h = h
+        self.vx = 0
+        self.vy = 0
 
     def update(self):
         self.x += self.vx
         self.y += self.vy
 
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 
+        pyxel.blt(self.x, self.y, 0,
             self.u, self.v,
             self.w, self.h, 0)
+
+    @property
+    def center(self):
+        return self.x + self.w/2, self.y + self.h/2
 
     @property
     def left(self):
@@ -50,6 +56,14 @@ class BaseSprite:
     @property
     def bottom(self):
         return self.y + self.h
+
+    def contains(self, spr):
+        x, y = spr.center
+        if x < self.left: return False
+        if y < self.top: return False
+        if self.right < x: return False
+        if self.bottom < y: return False
+        return True
 
 class PlayerSprite(BaseSprite):
 
@@ -71,9 +85,6 @@ class PlayerSprite(BaseSprite):
             self.vx += GRAVITY_X
             self.vy += GRAVITY_Y
 
-    def draw(self):
-        super().draw()
-
     def action_press(self):
         self.accel_flg = True
         self.u = 32
@@ -92,11 +103,16 @@ class CloudSprite(BaseSprite):
         self.vx = 0
         self.vy = 0
 
-    def update(self):
-        super().update()
+    def slide(self, vx):
+        self.vx = vx
 
-    def draw(self):
-        super().draw()
+class ItemSprite(BaseSprite):
+
+    def __init__(self, x, y, u, v):
+        """ Constructor """
+        super().__init__(x, y, u, v)
+        self.vx = 0
+        self.vy = 0
 
     def slide(self, vx):
         self.vx = vx
@@ -117,7 +133,14 @@ class Game:
         self.player = PlayerSprite(
             20, H/2, 16, 0)
 
-        # Cloud
+        # Inverval
+        self.interval_cnt = 0
+        self.interval_limit = 32
+
+        # Items
+        self.items = []
+
+        # Clouds
         self.cloud_w = 32
         self.cloud_h = 16
         self.cloud_vx = -0.4
@@ -158,7 +181,25 @@ class Game:
         if H < self.player.bottom:
             self.player.y = H - self.player.h
 
-        # Cloud
+        # Interval
+        self.interval_cnt += 1
+        if self.interval_limit < self.interval_cnt:
+            self.interval_cnt = random.randint(16, 32)
+            self.create_item() # Item
+
+        # Items
+        for i in range(len(self.items)-1, 0, -1):
+            item = self.items[i]
+            item.update()
+            if item.right < 0:
+                self.items.pop(i)
+                continue
+            if self.player.contains(item):
+                self.items.pop(i)
+                self.score += 10 # Score
+                pyxel.play(0, 0, loop=False) # Sound
+
+        # Clouds
         for cloud in self.clouds_top:
             cloud.update()
             if cloud.right < 0:
@@ -180,10 +221,13 @@ class Game:
         # Player
         self.player.draw()
 
-        # Cloud
+        # Items
+        for item in self.items:
+            item.draw()
+
+        # Clouds
         for cloud in self.clouds_top:
             cloud.draw()
-
         for cloud in self.clouds_bottom:
             cloud.draw()
 
@@ -199,6 +243,15 @@ class Game:
         if pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT):
             print("released!!")
             self.player.action_release()
+
+    def create_item(self):
+        print("create_item")
+        # Coin
+        y = random.randint(0, H - 16)
+        vx = 0.2 + random.random()
+        item = ItemSprite(W, y, 0, 16)
+        item.slide(-vx) # Slide
+        self.items.append(item)
 
 def main():
     """ Main """
