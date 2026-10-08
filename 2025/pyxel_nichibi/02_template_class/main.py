@@ -1,12 +1,12 @@
 import pyxel
 
 
-# Animationクラス
-class Animation:
+# Appクラス
+class App:
 
     def __init__(self):
         """ コンストラクタ """
-        pyxel.init(80, 60, title="Pyxel Animation")
+        pyxel.init(80, 60, title="HELLO PYXEL!!")
         pyxel.run(self.update, self.draw)
 
 
@@ -20,5 +20,5 @@ class Animation:
         pyxel.cls(1)
 
 
-# Animationクラスを初期化
-Animation()
+# Appクラスを初期化
+App()

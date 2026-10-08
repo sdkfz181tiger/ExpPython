@@ -1,22 +1,20 @@
 import pyxel
 
-rabbit_x = 0
-
-# キャラクターを描く処理
-def draw_my_character(x, y, color):
-    pyxel.circ(x, y, 3, color)
+x = 0
+y = 0
 
 # 更新処理
 def update():
-    global rabbit_x
-    rabbit_x += 1
+    global x, y
+    x += 1
+    y += 1
 
 # 描画処理
 def draw():
     pyxel.cls(0)
-    draw_my_character(rabbit_x, 25, 6)
+    pyxel.circ(x, y, 4, 7)
 
-# 画面初期化
+# Pyxel初期化
 pyxel.init(80, 60, title="HELLO PYXEL!!")
 
 # Pyxel実行
