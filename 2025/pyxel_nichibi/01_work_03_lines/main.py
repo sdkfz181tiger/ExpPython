@@ -21,8 +21,10 @@ x3 = pyxel.rndi(0, w)
 y3 = pyxel.rndi(0, h)
 pyxel.line(x2, y2, x3, y3, 9)
 
-# TODO: 
-#   for文を使って、連続折れ線を10本描く事!!
+# TODO: Lv1
+#   for文を使って、線を10本描く事
+# TODO: Lv2
+#   for文を使って、連続折れ線を10本描く事
 
 # 画面表示
 pyxel.show()
