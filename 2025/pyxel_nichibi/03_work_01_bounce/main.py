@@ -7,7 +7,7 @@ class App:
     def __init__(self):
         """ コンストラクタ """
         # Pyxel初期化
-        pyxel.init(120, 90, title="HELLO PYXEL!!")
+        pyxel.init(120, 90, title="Hello, Pyxel!!")
 
         self.w = pyxel.width # 画面横幅
         self.x = 0 # x座標
