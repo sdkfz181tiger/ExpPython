@@ -7,7 +7,8 @@ class App:
     def __init__(self):
         """ コンストラクタ """
         # Pyxel初期化
-        pyxel.init(120, 90, title="HELLO PYXEL!!")
+        pyxel.init(120, 90, title="Hello, Pyxel!!")
+        pyxel.load("my_resource.pyxres")
 
         self.w = pyxel.width
         self.h = pyxel.height

@@ -18,7 +18,8 @@ class Sprite:
         self.y += self.vy
 
     def draw(self):
-        pyxel.circ(self.x, self.y, self.size, self.color)
+        #pyxel.circ(self.x, self.y, self.size, self.color)
+        pyxel.blt(self.x, self.y, 0, 0, 16, 16, 16, 0)
 
     def move(self, spd, deg):
         rad = deg * math.pi / 180
