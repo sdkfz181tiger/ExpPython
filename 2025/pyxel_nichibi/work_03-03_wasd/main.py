@@ -13,7 +13,7 @@ class App:
         self.h = pyxel.height
 
         # Sprite
-        self.spr = sprite.Sprite(self.w/2, self.h/2, 2, 7)
+        self.spr = sprite.Sprite(self.w/2, self.h/2, 2, 2, 7)
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
