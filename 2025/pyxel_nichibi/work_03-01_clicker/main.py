@@ -1,5 +1,5 @@
 import pyxel
-
+import utility
 
 # Appクラス
 class App:
@@ -8,10 +8,11 @@ class App:
         """ コンストラクタ """
         # Pyxel初期化
         pyxel.init(120, 90, title="HELLO PYXEL!!")
+        pyxel.load("my_resource.pyxres")
 
         self.cx = pyxel.width / 2
         self.cy = pyxel.height / 2
-        self.counter = 0
+        self.counter = int(utility.LocalStorage.get_item("counter", 0))
 
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -21,6 +22,7 @@ class App:
         """ 更新処理 """
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             self.counter += 1
+            utility.LocalStorage.set_item("counter", self.counter)
 
 
     def draw(self):

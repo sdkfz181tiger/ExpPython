@@ -6,8 +6,10 @@ class App:
 
     def __init__(self):
         """ コンストラクタ """
+        print("コンストラクタ!!")
         # Pyxel初期化
         pyxel.init(120, 90, title="HELLO PYXEL!!")
+        pyxel.load("my_resource.pyxres")
 
         self.x = 0
         
@@ -17,13 +19,14 @@ class App:
 
     def update(self):
         """ 更新処理 """
+        print(f"xは,{self.x}")
         self.x += 1
 
 
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
-        pyxel.circ(self.x, 10, 1, 7)
+        pyxel.circ(self.x, 10, 3, 7)
 
 
 # Appクラスを初期化

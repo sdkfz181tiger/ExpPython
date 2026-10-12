@@ -2,6 +2,7 @@ import pyxel
 
 # Pyxel初期化
 pyxel.init(120, 90, title="Hello, Pyxel!!")
+pyxel.load("my_resource.pyxres")
 
 # Work01
 for i in range(5):

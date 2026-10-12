@@ -2,6 +2,7 @@ import pyxel
 
 # Pyxel初期化
 pyxel.init(120, 90, title="Hello, Pyxel!!")
+pyxel.load("my_resource.pyxres")
 
 # Work01
 for i in range(5):
@@ -15,7 +16,7 @@ for i in range(5):
 # TODO: Lv2
 #   赤、緑、青... の順で縞模様を作る事
 # TODO: Lv3
-#   7色の虹色模様を作る事
+#   15色全カラーの縞模様を作る事
 
 # 画面表示
 pyxel.show()
