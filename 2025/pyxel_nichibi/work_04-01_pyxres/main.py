@@ -1,5 +1,5 @@
 import pyxel
-import sprite
+import utility
 
 # Appクラス
 class App:
@@ -17,7 +17,7 @@ class App:
         self.asteroids = []
         for i in range(5):
             # Asteroid
-            asteroid = sprite.Sprite(
+            asteroid = utility.Sprite(
                 self.w/2, self.h/2, 16, 16, 8, 0, 16)
             self.asteroids.append(asteroid)
             # Move
