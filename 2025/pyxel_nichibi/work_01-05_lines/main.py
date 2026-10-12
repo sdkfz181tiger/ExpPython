@@ -2,7 +2,6 @@ import pyxel
 
 # Pyxel初期化
 pyxel.init(120, 90, title="Hello, Pyxel!!")
-pyxel.load("my_resource.pyxres")
 
 w = pyxel.width
 h = pyxel.height
@@ -25,7 +24,7 @@ pyxel.line(x2, y2, x3, y3, 9)
 # TODO: Lv1
 #   for文を使って、線を10本描く事
 # TODO: Lv2
-#   for文を使って、連続折れ線を10本描く事
+#   for文を使って、ランダム折れ線を10本描く事
 
 # 画面表示
 pyxel.show()
