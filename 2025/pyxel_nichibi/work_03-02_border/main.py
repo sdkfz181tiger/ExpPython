@@ -1,5 +1,6 @@
 import pyxel
 
+
 # Appクラス
 class App:
 
