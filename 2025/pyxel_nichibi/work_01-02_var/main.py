@@ -19,9 +19,5 @@ pyxel.circb(x, y+2, 2, 7)
 
 pyxel.line(x-4, y+7, x+4, y+7, 7)
 
-# 課題
-# TODO: Lv1
-#   変数を使ってニコニコマークを描く事
-
 # 画面表示
 pyxel.show()

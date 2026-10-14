@@ -21,14 +21,5 @@ for i in range(5):
     y = i * 10
     pyxel.text(x, y, str(i), 3) # 青
 
-# 課題
-# TODO: Lv1
-#   九九表を作る事
-# TODO: Lv2
-#   チェック柄を作る事
-# TODO: Lv3
-#   3の倍数の時は"赤"、
-#   それ以外は"白"
-
 # 画面表示
 pyxel.show()

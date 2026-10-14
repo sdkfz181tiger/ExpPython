@@ -18,8 +18,5 @@ def draw_character(x, y):
 draw_character(w/2-20, h/2)
 draw_character(w/2+20, h/2)
 
-# TODO: Lv1
-#   関数を使ってニコニコマークを描く事
-
 # 画面表示
 pyxel.show()
