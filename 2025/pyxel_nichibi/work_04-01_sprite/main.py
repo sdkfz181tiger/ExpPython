@@ -8,12 +8,13 @@ class App:
         """ コンストラクタ """
         # Pyxel初期化
         pyxel.init(120, 90, title="Hello, Pyxel!!")
+        pyxel.load("my_resource.pyxres")
 
         self.w = pyxel.width
         self.h = pyxel.height
 
         # Sprite
-        self.spr = utility.Sprite(self.w/2, self.h/2, 2, 2, 7)
+        self.spr = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -36,18 +37,14 @@ class App:
         if self.spr.y < 0:
             self.spr.y = self.h
 
-        # WASD
-        if pyxel.btnp(pyxel.KEY_A):
-            self.spr.move(2, 180)
-        
-        if pyxel.btnp(pyxel.KEY_D):
-            self.spr.move(2, 0)
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            deg = pyxel.rndi(0, 360)
+            self.spr.move(2, deg)
 
 
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
-
         self.spr.draw()
 
 

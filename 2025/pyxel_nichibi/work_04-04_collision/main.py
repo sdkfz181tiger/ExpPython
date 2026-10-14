@@ -10,18 +10,22 @@ class App:
         pyxel.init(120, 90, title="Hello, Pyxel!!")
         pyxel.load("my_resource.pyxres")
 
+        self.pause = False
         self.w = pyxel.width
         self.h = pyxel.height
+
+        # Player
+        self.player = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
 
         # Asteroids
         self.asteroids = []
         for i in range(5):
             # Asteroid
-            asteroid = utility.Sprite(self.w/2, self.h/2, 4, 4, 8)
+            asteroid = utility.Sprite(0, 0, 8, 0, 8, 8)
             self.asteroids.append(asteroid)
             # Move
             deg = pyxel.rndi(0, 360)
-            asteroid.move(2, deg)
+            asteroid.move(1, deg)
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -30,20 +34,33 @@ class App:
     def update(self):
         """ 更新処理 """
 
+        # Pause
+        if self.pause == True:
+            return
+
+        # Player
+        self.player.update()
+        self.overlap(self.player)
+
+        # Asteroids
         for asteroid in self.asteroids:
             asteroid.update()
-            self.overwrap(asteroid)
+            self.overlap(asteroid)
+
+            # Player x Asteroid
+            if self.player.collide(asteroid):
+                self.pause = True
 
 
     def draw(self):
         """ 描画処理 """
         pyxel.cls(0)
-
+        self.player.draw()
         for asteroid in self.asteroids:
             asteroid.draw()
 
 
-    def overwrap(self, spr):
+    def overlap(self, spr):
         """ 画面外判定 """
         if self.w < spr.x:
             spr.x = 0

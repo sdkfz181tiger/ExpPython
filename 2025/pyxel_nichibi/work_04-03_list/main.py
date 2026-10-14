@@ -17,8 +17,7 @@ class App:
         self.asteroids = []
         for i in range(5):
             # Asteroid
-            asteroid = utility.Sprite(
-                self.w/2, self.h/2, 16, 16, 8, 0, 16)
+            asteroid = utility.Sprite(self.w/2, self.h/2, 8, 0, 8, 8)
             self.asteroids.append(asteroid)
             # Move
             deg = pyxel.rndi(0, 360)
@@ -33,7 +32,7 @@ class App:
 
         for asteroid in self.asteroids:
             asteroid.update()
-            self.overwrap(asteroid)
+            self.overlap(asteroid)
 
 
     def draw(self):
@@ -44,7 +43,7 @@ class App:
             asteroid.draw()
 
 
-    def overwrap(self, spr):
+    def overlap(self, spr):
         """ 画面外判定 """
         if self.w < spr.x:
             spr.x = 0

@@ -1,5 +1,5 @@
 import pyxel
-import utility
+
 
 # Appクラス
 class App:
@@ -12,7 +12,7 @@ class App:
 
         self.cx = pyxel.width / 2
         self.cy = pyxel.height / 2
-        self.counter = int(utility.LocalStorage.get_item("counter", 0))
+        self.counter = 0
 
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -22,7 +22,8 @@ class App:
         """ 更新処理 """
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             self.counter += 1
-            utility.LocalStorage.set_item("counter", self.counter)
+            # Sound
+            pyxel.play(0, 0, loop=False)
 
 
     def draw(self):
