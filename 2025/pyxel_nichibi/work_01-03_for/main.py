@@ -3,7 +3,7 @@ import pyxel
 # Pyxel初期化
 pyxel.init(120, 90, title="Hello, Pyxel!!")
 
-# Work01
+# for文
 for i in range(5):
     x = i * 10
     y = 0
