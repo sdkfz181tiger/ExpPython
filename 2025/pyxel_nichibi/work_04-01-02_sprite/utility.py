@@ -19,7 +19,7 @@ class Sprite:
         self.anim_flg = False
         self.anim_index = 0
         self.anim_key = ""
-        self.anims = {} # Dictionary
+        self.anims = {}
 
     
     def update(self):
@@ -32,7 +32,7 @@ class Sprite:
         anims = self.anims[self.anim_key]
         self.u = anims[self.anim_index][0]
         self.v = anims[self.anim_index][1]
-        if pyxel.frame_count % 6 == 0:
+        if pyxel.frame_count % 3 == 0:
             self.anim_index += 1
         if len(anims) <= self.anim_index:
             self.anim_index = 0
@@ -48,6 +48,9 @@ class Sprite:
         self.vx = spd * math.cos(rad) # x方向の速度
         self.vy = spd * math.sin(rad) # y方向の速度
 
+    def stop(self):
+        self.vx = 0
+        self.vy = 0
 
     def set_animation(self, key, animations):
         self.anims[key] = animations

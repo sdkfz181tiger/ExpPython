@@ -16,9 +16,12 @@ class App:
         # Sprite
         self.spr = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
 
-        # TODO: Animation
-        self.spr.set_animation("hello", [[0, 0], [8, 0], [16, 0], [24, 0]])
-        self.spr.start_animation("hello")
+        # Animation
+        self.spr.set_animation("down", [[0, 16], [8, 16], [16, 16], [24, 16]])
+        self.spr.set_animation("up", [[0, 24], [8, 24], [16, 24], [24, 24]])
+        self.spr.set_animation("right", [[0, 32], [8, 32], [16, 32], [24, 32]])
+        self.spr.set_animation("left", [[0, 40], [8, 40], [16, 40], [24, 40]])
+        self.spr.start_animation("down")
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -41,10 +44,33 @@ class App:
         if self.spr.y < 0:
             self.spr.y = self.h
 
-        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            #deg = pyxel.rndi(0, 360)
-            #self.spr.move(2, deg)
-            self.spr.toggle_animation() # Test
+        if pyxel.btnp(pyxel.KEY_W):
+            self.spr.move(1, 270)
+            self.spr.start_animation("up")
+
+        if pyxel.btnp(pyxel.KEY_A):
+            self.spr.move(1, 180)
+            self.spr.start_animation("left")
+
+        if pyxel.btnp(pyxel.KEY_S):
+            self.spr.move(1, 90)
+            self.spr.start_animation("down")
+
+        if pyxel.btnp(pyxel.KEY_D):
+            self.spr.move(1, 0)
+            self.spr.start_animation("right")
+
+        if pyxel.btnr(pyxel.KEY_W):
+            self.spr.stop()
+
+        if pyxel.btnr(pyxel.KEY_A):
+            self.spr.stop()
+
+        if pyxel.btnr(pyxel.KEY_S):
+            self.spr.stop()
+
+        if pyxel.btnr(pyxel.KEY_D):
+            self.spr.stop()
 
 
     def draw(self):
