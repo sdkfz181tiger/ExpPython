@@ -39,8 +39,8 @@ class Sprite:
 
 
     def draw(self):
-        pyxel.blt(self.x, self.y, 
-                  0, self.u, self.v, self.w, self.h, 0)
+        pyxel.blt(self.x, self.y, 0,
+            self.u, self.v, self.w, self.h, 0)
 
 
     def move(self, spd, deg):
@@ -48,9 +48,11 @@ class Sprite:
         self.vx = spd * math.cos(rad) # x方向の速度
         self.vy = spd * math.sin(rad) # y方向の速度
 
+
     def stop(self):
         self.vx = 0
         self.vy = 0
+
 
     def set_animation(self, key, animations):
         self.anims[key] = animations
