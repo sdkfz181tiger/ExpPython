@@ -25,17 +25,7 @@ class Sprite:
     def update(self):
         self.x += self.vx
         self.y += self.vy
-
-        # Animation
-        if not self.anim_flg:
-            return
-        anims = self.anims[self.anim_key]
-        self.u = anims[self.anim_index][0]
-        self.v = anims[self.anim_index][1]
-        if pyxel.frame_count % 3 == 0:
-            self.anim_index += 1
-        if len(anims) <= self.anim_index:
-            self.anim_index = 0
+        self.animate()
 
 
     def draw(self):
@@ -52,6 +42,18 @@ class Sprite:
     def stop(self):
         self.vx = 0
         self.vy = 0
+
+
+    def animate(self):
+        if not self.anim_flg:
+            return
+        anims = self.anims[self.anim_key]
+        self.u = anims[self.anim_index][0]
+        self.v = anims[self.anim_index][1]
+        if pyxel.frame_count % 3 == 0:
+            self.anim_index += 1
+        if len(anims) <= self.anim_index:
+            self.anim_index = 0
 
 
     def set_animation(self, key, animations):
