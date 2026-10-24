@@ -1,8 +1,8 @@
 import pyxel
 
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -43,5 +43,5 @@ class App:
         pyxel.blt(self.x, 10, 0, 0, 0, 8, 8, 0)
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

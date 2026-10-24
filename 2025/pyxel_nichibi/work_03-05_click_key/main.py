@@ -1,8 +1,8 @@
 import pyxel
 
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -32,5 +32,5 @@ class App:
         pyxel.text(self.cx, self.cy, str(self.counter), 7)
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

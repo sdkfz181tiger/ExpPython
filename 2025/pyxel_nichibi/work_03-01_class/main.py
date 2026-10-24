@@ -1,8 +1,8 @@
 import pyxel
 
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -28,5 +28,5 @@ class App:
         pyxel.circ(self.x, 10, 3, 7)
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

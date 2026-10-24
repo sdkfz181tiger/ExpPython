@@ -3,8 +3,8 @@ import pytweening as tween
 import math
 
 #==========
-# Spriteクラス
-class Sprite:
+# BaseSpriteクラス
+class BaseSprite:
 
     def __init__(self, x, y, u=0, v=0, w=8, h=8):
         """ コンストラクタ """
@@ -51,6 +51,33 @@ class Sprite:
         self.vy = 0
         if -1 < self.t_frame:
             self.t_frame = -1
+
+
+    #==========
+    # Collision
+    def get_min_x(self):
+        return self.x
+
+    def get_min_y(self):
+        return self.y
+
+    def get_max_x(self):
+        return self.x + self.w
+
+    def get_max_y(self):
+        return self.y + self.h
+
+    def collide(self, other):
+        if other.get_max_x() < self.get_min_x():
+            return False
+        if other.get_max_y() < self.get_min_y():
+            return False
+        if self.get_max_x() < other.get_min_x():
+            return False
+        if self.get_max_y() < other.get_min_y():
+            return False
+        return True
+
 
     #==========
     # Animation

@@ -2,8 +2,8 @@ import pyxel
 import pytweening as tween
 import utility
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -15,7 +15,7 @@ class App:
         self.h = pyxel.height
 
         # Sprite
-        self.spr = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
+        self.spr = utility.BaseSprite(self.w/2, self.h/2, 0, 0, 8, 8)
 
         # Animation
         self.spr.set_animation("down", [[0, 16], [8, 16], [16, 16], [24, 16]])
@@ -23,7 +23,7 @@ class App:
         self.spr.set_animation("right", [[0, 32], [8, 32], [16, 32], [24, 32]])
         self.spr.set_animation("left", [[0, 40], [8, 40], [16, 40], [24, 40]])
         self.spr.set_animation("dead", [[0, 48], [8, 48], [16, 48], [24, 48], None])
-        self.spr.start_animation("down")
+        self.spr.start_animation("dead")
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -34,17 +34,45 @@ class App:
 
         self.spr.update()
 
-        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
-            m_x = pyxel.mouse_x
-            m_y = pyxel.mouse_y
-            self.spr.move_to(m_x, m_y, 1, tween.iterLinear)
-            #self.spr.move_to(m_x, m_y, 1, tween.iterEaseOutQuart)
-            #self.spr.move_to(m_x, m_y, 1, tween.iterEaseInQuart)
+        if self.w < self.spr.x:
+            self.spr.x = 0
+
+        if self.spr.x < 0:
+            self.spr.x = self.w
+
+        if self.h < self.spr.y:
+            self.spr.y = 0
+
+        if self.spr.y < 0:
+            self.spr.y = self.h
+
+        if pyxel.btnp(pyxel.KEY_W):
+            self.spr.move(1, 270)
+            self.spr.start_animation("up")
+
+        if pyxel.btnp(pyxel.KEY_A):
+            self.spr.move(1, 180)
+            self.spr.start_animation("left")
+
+        if pyxel.btnp(pyxel.KEY_S):
+            self.spr.move(1, 90)
             self.spr.start_animation("down")
 
-        if pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT):
+        if pyxel.btnp(pyxel.KEY_D):
+            self.spr.move(1, 0)
+            self.spr.start_animation("right")
+
+        if pyxel.btnr(pyxel.KEY_W):
             self.spr.stop()
-            self.spr.stop_animation()
+
+        if pyxel.btnr(pyxel.KEY_A):
+            self.spr.stop()
+
+        if pyxel.btnr(pyxel.KEY_S):
+            self.spr.stop()
+
+        if pyxel.btnr(pyxel.KEY_D):
+            self.spr.stop()
 
 
     def draw(self):
@@ -52,11 +80,6 @@ class App:
         pyxel.cls(0)
         self.spr.draw()
 
-        # マウス座標
-        m_x = pyxel.mouse_x
-        m_y = pyxel.mouse_y
-        pyxel.circ(m_x, m_y, 1, 7)
 
-
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

@@ -2,8 +2,8 @@ import pyxel
 import math
 
 #==========
-# Spriteクラス
-class Sprite:
+# BaseSpriteクラス
+class BaseSprite:
 
     def __init__(self, x, y, u=0, v=0, w=8, h=8):
         """ コンストラクタ """

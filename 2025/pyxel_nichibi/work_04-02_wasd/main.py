@@ -1,8 +1,8 @@
 import pyxel
 import utility
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -14,7 +14,7 @@ class App:
         self.h = pyxel.height
 
         # Sprite
-        self.spr = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
+        self.spr = utility.BaseSprite(self.w/2, self.h/2, 0, 0, 8, 8)
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -51,5 +51,5 @@ class App:
         self.spr.draw()
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

@@ -1,8 +1,8 @@
 import pyxel
 import utility
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -63,5 +63,5 @@ class App:
         print(f"on_click: {title}")
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()

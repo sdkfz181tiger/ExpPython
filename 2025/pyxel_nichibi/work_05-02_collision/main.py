@@ -1,8 +1,8 @@
 import pyxel
 import utility
 
-# Appクラス
-class App:
+# Gameクラス
+class Game:
 
     def __init__(self):
         """ コンストラクタ """
@@ -15,13 +15,13 @@ class App:
         self.h = pyxel.height
 
         # Player
-        self.player = utility.Sprite(self.w/2, self.h/2, 0, 0, 8, 8)
+        self.player = utility.BaseSprite(self.w/2, self.h/2, 0, 0, 8, 8)
 
         # Asteroids
         self.asteroids = []
         for i in range(5):
             # Asteroid
-            asteroid = utility.Sprite(0, 0, 8, 0, 8, 8)
+            asteroid = utility.BaseSprite(0, 0, 8, 0, 8, 8)
             self.asteroids.append(asteroid)
             # Move
             deg = pyxel.rndi(0, 360)
@@ -72,5 +72,5 @@ class App:
             spr.y = self.h
 
 
-# Appクラスを初期化
-App()
+# Gameクラスを初期化
+Game()
