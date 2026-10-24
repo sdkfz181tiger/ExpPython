@@ -25,7 +25,7 @@ class App:
             self.asteroids.append(asteroid)
             # Move
             deg = pyxel.rndi(0, 360)
-            asteroid.move(1, deg)
+            asteroid.move(0.4, deg)
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)

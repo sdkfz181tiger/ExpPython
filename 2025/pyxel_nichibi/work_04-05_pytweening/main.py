@@ -33,24 +33,15 @@ class App:
 
         self.spr.update()
 
-        if self.w < self.spr.x:
-            self.spr.x = 0
-
-        if self.spr.x < 0:
-            self.spr.x = self.w
-
-        if self.h < self.spr.y:
-            self.spr.y = 0
-
-        if self.spr.y < 0:
-            self.spr.y = self.h
-
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             m_x = pyxel.mouse_x
             m_y = pyxel.mouse_y
             self.spr.move_to(m_x, m_y, 1, tween.iterLinear)
             #self.spr.move_to(m_x, m_y, 1, tween.iterEaseOutQuart)
             #self.spr.move_to(m_x, m_y, 1, tween.iterEaseInQuart)
+
+        if pyxel.btnr(pyxel.MOUSE_BUTTON_LEFT):
+            self.spr.stop()
 
 
     def draw(self):

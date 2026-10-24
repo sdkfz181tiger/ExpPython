@@ -49,7 +49,8 @@ class Sprite:
     def stop(self):
         self.vx = 0
         self.vy = 0
-
+        if -1 < self.t_frame:
+            self.t_frame = -1
 
     #==========
     # Animation
