@@ -58,8 +58,13 @@ class Sprite:
         if not self.anim_flg:
             return
         anims = self.anims[self.anim_key]
-        self.u = anims[self.anim_index][0]
-        self.v = anims[self.anim_index][1]
+        frame = anims[self.anim_index]
+        if frame is None:
+            self.anim_flg = False
+            self.anim_index = 0
+            frame = anims[self.anim_index]
+        self.u = frame[0]
+        self.v = frame[1]
         if pyxel.frame_count % 3 == 0:
             self.anim_index += 1
         if len(anims) <= self.anim_index:
