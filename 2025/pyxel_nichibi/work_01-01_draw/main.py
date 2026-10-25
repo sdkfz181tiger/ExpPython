@@ -24,9 +24,5 @@ pyxel.circb(90, 30, 10, 8)
 pyxel.elli(50, 55, 20, 10, 9)
 pyxel.ellib(85, 50, 10, 20, 10)
 
-# 課題
-# TODO: Lv1
-#   アンパンマンを描く事
-
 # 画面表示
 pyxel.show()

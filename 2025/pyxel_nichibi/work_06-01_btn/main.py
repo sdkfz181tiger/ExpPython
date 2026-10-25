@@ -17,6 +17,9 @@ class Game:
         # Button
         self.btn_a = utility.Button(10, 10, "BTN_A", self.on_click, 5)
         self.btn_b = utility.Button(48, 10, "BTN_B", self.on_click, 8)
+
+        # Counter
+        self.counter = 0
         
         # Pyxel実行
         pyxel.run(self.update, self.draw)
@@ -44,6 +47,9 @@ class Game:
         self.btn_a.draw()
         self.btn_b.draw()
 
+        # Counter
+        pyxel.text(self.w/2, self.h/2, str(self.counter), 7)
+
         # Mouse
         pyxel.rect(mx, my, 1, 1, 7)
         
@@ -61,6 +67,12 @@ class Game:
 
     def on_click(self, title):
         print(f"on_click: {title}")
+
+        if title == "BTN_A":
+            self.counter += 1
+
+        if title == "BTN_B":
+            self.counter -= 1
 
 
 # Gameクラスを初期化
