@@ -58,14 +58,18 @@ class BaseSprite:
     def get_min_x(self):
         return self.x
 
+
     def get_min_y(self):
         return self.y
+
 
     def get_max_x(self):
         return self.x + self.w
 
+
     def get_max_y(self):
         return self.y + self.h
+
 
     def collide(self, other):
         if other.get_max_x() < self.get_min_x():

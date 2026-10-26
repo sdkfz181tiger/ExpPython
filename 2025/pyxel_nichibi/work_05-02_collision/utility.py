@@ -16,30 +16,38 @@ class BaseSprite:
         self.vx = 0
         self.vy = 0
         
+
     def update(self):
         self.x += self.vx
         self.y += self.vy
 
+
     def draw(self):
         pyxel.blt(self.x, self.y, 
             0, self.u, self.v, self.w, self.h, 0)
+
 
     def move(self, spd, deg):
         rad = deg * math.pi / 180
         self.vx = spd * math.cos(rad) # x方向の速度
         self.vy = spd * math.sin(rad) # y方向の速度
 
+
     def get_min_x(self):
         return self.x
+
 
     def get_min_y(self):
         return self.y
 
+
     def get_max_x(self):
         return self.x + self.w
 
+
     def get_max_y(self):
         return self.y + self.h
+
 
     def collide(self, other):
         if other.get_max_x() < self.get_min_x():

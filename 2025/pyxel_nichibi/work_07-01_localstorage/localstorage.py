@@ -11,12 +11,14 @@ except Exception:
 # StorageManagerクラス
 class StorageManager:
 
+
     @staticmethod
     def set_item(key:str, value:str):
         if window is None:
             return
         print(f"set_str() key:{key}, value:{value}")
         window.localStorage.setItem(key, value)
+
 
     @staticmethod
     def get_item(key:str, default=None)->str|None:

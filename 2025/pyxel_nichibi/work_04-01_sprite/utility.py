@@ -15,14 +15,17 @@ class BaseSprite:
         self.h = h
         self.vx = 0
         self.vy = 0
-        
+     
+
     def update(self):
         self.x += self.vx
         self.y += self.vy
 
+
     def draw(self):
         pyxel.blt(self.x, self.y, 
             0, self.u, self.v, self.w, self.h, 0)
+
 
     def move(self, spd, deg):
         rad = deg * math.pi / 180
