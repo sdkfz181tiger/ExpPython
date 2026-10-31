@@ -85,14 +85,18 @@ class BaseSprite:
     def get_min_x(self):
         return self.x
 
+
     def get_min_y(self):
         return self.y
+
 
     def get_max_x(self):
         return self.x + self.w
 
+
     def get_max_y(self):
         return self.y + self.h
+
 
     def collide(self, other):
         if other.get_max_x() < self.get_min_x():
@@ -104,6 +108,18 @@ class BaseSprite:
         if self.get_max_y() < other.get_min_y():
             return False
         return True
+
+
+    def is_inside(self, x, y):
+            if x < self.get_min_x():
+                return False
+            if y < self.get_min_y():
+                return False
+            if self.get_max_x() < x:
+                return False
+            if self.get_max_y() < y:
+                return False
+            return True
 
 
     #==========
@@ -164,8 +180,7 @@ class BaseSprite:
                     self.x, self.y, x, y, 
                     t_interval_size))
 
-    #==========
-    # Tilemap
+
     def get_left(self):
         return (self.x, self.y + self.hh)
 
@@ -182,51 +197,55 @@ class BaseSprite:
         return (self.x + self.hw, self.y + self.h)
 
 
-    def is_tile_type(self, x, y, type):
-        tilemap = pyxel.tilemaps[0]
-        u, v = x // 8, y // 8
-        tile = tilemap.pget(u, v)
-        if not(tile in TILE_TYPES):
-            return TILE_NONE, u, v
-        return TILE_TYPES[tile] == type, u, v
+#==========
+# Tilemap
+
+def is_tile_type(x, y, type):
+    tilemap = pyxel.tilemaps[0]
+    u, v = x // 8, y // 8
+    tile = tilemap.pget(u, v)
+    if not(tile in TILE_TYPES):
+        return TILE_NONE, u, v
+    return TILE_TYPES[tile] == type, u, v
 
 
-    def collide_tile(self, t_type, replace=None):
-        tilemap = pyxel.tilemaps[0]
-        x, y = self.get_bottom()# x Bottom
-        flg, u, v = self.is_tile_type(x, y, t_type)
-        if flg and 0 < self.vy:
-            if replace:
-                tilemap.pset(u, v, replace)
-            else:
-                self.y = (v-1) * 8
-                self.vy = 0
-            return True
-        x, y = self.get_top() # x Top
-        flg, u, v = self.is_tile_type(x, y, t_type)
-        if flg and self.vy < 0:
-            if replace:
-                tilemap.pset(u, v, replace)
-            else:
-                self.y = (v+1) * 8
-                self.vy = 0
-            return True
-        x, y = self.get_left() # x Left
-        flg, u, v = self.is_tile_type(x, y, t_type)
-        if flg and self.vx < 0:
-            if replace:
-                tilemap.pset(u, v, replace)
-            else:
-                self.x = (u+1) * 8
-                self.vx = 0
-            return True
-        x, y = self.get_right() # x Right
-        flg, u, v = self.is_tile_type(x, y, t_type)
-        if flg and 0 < self.vx:
-            if replace:
-                tilemap.pset(u, v, replace)
-            else:
-                self.x = (u-1) * 8
-                self.vx = 0
-            return True
-        return False
+def collide_tile(spr, t_type, replace=None):
+    tilemap = pyxel.tilemaps[0]
+    x, y = spr.get_bottom()# x Bottom
+    flg, u, v = is_tile_type(x, y, t_type)
+    if flg and 0 < spr.vy:
+        if replace:
+            tilemap.pset(u, v, replace)
+        else:
+            spr.y = (v-1) * 8
+            spr.vy = 0
+        return True
+    x, y = spr.get_top() # x Top
+    flg, u, v = is_tile_type(x, y, t_type)
+    if flg and spr.vy < 0:
+        if replace:
+            tilemap.pset(u, v, replace)
+        else:
+            spr.y = (v+1) * 8
+            spr.vy = 0
+        return True
+    x, y = spr.get_left() # x Left
+    flg, u, v = is_tile_type(x, y, t_type)
+    if flg and spr.vx < 0:
+        if replace:
+            tilemap.pset(u, v, replace)
+        else:
+            spr.x = (u+1) * 8
+            spr.vx = 0
+        return True
+    x, y = spr.get_right() # x Right
+    flg, u, v = is_tile_type(x, y, t_type)
+    if flg and 0 < spr.vx:
+        if replace:
+            tilemap.pset(u, v, replace)
+        else:
+            spr.x = (u-1) * 8
+            spr.vx = 0
+        return True
+    return False
+

@@ -60,6 +60,18 @@ class BaseSprite:
             return False
         return True
 
+
+    def is_inside(self, x, y):
+            if x < self.get_min_x():
+                return False
+            if y < self.get_min_y():
+                return False
+            if self.get_max_x() < x:
+                return False
+            if self.get_max_y() < y:
+                return False
+            return True
+
 #==========
 # Buttonクラス
 class Button:

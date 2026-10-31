@@ -6,13 +6,13 @@ import utility
 W, H = 120, 90
 
 # カメラ
-GAME_AREA_W    = 192
-GAME_AREA_H    = 192
+CAMERA_AREA_W  = 192
+CAMERA_AREA_H  = 192
 CAMERA_PAD_X   = 40
 CAMERA_PAD_Y   = 40
-CAMERA_LIMIT_L = W - GAME_AREA_W
+CAMERA_LIMIT_L = W - CAMERA_AREA_W
 CAMERA_LIMIT_R = 0
-CAMERA_LIMIT_T = H - GAME_AREA_H
+CAMERA_LIMIT_T = H - CAMERA_AREA_H
 CAMERA_LIMIT_B = 0
 
 
@@ -44,8 +44,8 @@ class Game:
 
         # Collision x Gate x Coin
         self.player.update()
-        self.player.collide_tile(utility.TILE_GATE)
-        if self.player.collide_tile(utility.TILE_COIN, (0, 0)):
+        utility.collide_tile(self.player, utility.TILE_GATE)
+        if utility.collide_tile(self.player, utility.TILE_COIN, (0, 0)):
             pyxel.play(0, 0)   
         
         # WASD
@@ -75,7 +75,8 @@ class Game:
         self.camera_on()
 
         # Tilemap
-        pyxel.bltm(0, 0, 0, 0, 0, GAME_AREA_W, GAME_AREA_H, 0)
+        pyxel.bltm(0, 0, 0, 0, 0, 
+                   CAMERA_AREA_W, CAMERA_AREA_H, 0)
 
         self.player.draw()
 
