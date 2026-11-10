@@ -20,6 +20,7 @@ class Game:
 
     def update(self):
         """ 更新処理 """
+        
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             self.counter += 1
             # Sound

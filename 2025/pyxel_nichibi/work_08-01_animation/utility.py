@@ -106,6 +106,7 @@ class BaseSprite:
             self.anim_flg = False
             self.anim_index = 0
             frame = anims[self.anim_index]
+            return
         self.u = frame[0]
         self.v = frame[1]
         if pyxel.frame_count % 3 == 0:
