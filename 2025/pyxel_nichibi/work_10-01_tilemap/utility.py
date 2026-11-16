@@ -60,7 +60,7 @@ class BaseSprite:
 
 
     def get_right(self):
-        return (self.x + self.w, self.y + self.hh)
+        return (self.x + self.w - 1, self.y + self.hh)
 
 
     def get_top(self):
@@ -68,7 +68,7 @@ class BaseSprite:
 
 
     def get_bottom(self):
-        return (self.x + self.hw, self.y + self.h)
+        return (self.x + self.hw, self.y + self.h - 1)
 
 
     #==========
@@ -173,22 +173,6 @@ class BaseSprite:
                     t_interval_size))
 
 
-    def get_left(self):
-        return (self.x, self.y + self.hh)
-
-
-    def get_right(self):
-        return (self.x + self.w, self.y + self.hh)
-
-
-    def get_top(self):
-        return (self.x + self.hw, self.y)
-
-
-    def get_bottom(self):
-        return (self.x + self.hw, self.y + self.h)
-
-
 #==========
 # Camera
 class CameraManager:
@@ -290,8 +274,9 @@ def collide_tile(spr, t_type, t_types, replace=None):
         if replace:
             tilemap.pset(u, v, replace)
         else:
-            spr.x = (u+1) * 8
+            spr.x = (u+1) * 8 + 1
             spr.vx = 0
+            spr.vy = 0
         return True
     x, y = spr.get_right() # x Right
     flg, u, v = is_tile_type(x, y, t_type, t_types)

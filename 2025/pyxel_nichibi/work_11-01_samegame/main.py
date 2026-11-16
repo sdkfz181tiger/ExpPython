@@ -3,13 +3,14 @@ import pytweening as tween
 import random
 import utility
 
-ROWS = 7
-COLS = 10
+ROWS = 9
+COLS = 12
 TILE_A = (0, 8)
 TILE_B = (8, 8)
 TILE_C = (16, 8)
+TILE_D = (24, 8)
 TILE_TYPES = [
-    TILE_A, TILE_B, TILE_C
+    TILE_A, TILE_B, TILE_C, TILE_D
 ]
 
 # Gameクラス
@@ -26,7 +27,7 @@ class Game:
 
         # Tiles
         self.tiles = []
-        s_x, s_y, pad = 10, 10, 10
+        s_x, s_y, pad = 7, 7, 9
         for r in range(ROWS):
             for c in range(COLS):
                 x = s_x + c * pad
@@ -42,9 +43,11 @@ class Game:
     def update(self):
         """ 更新処理 """
 
+        # Update
         for tile in self.tiles:
             tile.update()
 
+        # Click
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             for tile in self.tiles:
                 if tile.is_tweening():
@@ -123,6 +126,7 @@ class Game:
             from_tile = self.tiles[from_t]
             if self.tiles[from_t].is_off():
                 continue
+            # Swap
             from_tile.move_to(to_tile.x, to_tile.y, 0.4, tween.iterEaseInQuart)
             to_tile.x, to_tile.y = from_tile.x, from_tile.y
             from_tile.r, to_tile.r = to_tile.r, from_tile.r

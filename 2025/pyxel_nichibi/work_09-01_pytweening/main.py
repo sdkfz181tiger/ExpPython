@@ -56,6 +56,7 @@ class Game:
         m_x = pyxel.mouse_x
         m_y = pyxel.mouse_y
         pyxel.circ(m_x, m_y, 1, 7)
+        pyxel.line(self.spr.x, self.spr.y, m_x, m_y, 7)
 
 
 # Gameクラスを初期化

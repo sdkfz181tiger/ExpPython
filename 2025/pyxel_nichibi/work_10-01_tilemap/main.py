@@ -36,11 +36,12 @@ class Game:
     def update(self):
         """ 更新処理 """
 
-        # Collision x Gate x Coin
         self.player.update()
+
+        # Collision x Gate x Coin
         utility.collide_tile(self.player, TILE_GATE, TILE_TYPES)
         if utility.collide_tile(self.player, TILE_COIN, TILE_TYPES, (0, 0)):
-            pyxel.play(0, 0)   
+            pyxel.play(0, 0)
         
         # WASD
         if pyxel.btnp(pyxel.KEY_W):
